@@ -1,16 +1,17 @@
-package businesslogicservice.player;
+package dataservice.player;
 
 import java.util.ArrayList;
+
+import beans.GamePlayer;
+import beans.GeneralPlayer;
+import beans.SeasonPlayer;
 
 import common.statics.DataKind;
 import common.statics.Field;
 import common.statics.GameKind;
 import common.statics.Season;
-import beans.GamePlayer;
-import beans.GeneralPlayer;
-import beans.SeasonPlayer;
 
-public interface OnePlayerInfoBlService {
+public interface OnePlayerDataService {
 	// 获得球员的基本信息//season,age是为了处理同名的球员
 	public GeneralPlayer getGeneralPlayer(String playerId);
 
