@@ -15,12 +15,6 @@ import dataservice.hot.PlayerHotDataService;
 public class PlayerHotData implements PlayerHotDataService {
 
 	@Override
-	public ArrayList<GamePlayer> getPlayerHot(String nowDate, String field) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public ArrayList<SeasonPlayer> getPlayerKingOfSeason(Season season, GameKind gameKind, DataKind dataKind, Field sortField) {
 		// TODO Auto-generated method stub
 		return null;

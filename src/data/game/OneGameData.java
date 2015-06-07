@@ -1,12 +1,12 @@
-package data.match;
+package data.game;
 
 import java.util.ArrayList;
 
 import beans.GamePlayer;
 import beans.GameTeam;
-import dataservice.match.OneMatchDataService;
+import dataservice.game.OneGameDataService;
 
-public class OneMatchData implements OneMatchDataService {
+public class OneGameData implements OneGameDataService {
 
 	@Override
 	public ArrayList<GamePlayer> getPlayersPerformOfOneGame(String teamName, String date) {

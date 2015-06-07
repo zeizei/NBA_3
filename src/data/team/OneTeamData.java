@@ -3,17 +3,16 @@ package data.team;
 import java.util.ArrayList;
 
 import beans.GameTeam;
+import beans.SeasonPlayer;
 import beans.SeasonTeam;
-
 import common.statics.Field;
 import common.statics.Season;
-
 import dataservice.team.OneTeamDataService;
 
 public class OneTeamData implements OneTeamDataService {
 
 	@Override
-	public ArrayList<String> getAllPlayerIds(String teamName, Season season) {
+	public ArrayList<SeasonPlayer> getOneSeasonPlayers(String teamName, Season season) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -1,10 +1,10 @@
-package dataservice.match;
+package dataservice.game;
 
 import java.util.ArrayList;
 
 import beans.GeneralGame;
 
-public interface MatchInfoDataService {
+public interface GameInfoDataService {
 	// 得到最近的有比赛的日期
 	public String getLatestDate();
 

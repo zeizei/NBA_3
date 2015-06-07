@@ -1,28 +1,23 @@
-package businesslogic.match;
+package data.game;
 
 import java.util.ArrayList;
 
+import mysqldatabase.DB;
 import beans.GeneralGame;
-import businesslogicservice.match.MatchInfoBlService;
+import dataservice.game.GameInfoDataService;
 
-public class MatchInfoBl implements MatchInfoBlService{
+public class GameInfoData implements GameInfoDataService {
+	private DB db = DB.getInstance();
 
-	@Override
 	public String getLatestDate() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public ArrayList<GeneralGame> getTodayMatches(String date) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public GeneralGame getGeneralMatch(String teamName, String date) {
-		// TODO Auto-generated method stub
 		return null;
 	}
-
 }

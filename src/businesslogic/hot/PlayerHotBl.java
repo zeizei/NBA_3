@@ -2,33 +2,29 @@ package businesslogic.hot;
 
 import java.util.ArrayList;
 
+import common.datastructure.PlayerHotInfo;
 import common.statics.DataKind;
 import common.statics.Field;
 import common.statics.GameKind;
 import common.statics.Season;
-
+import data.hot.PlayerHotData;
+import dataservice.hot.PlayerHotDataService;
 import beans.GamePlayer;
 import beans.SeasonPlayer;
 import businesslogicservice.hot.PlayerHotBlSrevice;
 
 public class PlayerHotBl implements PlayerHotBlSrevice {
+	private PlayerHotDataService playerHotData = new PlayerHotData();
 
-	@Override
-	public ArrayList<GamePlayer> getPlayerHot(String nowDate, String field) {
-		// TODO Auto-generated method stub
+	public ArrayList<PlayerHotInfo> getPlayerHot(String nowDate, String field) {
 		return null;
 	}
 
-	@Override
 	public ArrayList<SeasonPlayer> getPlayerKingOfSeason(Season season, GameKind gameKind, DataKind dataKind, Field sortField) {
-		// TODO Auto-generated method stub
-		return null;
+		return playerHotData.getPlayerKingOfSeason(season, gameKind, dataKind, sortField);
 	}
 
-	@Override
 	public ArrayList<GamePlayer> getPlayerKingOfDaily(String date, Field sortField) {
-		// TODO Auto-generated method stub
-		return null;
+		return playerHotData.getPlayerKingOfDaily(date, sortField);
 	}
-
 }
