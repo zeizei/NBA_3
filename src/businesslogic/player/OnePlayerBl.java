@@ -16,15 +16,28 @@ import businesslogicservice.player.OnePlayerBlService;
 public class OnePlayerBl implements OnePlayerBlService {
 	private OnePlayerDataService onePlayerData = new OnePlayerData();
 
+	@Override
 	public GeneralPlayer getGeneralPlayer(String playerId) {
-		return onePlayerData.getGeneralPlayer(playerId);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	@Override
 	public ArrayList<SeasonPlayer> getSeasonPlayer(String playerId, GameKind gameKind, DataKind dataKind, Field sortField) {
-		return onePlayerData.getSeasonPlayer(playerId, gameKind, dataKind, sortField);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	@Override
 	public ArrayList<GamePlayer> getGamePlayer(String playerId, Season season, Field sortField) {
-		return onePlayerData.getGamePlayer(playerId, season, sortField);
+		// TODO Auto-generated method stub
+		return null;
 	}
+
+	@Override
+	public ArrayList<GamePlayer> getLatestGamePlayer(String playerId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
