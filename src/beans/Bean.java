@@ -5,6 +5,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public class Bean implements Serializable {
 
@@ -170,6 +172,10 @@ public class Bean implements Serializable {
 			}
 			return objects;
 		}
+		return null;
+	}
+
+	public static <T> ArrayList<T> resultSetToList(ResultSet rs, T object) {
 		return null;
 	}
 }
