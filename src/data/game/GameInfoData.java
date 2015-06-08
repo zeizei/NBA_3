@@ -32,9 +32,12 @@ public class GameInfoData implements GameInfoDataService {
 			String sql = "select * from generalgame where date ='" + date + "'";
 			ResultSet rs = this.db.find(sql);
 			ArrayList<GeneralGame> generalGameList = Bean.resultSetToList(rs, new GeneralGame());
+			if (generalGameList != null && generalGameList.size() != 0) {
+				return generalGameList;
+			}
 		}
 		return null;
-	}
+	}// 得到某一天的所有比赛
 
 	public GeneralGame getGeneralMatch(String teamName, String date) {
 		return null;
