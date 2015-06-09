@@ -40,12 +40,14 @@ public class GameInfoData implements GameInfoDataService {
 	}// 得到某一天的所有比赛
 
 	public GeneralGame getGeneralMatch(String teamName, String date) {
+		if (teamName != null && date != null) {
+			String sql = "select * from generalgame where date ='" + date + "' and (homeTeam ='" + teamName + "' or guestTeam='" + teamName + "')";
+			ResultSet rs = this.db.find(sql);
+			ArrayList<GeneralGame> generalGameList = Bean.resultSetToList(rs, new GeneralGame());
+			if (generalGameList != null && generalGameList.size() == 1) {
+				return generalGameList.get(0);
+			}
+		}
 		return null;
-	}
-
-	public static void main(String args[]) {
-		GameInfoData gameInfoData = new GameInfoData();
-		String latestDate = gameInfoData.getLatestDate();
-		System.out.println(latestDate);
-	}
+	}// 得到某一支球队某一天的比赛
 }

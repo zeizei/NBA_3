@@ -11,6 +11,7 @@ public class Position {
 		return this.position;
 	}
 
+	public static Position All = new Position("All");
 	public static Position C = new Position("C");
 	public static Position F = new Position("F");
 	public static Position G = new Position("G");

@@ -20,5 +20,6 @@ public interface PlayerInfoDataService {
 	public ArrayList<SeasonPlayer> vagueSearch(String str);
 
 	// 组合筛选
-	public ArrayList<SeasonPlayer> getSeasonPlayer(CombineSelectionCell[] combineSelectionCells);
+	public ArrayList<SeasonPlayer> getSeasonPlayer(Season season, GameKind gameKind, DataKind dataKind, League league, Position position, AgeRange ageRange,
+			CombineSelectionCell[] combineSelectionCells);
 }

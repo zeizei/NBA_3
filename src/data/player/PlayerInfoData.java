@@ -1,7 +1,10 @@
 package data.player;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import mysqldatabase.DB;
+import beans.Bean;
 import beans.SeasonPlayer;
 import common.datastructure.CombineSelectionCell;
 import common.statics.AgeRange;
@@ -14,23 +17,28 @@ import common.statics.Season;
 import dataservice.player.PlayerInfoDataService;
 
 public class PlayerInfoData implements PlayerInfoDataService {
+	private DB db = DB.getInstance();
 
-	@Override
 	public ArrayList<SeasonPlayer> getSeasonPlayer(Season season, GameKind gameKind, DataKind dataKind, League league, Position position, AgeRange ageRange, Field sortField) {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 
-	@Override
 	public ArrayList<SeasonPlayer> vagueSearch(String str) {
-		// TODO Auto-generated method stub
+		if (str != null && str.length() != 0) {
+			str = str.toLowerCase();
+			String sql = "select * from seasonplayer where lower(playerName) like '%" + str + "%' and season = 'Career' and isPlayOff = 0";
+			ResultSet rs = this.db.find(sql);
+			ArrayList<SeasonPlayer> seasonPlayerList = Bean.resultSetToList(rs, new SeasonPlayer());
+			if (seasonPlayerList != null && seasonPlayerList.size() != 0) {
+				return seasonPlayerList;
+			}
+		}
+		return null;
+	}// 模糊查找
+
+	public ArrayList<SeasonPlayer> getSeasonPlayer(Season season, GameKind gameKind, DataKind dataKind, League league, Position position, AgeRange ageRange,
+			CombineSelectionCell[] combineSelectionCells) {
 		return null;
 	}
-
-	@Override
-	public ArrayList<SeasonPlayer> getSeasonPlayer(CombineSelectionCell[] combineSelectionCells) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
