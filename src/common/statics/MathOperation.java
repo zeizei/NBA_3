@@ -16,4 +16,6 @@ public class MathOperation {
 	public static final MathOperation equal = new MathOperation("=");
 	public static final MathOperation less_equal = new MathOperation("<=");
 	public static final MathOperation more_equal = new MathOperation(">=");
+	//
+	public static final MathOperation[] operatons = { more_equal, less_equal, less, more, equal };
 }

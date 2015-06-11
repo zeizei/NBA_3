@@ -11,11 +11,14 @@ public class GameKind {
 	public String toString() {
 		if (this.isPlayOff == 1) {
 			return "playOff";
-		} else {
+		}
+		else {
 			return "regular";
 		}
 	}
 
-	public static GameKind regular_game = new GameKind(0);
-	public static GameKind playOff_game = new GameKind(1);
+	public static final GameKind regular_game = new GameKind(0);
+	public static final GameKind playOff_game = new GameKind(1);
+	//
+	public static final GameKind[] gameKinds = { regular_game, playOff_game };
 }

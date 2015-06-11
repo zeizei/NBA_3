@@ -1,14 +1,16 @@
 package data.player;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+
+import beans.GamePlayer;
+import beans.GeneralPlayer;
+import beans.SeasonPlayer;
 
 import common.statics.DataKind;
 import common.statics.Field;
 import common.statics.GameKind;
 import common.statics.Season;
-import beans.GamePlayer;
-import beans.GeneralPlayer;
-import beans.SeasonPlayer;
 
 public class OnePlayerData_driver {
 	private OnePlayerData onePlayerData = new OnePlayerData();
@@ -19,7 +21,7 @@ public class OnePlayerData_driver {
 	}
 
 	public void testGetSeasonPlayer() {
-		ArrayList<SeasonPlayer> seasonPlayerList = onePlayerData.getSeasonPlayer("jamesle01", GameKind.regular_game, DataKind.AVERAGE, Field.point);
+		ArrayList<SeasonPlayer> seasonPlayerList = onePlayerData.getSeasonPlayer("jamesle01", GameKind.regular_game, DataKind.average, Field.point);
 		if (seasonPlayerList != null) {
 			for (int i = 0; i < seasonPlayerList.size(); i++) {
 				System.out.println(seasonPlayerList.get(i));
@@ -28,16 +30,32 @@ public class OnePlayerData_driver {
 	}
 
 	public void testGetGamePlayer() {
-		ArrayList<GamePlayer> gamePlayerList = onePlayerData.getGamePlayer("jamesle01", Season.season_array[0], Field.date);
+		ArrayList<GamePlayer> gamePlayerList = onePlayerData.getGamePlayer("jamesle01", Season.seasons[0], GameKind.regular_game, Field.date);
 		for (int i = 0; i < gamePlayerList.size(); i++) {
 			System.out.println(gamePlayerList.get(i).toString());
+			System.out.println(i);
 		}
 	}
 
-	public static void main(String args[]) {
-		OnePlayerData_driver driver = new OnePlayerData_driver();
+	public static void main(String args[]) throws SQLException {
+		// OnePlayerData_driver driver = new OnePlayerData_driver();
 		// driver.testGetGeneralPlayer();
 		// driver.testGetSeasonPlayer();
-		driver.testGetGamePlayer();
+		// driver.testGetGamePlayer();
+		// String shortSql = "select distinct short from generalteam";
+		// ResultSet rs = DB.getInstance().find(shortSql);
+		// ArrayList<String> shortNameList = new ArrayList<String>();
+		// while (rs.next()) {
+		// String shortName = rs.getString("short");
+		// shortNameList.add(shortName);
+		// }
+		// for (int i = 0; i < shortNameList.size(); i++) {
+		// System.out.println(shortNameList.get(i));
+		// String sql =
+		// "update seasonplayer set teamName = (select distinct teamName from generalteam where short = seasonplayer.teamName) where seasonplayer.teamName='"
+		// + shortNameList.get(i)
+		// + "'";
+		// DB.getInstance().update(sql);
+		// }
 	}
 }

@@ -7,9 +7,10 @@ public class Season {
 
 	private Season(String season) {
 		this.season = season;
-		this.startYear = season.substring(0, 4);
-		this.finishYear = String.valueOf(Integer.parseInt(startYear) + 1);
-
+		if (!season.equals("Career")) {
+			this.startYear = season.substring(0, 4);
+			this.finishYear = String.valueOf(Integer.parseInt(startYear) + 1);
+		}
 	}
 
 	public String toString() {
@@ -17,7 +18,6 @@ public class Season {
 	}
 
 	public String getStartDate() {
-
 		return startYear + "-10-01";
 
 	}
@@ -27,13 +27,14 @@ public class Season {
 
 	}
 
-	public static Season[] season_array = new Season[69];
+	public static final Season[] seasons = new Season[70];
 	static {
 		int base = 1946;
 		for (int i = 0; i < 69; i++) {
 			int start = base + i;
 			int finish = start + 1;
-			season_array[68 - i] = new Season(String.valueOf(start) + "-" + String.valueOf(finish).substring(2));
+			seasons[69 - i] = new Season(String.valueOf(start) + "-" + String.valueOf(finish).substring(2));
 		}
+		seasons[0] = new Season("Career");
 	}
 }

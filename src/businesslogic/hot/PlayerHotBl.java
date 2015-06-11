@@ -21,7 +21,7 @@ public class PlayerHotBl implements PlayerHotBlSrevice {
 	}
 
 	public ArrayList<SeasonPlayer> getPlayerKingOfSeason(Season season, GameKind gameKind, DataKind dataKind, Field sortField) {
-		return playerHotData.getPlayerKingOfSeason(season, gameKind, dataKind, sortField);
+		return null;
 	}
 
 	public ArrayList<GamePlayer> getPlayerKingOfDaily(String date, Field sortField) {

@@ -68,12 +68,12 @@ public class SeasonPlayer extends Bean {
 				"realShot", "threeEFF", "freeEFF", "offReboundEFF", "defReboundEFF", "totReboundEFF", "assistEFF", "stealEFF", "blockEFF", "faultEFF", "useEFF", "offWinShare", "offWinShare",
 				"defWinShare", "winShare", "winSharePer48", "offBoxPM", "offBoxPM", "defBoxPM", "BoxPM", "replaceValue" };
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("round(" + changedField[0]).append(" / ").append("numOfGame,2)as '").append(changedField[0]).append("'");
+		buffer.append("round(seasonplayer." + changedField[0]).append(" / ").append("numOfGame,2) as '").append(changedField[0]).append("'");
 		for (int i = 1; i < changedField.length; i++) {
-			buffer.append(",").append("round(" + changedField[i]).append(" / ").append("numOfGame,2)as '").append(changedField[i]).append("'");
+			buffer.append(",").append("round(seasonplayer." + changedField[i]).append(" / ").append("numOfGame,2) as '").append(changedField[i]).append("'");
 		}
 		for (int i = 0; i < unchangedField.length; i++) {
-			buffer.append(",").append(unchangedField[i]);
+			buffer.append(",").append("seasonplayer." + unchangedField[i]);
 		}
 		return buffer.toString();
 	}

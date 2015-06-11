@@ -16,6 +16,8 @@ public class DataKind {
 		}
 	}
 
-	public static DataKind AVERAGE = new DataKind(0);
-	public static DataKind TOTAL = new DataKind(1);
+	public static final DataKind average = new DataKind(0);
+	public static final DataKind total = new DataKind(1);
+	//
+	public static final DataKind[] dataKinds = { average, total };
 }

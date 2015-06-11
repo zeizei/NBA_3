@@ -7,6 +7,6 @@ public class Main {
 	public static MainFrame mainFrame;
 
 	public static void main(String args[]) {
-		  StartWindow splash=new StartWindow();
+		new StartWindow();
 	}
 }

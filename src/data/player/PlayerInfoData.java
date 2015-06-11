@@ -20,14 +20,44 @@ public class PlayerInfoData implements PlayerInfoDataService {
 	private DB db = DB.getInstance();
 
 	public ArrayList<SeasonPlayer> getSeasonPlayer(Season season, GameKind gameKind, DataKind dataKind, League league, Position position, AgeRange ageRange, Field sortField) {
-
+		if (season != null && gameKind != null && dataKind != null && league != null && position != null && ageRange != null && sortField != null) {
+			String isPlayOffSql = " and isPlayOff = 0 ";
+			if (GameKind.playOff_game.equals(gameKind)) {
+				isPlayOffSql = " and isPlayOff = 1 ";
+			}// 是否季后赛
+			String positionSql = " and position like '%" + position.toString() + "%'";
+			if (position.equals(Position.All) || season.equals(Season.seasons[0])) {
+				positionSql = "";
+			}
+			String ageSql = " and " + ageRange.toString();
+			if (ageRange.equals(AgeRange.All) || season.equals(Season.seasons[0])) {
+				ageSql = "";
+			}
+			String dataKindSql = "select *";
+			if (dataKind.equals(DataKind.average)) {
+				dataKindSql = "select " + SeasonPlayer.getAvgSqlString();
+			}
+			String sql = dataKindSql + " from seasonplayer, generalteam where season = '" + season.toString() + "'" + isPlayOffSql + positionSql + ageSql
+					+ " and (generalteam.teamName = seasonplayer.teamName) and (seasonplayer.season between generalteam.startSeason and generalteam.finishSeason) and generalteam.league = '"
+					+ league.toString() + "' order by " + sortField.toString() + " desc";
+			if (league.equals(League.all_league) || season.equals(Season.seasons[0])) {
+				sql = dataKindSql + " from seasonplayer where season = '" + season.toString() + "'" + isPlayOffSql + positionSql + ageSql + " order by " + sortField.toString() + " desc";
+			}
+			System.out.println(sql);
+			ResultSet rs = this.db.find(sql);
+			ArrayList<SeasonPlayer> seasonPlayerList = Bean.resultSetToList(rs, new SeasonPlayer());
+			if (seasonPlayerList != null && seasonPlayerList.size() != 0) {
+				return seasonPlayerList;
+			}
+		}
 		return null;
 	}
 
 	public ArrayList<SeasonPlayer> vagueSearch(String str) {
 		if (str != null && str.length() != 0) {
 			str = str.toLowerCase();
-			String sql = "select * from seasonplayer where lower(playerName) like '%" + str + "%' and season = 'Career' and isPlayOff = 0";
+			String sql = "select " + SeasonPlayer.getAvgSqlString() + " from seasonplayer where lower(playerName) like '%" + str
+					+ "%' and seasonplayer.season = 'Career' and seasonplayer.isPlayOff = 0 order by seasonplayer.point desc";
 			ResultSet rs = this.db.find(sql);
 			ArrayList<SeasonPlayer> seasonPlayerList = Bean.resultSetToList(rs, new SeasonPlayer());
 			if (seasonPlayerList != null && seasonPlayerList.size() != 0) {
@@ -37,8 +67,47 @@ public class PlayerInfoData implements PlayerInfoDataService {
 		return null;
 	}// 模糊查找
 
-	public ArrayList<SeasonPlayer> getSeasonPlayer(Season season, GameKind gameKind, DataKind dataKind, League league, Position position, AgeRange ageRange,
-			CombineSelectionCell[] combineSelectionCells) {
+	public ArrayList<SeasonPlayer> getSeasonPlayer(Season season, GameKind gameKind, DataKind dataKind, League league, Position position, AgeRange ageRange, ArrayList<CombineSelectionCell> cellList) {
+		if (season != null && gameKind != null && dataKind != null && league != null && position != null && ageRange != null && cellList != null && cellList.size() != 0) {
+			String isPlayOffSql = " and isPlayOff = 0 ";
+			if (GameKind.playOff_game.equals(gameKind)) {
+				isPlayOffSql = " and isPlayOff = 1 ";
+			}// 是否季后赛
+			String positionSql = " and position like '%" + position.toString() + "%'";
+			if (position.equals(Position.All) || season.equals(Season.seasons[0])) {
+				positionSql = "";
+			}// 位置
+			String ageSql = " and " + ageRange.toString();
+			if (ageRange.equals(AgeRange.All) || season.equals(Season.seasons[0])) {
+				ageSql = "";
+			}// 年龄
+			StringBuffer buffer = new StringBuffer();
+			String dataKindSql = "select *";
+			if (dataKind.equals(DataKind.average)) {
+				dataKindSql = "select " + SeasonPlayer.getAvgSqlString();
+				for (int i = 0; i < cellList.size(); i++) {
+					buffer.append(" and ").append(cellList.get(i).getAvgStr());
+				}
+			}
+			else {
+				for (int i = 0; i < cellList.size(); i++) {
+					buffer.append(" and ").append(cellList.get(i).getSqlStr());
+				}
+			}// 数据类型以及筛选内容
+			String selectSql = buffer.toString();
+			String sql = dataKindSql + " from seasonplayer, generalteam where season = '" + season.toString() + "'" + isPlayOffSql + positionSql + ageSql
+					+ " and (generalteam.teamName = seasonplayer.teamName) and (seasonplayer.season between generalteam.startSeason and generalteam.finishSeason) and generalteam.league = '"
+					+ league.toString() + "' " + selectSql + " order by point desc";
+			if (league.equals(League.all_league) || season.equals(Season.seasons[0])) {
+				sql = dataKindSql + " from seasonplayer where season = '" + season.toString() + "'" + isPlayOffSql + positionSql + ageSql + selectSql + " order by point desc";
+			}
+			System.out.println(sql);
+			ResultSet rs = this.db.find(sql);
+			ArrayList<SeasonPlayer> seasonPlayerList = Bean.resultSetToList(rs, new SeasonPlayer());
+			if (seasonPlayerList != null && seasonPlayerList.size() != 0) {
+				return seasonPlayerList;
+			}
+		}
 		return null;
-	}
+	}// 高级筛选
 }

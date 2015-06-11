@@ -37,7 +37,7 @@ public class OnePlayerData implements OnePlayerDataService {
 			}
 			String sql = "select " + SeasonPlayer.getAvgSqlString() + " from seasonplayer where playerId = '" + playerId + "' and isPlayOff=" + isPlayOff + " order by " + sortField.toString()
 					+ " desc";
-			if (DataKind.TOTAL.equals(dataKind)) {
+			if (DataKind.total.equals(dataKind)) {
 				sql = "select * from seasonplayer where playerId = '" + playerId + "' and isPlayOff=" + isPlayOff + " order by " + sortField.toString() + " desc";
 			}
 			ResultSet rs = this.db.find(sql);
@@ -49,10 +49,14 @@ public class OnePlayerData implements OnePlayerDataService {
 		return null;
 	}// 得到一个球员所有赛季的数据
 
-	public ArrayList<GamePlayer> getGamePlayer(String playerId, Season season, Field sortField) {
+	public ArrayList<GamePlayer> getGamePlayer(String playerId, Season season, GameKind gameKind, Field sortField) {
 		if (playerId != null && season != null && sortField != null) {
-			String sql = "select * from gameplayer where playerId = '" + playerId + "' and (date between '" + season.getStartDate() + "' and '" + season.getFinishDate() + "') order by "
-					+ sortField.toString() + " desc";
+			int isPlayOff = 0;
+			if (GameKind.playOff_game.equals(gameKind)) {
+				isPlayOff = 1;
+			}
+			String sql = "select * from gameplayer where playerId = '" + playerId + "' and date in (select date from generalgame where date between '" + season.getStartDate() + "' and '"
+					+ season.getFinishDate() + "' and isPlayOff = " + isPlayOff + ") order by " + sortField.toString() + " desc";
 			ResultSet rs = this.db.find(sql);
 			ArrayList<GamePlayer> gamePlayerList = Bean.resultSetToList(rs, new GamePlayer());
 			if (gamePlayerList != null && gamePlayerList.size() != 0) {

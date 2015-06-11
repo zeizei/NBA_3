@@ -1,29 +1,28 @@
 package data.hot;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import mysqldatabase.DB;
+import beans.Bean;
 import beans.GamePlayer;
-import beans.SeasonPlayer;
 
-import common.statics.DataKind;
 import common.statics.Field;
-import common.statics.GameKind;
-import common.statics.Season;
 
 import dataservice.hot.PlayerHotDataService;
 
 public class PlayerHotData implements PlayerHotDataService {
+	private DB db = DB.getInstance();
 
-	@Override
-	public ArrayList<SeasonPlayer> getPlayerKingOfSeason(Season season, GameKind gameKind, DataKind dataKind, Field sortField) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public ArrayList<GamePlayer> getPlayerKingOfDaily(String date, Field sortField) {
-		// TODO Auto-generated method stub
+		if (date != null && sortField != null) {
+			String sql = "select * from gameplayer where date = '" + date + "' order by " + sortField + " desc";
+			ResultSet rs = this.db.find(sql);
+			ArrayList<GamePlayer> gamePlayerList = Bean.resultSetToList(rs, new GamePlayer());
+			if (gamePlayerList != null && gamePlayerList.size() != 0) {
+				return gamePlayerList;
+			}
+		}
 		return null;
 	}
-
 }

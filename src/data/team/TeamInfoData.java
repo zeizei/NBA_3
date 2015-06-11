@@ -14,10 +14,10 @@ import dataservice.team.TeamInfoDataService;
 
 public class TeamInfoData implements TeamInfoDataService {
 
-	@Override
 	public ArrayList<SeasonTeam> getSeasonTeam(Season season, GameKind gameKind, DataKind dataKind, League league, Field sortField) {
-		// TODO Auto-generated method stub
+		if (season != null && gameKind != null && dataKind != null && league != null && sortField != null) {
+
+		}
 		return null;
 	}
-
 }
