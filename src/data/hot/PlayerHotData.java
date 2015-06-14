@@ -18,6 +18,7 @@ public class PlayerHotData implements PlayerHotDataService {
 	private DB db = DB.getInstance();
 
 	public ArrayList<PlayerHotInfo> getPlayerHot(Field field) {
+
 		return null;
 	}
 
@@ -34,7 +35,6 @@ public class PlayerHotData implements PlayerHotDataService {
 				else {
 					sortStr = " and " + sortField.toString() + "Shot >=150 order by " + sortField.toString() + " desc";
 				}
-
 			}
 			else {
 				buffer.append(",").append("round(" + sortField.toString()).append("/numOfGame,2) as '").append(sortField.toString()).append("'");

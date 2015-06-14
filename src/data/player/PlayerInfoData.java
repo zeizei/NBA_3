@@ -26,11 +26,11 @@ public class PlayerInfoData implements PlayerInfoDataService {
 				isPlayOffSql = " and isPlayOff = 1 ";
 			}// 是否季后赛
 			String positionSql = " and position like '%" + position.toString() + "%'";
-			if (position.equals(Position.All) || season.equals(Season.seasons[0])) {
+			if (position.equals(Position.All) || season.equals(Season.seasons_with_Career[0])) {
 				positionSql = "";
 			}
 			String ageSql = " and " + ageRange.toString();
-			if (ageRange.equals(AgeRange.All) || season.equals(Season.seasons[0])) {
+			if (ageRange.equals(AgeRange.All) || season.equals(Season.seasons_with_Career[0])) {
 				ageSql = "";
 			}
 			String dataKindSql = "select *";
@@ -40,7 +40,7 @@ public class PlayerInfoData implements PlayerInfoDataService {
 			String sql = dataKindSql + " from seasonplayer, generalteam where season = '" + season.toString() + "'" + isPlayOffSql + positionSql + ageSql
 					+ " and (generalteam.teamName = seasonplayer.teamName) and (seasonplayer.season between generalteam.startSeason and generalteam.finishSeason) and generalteam.league = '"
 					+ league.toString() + "' order by " + sortField.toString() + " desc limit 50";
-			if (league.equals(League.all_league) || season.equals(Season.seasons[0])) {
+			if (league.equals(League.all_league) || season.equals(Season.seasons_with_Career[0])) {
 				sql = dataKindSql + " from seasonplayer where season = '" + season.toString() + "'" + isPlayOffSql + positionSql + ageSql + " order by " + sortField.toString() + " desc limit 50";
 			}
 			System.out.println(sql);
@@ -74,11 +74,11 @@ public class PlayerInfoData implements PlayerInfoDataService {
 				isPlayOffSql = " and isPlayOff = 1 ";
 			}// 是否季后赛
 			String positionSql = " and position like '%" + position.toString() + "%'";
-			if (position.equals(Position.All) || season.equals(Season.seasons[0])) {
+			if (position.equals(Position.All) || season.equals(Season.seasons_with_Career[0])) {
 				positionSql = "";
 			}// 位置
 			String ageSql = " and " + ageRange.toString();
-			if (ageRange.equals(AgeRange.All) || season.equals(Season.seasons[0])) {
+			if (ageRange.equals(AgeRange.All) || season.equals(Season.seasons_with_Career[0])) {
 				ageSql = "";
 			}// 年龄
 			StringBuffer buffer = new StringBuffer();
@@ -98,7 +98,7 @@ public class PlayerInfoData implements PlayerInfoDataService {
 			String sql = dataKindSql + " from seasonplayer, generalteam where season = '" + season.toString() + "'" + isPlayOffSql + positionSql + ageSql
 					+ " and (generalteam.teamName = seasonplayer.teamName) and (seasonplayer.season between generalteam.startSeason and generalteam.finishSeason) and generalteam.league = '"
 					+ league.toString() + "' " + selectSql + " order by point desc";
-			if (league.equals(League.all_league) || season.equals(Season.seasons[0])) {
+			if (league.equals(League.all_league) || season.equals(Season.seasons_with_Career[0])) {
 				sql = dataKindSql + " from seasonplayer where season = '" + season.toString() + "'" + isPlayOffSql + positionSql + ageSql + selectSql + " order by point desc";
 			}
 			System.out.println(sql);

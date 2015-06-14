@@ -31,7 +31,7 @@ public class OnePlayerData_driver {
 	}
 
 	public void testGetGamePlayer() {
-		ArrayList<GamePlayer> gamePlayerList = onePlayerData.getGamePlayer("jamesle01", Season.seasons[0], GameKind.regular_game, Field.date);
+		ArrayList<GamePlayer> gamePlayerList = onePlayerData.getGamePlayer("jamesle01", Season.seasons_with_Career[0], GameKind.regular_game, Field.date);
 		for (int i = 0; i < gamePlayerList.size(); i++) {
 			System.out.println(gamePlayerList.get(i).toString());
 			System.out.println(i);

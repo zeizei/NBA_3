@@ -39,7 +39,7 @@ public class SeasonPlayerKingPanel extends PlayerKingPanel implements MouseListe
 	}
 
 	private void init() {
-		super.playerKing = this.playerHotBl.getPlayerKingOfSeason(Season.season_team[0], Field.point);
+		super.playerKing = this.playerHotBl.getPlayerKingOfSeason(Season.this_season, Field.point);
 		super.setContent();
 	}
 
@@ -90,7 +90,7 @@ public class SeasonPlayerKingPanel extends PlayerKingPanel implements MouseListe
 				for (int j = 0; j < 8; j++) {
 					fieldButton[j].setBackground(MyColor.MIDDLE_COLOR);
 				}
-				super.playerKing = super.playerHotBl.getPlayerKingOfSeason(Season.season_team[0], seasonPlayerKingFields[i]);
+				super.playerKing = super.playerHotBl.getPlayerKingOfSeason(Season.this_season, seasonPlayerKingFields[i]);
 				fieldButton[i].setBackground(MyColor.SELECTED);
 				this.setContent();
 				HotSportPanel.showRefreshed();

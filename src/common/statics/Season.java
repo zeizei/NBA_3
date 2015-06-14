@@ -33,8 +33,8 @@ public class Season {
 
 	public static Season dateToSeason(String date) {
 		for (int i = 0; i < 69; i++) {
-			if (season_team[i].getStartDate().compareTo(date) < 0 && season_team[i].getFinishDate().compareTo(date) > 0) {
-				return season_team[i];
+			if (all_seasons[i].getStartDate().compareTo(date) < 0 && all_seasons[i].getFinishDate().compareTo(date) > 0) {
+				return all_seasons[i];
 			}
 		}
 		return null;
@@ -42,23 +42,24 @@ public class Season {
 
 	public static Season getSeason(String str) {
 		for (int i = 0; i < 69; i++) {
-			if ((season_team[i].toString()).equals(str)) {
-				return season_team[i];
+			if ((all_seasons[i].toString()).equals(str)) {
+				return all_seasons[i];
 			}
 		}
 		return null;
 	}
 
-	public static final Season[] seasons = new Season[70];
-	public static final Season[] season_team = new Season[69];
+	public static final Season[] seasons_with_Career = new Season[70];
+	public static final Season[] all_seasons = new Season[69];
+	public static final Season this_season = new Season("2014-15");
 	static {
 		int base = 1946;
 		for (int i = 0; i < 69; i++) {
 			int start = base + i;
 			int finish = start + 1;
-			season_team[68 - i] = new Season(String.valueOf(start) + "-" + String.valueOf(finish).substring(2));
-			seasons[69 - i] = new Season(String.valueOf(start) + "-" + String.valueOf(finish).substring(2));
+			all_seasons[68 - i] = new Season(String.valueOf(start) + "-" + String.valueOf(finish).substring(2));
+			seasons_with_Career[69 - i] = new Season(String.valueOf(start) + "-" + String.valueOf(finish).substring(2));
 		}
-		seasons[0] = new Season("Career");
+		seasons_with_Career[0] = new Season("Career");
 	}
 }

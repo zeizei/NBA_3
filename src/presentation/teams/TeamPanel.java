@@ -165,7 +165,7 @@ public class TeamPanel extends MyPanel {
 		}
 
 		private void initTable() {
-			ArrayList<SeasonTeam> seasonTeamList = this.teamInfoBl.getSeasonTeam(Season.season_team[0], DataKind.average, League.all_league, Field.numOfWin);
+			ArrayList<SeasonTeam> seasonTeamList = this.teamInfoBl.getSeasonTeam(Season.this_season, DataKind.average, League.all_league, Field.numOfWin);
 			this.fillTable(seasonTeamList);
 		}
 
@@ -286,7 +286,7 @@ public class TeamPanel extends MyPanel {
 				searchButton = new JButton("搜索");
 				findTeamButton = new JButton(new ImageIcon("images/players/find_normal.png"));
 
-				seasonChoose = new MyComboBox<>(Season.season_team);
+				seasonChoose = new MyComboBox<>(Season.all_seasons);
 				dataKindChoose = new MyComboBox<Object>(DataKind.dataKinds);
 				leagueChoose = new MyComboBox<Object>(League.leagues);
 				sortFieldChoose = new MyComboBox<Object>(Field.team_sort_field);
@@ -333,7 +333,7 @@ public class TeamPanel extends MyPanel {
 					int dataKindInt = dataKindChoose.getSelectedIndex();
 					int leagueInt = leagueChoose.getSelectedIndex();
 					int sortCellInt = sortFieldChoose.getSelectedIndex();
-					ArrayList<SeasonTeam> seasonTeamList = teamInfoBl.getSeasonTeam(Season.season_team[seasonInt], DataKind.dataKinds[dataKindInt], League.leagues[leagueInt],
+					ArrayList<SeasonTeam> seasonTeamList = teamInfoBl.getSeasonTeam(Season.all_seasons[seasonInt], DataKind.dataKinds[dataKindInt], League.leagues[leagueInt],
 							Field.team_sort_field[sortCellInt]);
 					fillTable(seasonTeamList);
 				}

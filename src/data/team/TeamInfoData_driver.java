@@ -18,7 +18,7 @@ public class TeamInfoData_driver {
 	}
 
 	public void testGetGeneralTeam() {
-		generalTeam generalTeam = teamInfoData.getGeneralTeam("Charlotte Hornets", Season.season_team[0]);
+		generalTeam generalTeam = teamInfoData.getGeneralTeam("Charlotte Hornets", Season.all_seasons[0]);
 		System.out.println(generalTeam);
 
 	}

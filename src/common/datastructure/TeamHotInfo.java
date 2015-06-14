@@ -1,6 +1,6 @@
 package common.datastructure;
 
-public class TeamHotInfo {
+public class TeamHotInfo extends HotVo {
 	private String field;
 	private String league;
 	private String teamName;

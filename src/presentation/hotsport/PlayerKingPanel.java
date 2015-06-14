@@ -85,7 +85,7 @@ public class PlayerKingPanel extends MyPanel {
 					teamIcon = new ImageIcon(PathOfFile.TEAM_LOGO_IMAGE + "NBA.png");
 				}
 				else {
-					generalTeam generalTeam = new TeamInfoBl().getGeneralTeam(teamName, Season.season_team[0]);
+					generalTeam generalTeam = new TeamInfoBl().getGeneralTeam(teamName, Season.this_season);
 					if (generalTeam != null) {
 						teamIcon = new ImageIcon(PathOfFile.TEAM_LOGO_IMAGE + generalTeam.getImgName() + ".png");
 					}

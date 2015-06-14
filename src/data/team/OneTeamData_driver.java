@@ -15,7 +15,7 @@ public class OneTeamData_driver {
 	private OneTeamData oneTeamData = new OneTeamData();
 
 	public void testGetOneSeasonPlayers() {
-		ArrayList<SeasonPlayer> seasonPlayerList = this.oneTeamData.getOneSeasonPlayers("HOU", Season.seasons[0], GameKind.regular_game, DataKind.average, Field.point);
+		ArrayList<SeasonPlayer> seasonPlayerList = this.oneTeamData.getOneSeasonPlayers("HOU", Season.seasons_with_Career[0], GameKind.regular_game, DataKind.average, Field.point);
 		for (int i = 0; i < seasonPlayerList.size(); i++) {
 			System.out.println(seasonPlayerList.get(i));
 			System.out.println(i);
@@ -31,7 +31,7 @@ public class OneTeamData_driver {
 	}
 
 	public void testGetRegularGameTeam() {
-		ArrayList<GameTeam> gameTeamList = this.oneTeamData.getRegularGameTeam("Atlanta Hawks", Season.seasons[0], Field.date);
+		ArrayList<GameTeam> gameTeamList = this.oneTeamData.getRegularGameTeam("Atlanta Hawks", Season.seasons_with_Career[0], Field.date);
 		for (int i = 0; i < gameTeamList.size(); i++) {
 			System.out.println(gameTeamList.get(i));
 			System.out.println(i);
