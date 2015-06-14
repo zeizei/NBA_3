@@ -53,7 +53,7 @@ public class MainFrame extends JFrame {
 		private CardLayout card;// 卡片布局管理器
 		private PlayerPanel playerPanel;// 球员界面
 		private TeamPanel teamPanel;// 球队界面
-		private GamePanel matchPanel;// 比赛界面
+		private GamePanel gamePanel;// 比赛界面
 		private HotSportPanel hotSportPanel;// 热点界面
 
 		ContentPanel() {
@@ -62,14 +62,14 @@ public class MainFrame extends JFrame {
 			this.setLayout(card);
 			//
 			playerPanel = new PlayerPanel();
-			// teamPanel = new TeamPanel();
-			// matchPanel = new GamePanel();
-			// hotSportPanel = new HotSportPanel();
+			teamPanel = new TeamPanel();
+			gamePanel = new GamePanel();
+			hotSportPanel = new HotSportPanel();
 
 			this.add(playerPanel, "playerPanel");
-			// this.add(teamPanel, "teamPanel");
-			// this.add(matchPanel, "matchPanel");
-			// this.add(hotSportPanel, "hotSportPanel");
+			this.add(teamPanel, "teamPanel");
+			this.add(gamePanel, "matchPanel");
+			this.add(hotSportPanel, "hotSportPanel");
 			this.setVisible(true);
 		}
 
@@ -173,7 +173,7 @@ public class MainFrame extends JFrame {
 				teamPanelButton.setIcon(teams_press);
 				changeAllIsPress();
 				teamPanelButton.setIsPress(true);
-				frame.changeBackGround(new ImageIcon("images/teams/background_team.png"));
+				frame.changeBackGround(new ImageIcon());// "images/teams/background_team.png"
 				contentPanel.showTeamPanel();
 			}
 			else if (e.getSource().equals(matchPanelButton)) {

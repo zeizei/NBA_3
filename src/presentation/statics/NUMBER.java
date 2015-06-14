@@ -17,6 +17,7 @@ public class NUMBER {
 	public static final int NUMBER_OF_FIRST = 5;// 首发人数
 	public static final int DEFAULT_NUMBER = 50;// 筛选出的球员人数
 	public static final int UNKNOWN_AGE = -1;// 年龄未知
+	public static final int defualt_hot_num = 5;
 
 	private static int getScreenWidth() {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();

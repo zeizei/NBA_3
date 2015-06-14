@@ -2,11 +2,15 @@ package dataservice.hot;
 
 import java.util.ArrayList;
 
-import beans.GamePlayer;
-
+import common.datastructure.PlayerHotInfo;
+import common.datastructure.PlayerKingInfo;
 import common.statics.Field;
+import common.statics.Season;
 
 public interface PlayerHotDataService {
-	// 得到当日数据王数组
-	public ArrayList<GamePlayer> getPlayerKingOfDaily(String date, Field sortField);
+	public ArrayList<PlayerHotInfo> getPlayerHot(Field field);
+
+	public ArrayList<PlayerKingInfo> getPlayerKingOfSeason(Season season, Field sortField);// 最近这个赛季常规赛数据王
+
+	public ArrayList<PlayerKingInfo> getPlayerKingOfDaily(String date, Field sortField);
 }

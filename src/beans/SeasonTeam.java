@@ -87,12 +87,12 @@ public class SeasonTeam extends Bean {
 				"strengthOfSchedule", "simpleRatingSystem", "offEFF", "defEFF", "pace", "freeEFF", "threeEFF", "realShot", "shotEFF", "faultEFF", "offReboundEFF", "freePerFieldGoal", "oppShotEFF",
 				"oppFaultEFF", "defReboundEFF", "oppFreePerFieldGoal", "arean" };
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("round(" + changedField[0]).append(" / ").append("numOfGame,2) as '").append(changedField[0]).append("'");
+		buffer.append("round(seasonteam." + changedField[0]).append(" / ").append("numOfGame,2) as '").append(changedField[0]).append("'");
 		for (int i = 1; i < changedField.length; i++) {
-			buffer.append(",").append("round(" + changedField[i]).append(" / ").append("numOfGame,2) as '").append(changedField[i]).append("'");
+			buffer.append(",").append("round(seasonteam." + changedField[i]).append(" / ").append("numOfGame,2) as '").append(changedField[i]).append("'");
 		}
 		for (int i = 0; i < unchangedField.length; i++) {
-			buffer.append(",").append(unchangedField[i]);
+			buffer.append(",").append("seasonteam." + unchangedField[i]);
 		}
 		return buffer.toString();
 	}

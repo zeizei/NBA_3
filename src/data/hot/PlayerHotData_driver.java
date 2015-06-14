@@ -2,15 +2,14 @@ package data.hot;
 
 import java.util.ArrayList;
 
+import common.datastructure.PlayerKingInfo;
 import common.statics.Field;
-
-import beans.GamePlayer;
 
 public class PlayerHotData_driver {
 	private PlayerHotData playerHotData = new PlayerHotData();
 
 	public void testGetPlayerKingOfDaily() {
-		ArrayList<GamePlayer> gamePlayerList = this.playerHotData.getPlayerKingOfDaily("2015-03-22", Field.point);
+		ArrayList<PlayerKingInfo> gamePlayerList = this.playerHotData.getPlayerKingOfDaily("2015-06-04", Field.point);
 		for (int i = 0; i < gamePlayerList.size(); i++) {
 			System.out.println(gamePlayerList.get(i));
 		}

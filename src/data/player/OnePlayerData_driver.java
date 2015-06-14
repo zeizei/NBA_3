@@ -1,12 +1,13 @@
 package data.player;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import mysqldatabase.DB;
 import beans.GamePlayer;
 import beans.GeneralPlayer;
 import beans.SeasonPlayer;
-
 import common.statics.DataKind;
 import common.statics.Field;
 import common.statics.GameKind;

@@ -29,5 +29,4 @@ public class PlayerInfoBl implements PlayerInfoBlService {
 	public ArrayList<SeasonPlayer> getSeasonPlayer(Season season, GameKind gameKind, DataKind dataKind, League league, Position position, AgeRange ageRange, ArrayList<CombineSelectionCell> cellList) {
 		return playerInfoData.getSeasonPlayer(season, gameKind, dataKind, league, position, ageRange, cellList);
 	}
-
 }

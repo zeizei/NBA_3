@@ -30,11 +30,13 @@ public class MyLabel extends JLabel {
 	}
 
 	public void setMyIcon(ImageIcon icon) {
-		ImageIcon Icon = icon;
-		Image image = Icon.getImage();
-		Image temp = image.getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_REPLICATE);
-		Icon.setImage(temp);
-		this.setIcon(Icon);
+		if (icon != null) {
+			ImageIcon Icon = icon;
+			Image image = Icon.getImage();
+			Image temp = image.getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_REPLICATE);
+			Icon.setImage(temp);
+			this.setIcon(Icon);
+		}
 	}
 
 	public void setTextAndStyle(String str) {

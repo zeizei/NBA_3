@@ -39,9 +39,9 @@ public class PlayerInfoData implements PlayerInfoDataService {
 			}
 			String sql = dataKindSql + " from seasonplayer, generalteam where season = '" + season.toString() + "'" + isPlayOffSql + positionSql + ageSql
 					+ " and (generalteam.teamName = seasonplayer.teamName) and (seasonplayer.season between generalteam.startSeason and generalteam.finishSeason) and generalteam.league = '"
-					+ league.toString() + "' order by " + sortField.toString() + " desc";
+					+ league.toString() + "' order by " + sortField.toString() + " desc limit 50";
 			if (league.equals(League.all_league) || season.equals(Season.seasons[0])) {
-				sql = dataKindSql + " from seasonplayer where season = '" + season.toString() + "'" + isPlayOffSql + positionSql + ageSql + " order by " + sortField.toString() + " desc";
+				sql = dataKindSql + " from seasonplayer where season = '" + season.toString() + "'" + isPlayOffSql + positionSql + ageSql + " order by " + sortField.toString() + " desc limit 50";
 			}
 			System.out.println(sql);
 			ResultSet rs = this.db.find(sql);

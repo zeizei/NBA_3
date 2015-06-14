@@ -152,13 +152,17 @@ public class PlayerPanel extends MyPanel {
 
 	private void setTableStyle() {
 		rangeAndNameTable.setTableColumnWidth(0, 50);
-		rangeAndNameTable.setTableColumnWidth(1, 50);
+		rangeAndNameTable.setTableColumnWidth(1, 80);
 		rangeAndNameTable.setTableColumnWidth(2, 80);
 		rangeAndNameTable.setTableColumnWidth(3, 120);
 		playerShowPane.getViewport().setOpaque(false);
 		playerShowPane.setOpaque(false);
 		playerShowPane.setBorder(new EmptyBorder(0, 0, 0, 0));
-		playerShowTable.setAllTableColumnWidth(90);
+		playerShowTable.setAllTableColumnWidth(80);
+		playerShowTable.setTableColumnWidth(0, 105);
+		playerShowTable.setTableColumnWidth(1, 40);
+		playerShowTable.setTableColumnWidth(3, 90);
+		playerShowTable.setTableColumnWidth(4, 90);
 		playerShowTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
 				checkSelection(false);

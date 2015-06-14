@@ -8,12 +8,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import presentation.game.OneGamePanel;
 import presentation.mycomponent.MyButton;
 import presentation.mycomponent.MyPanel;
 import presentation.players.OnePlayerPanel;
 import presentation.statics.MyColor;
 import presentation.statics.MyFont;
 import presentation.statics.NUMBER;
+import presentation.teams.OneTeamPanel;
 
 public class SonFrame {
 	public static JFrame cardFrame;
@@ -31,7 +33,7 @@ public class SonFrame {
 		cardFrame.setBounds((NUMBER.SCREEN_WIDTH - NUMBER.FRAME_WIDTH) / 2, (NUMBER.SCREEN_HEIGHT - NUMBER.FRAME_HEIGHT) / 2 - 20, NUMBER.FRAME_WIDTH, NUMBER.FRAME_HEIGHT);
 		MyPanel contentPanel = null;
 		if (str.equals(playerCard)) {
-			contentPanel = new OnePlayerPanel((String) o);
+			// contentPanel = new OnePlayerPanel((String) o);
 			BG = new JLabel(new ImageIcon("images/players/background_playercard.png"));
 		}
 		else if (str.endsWith(teamCard)) {
@@ -39,7 +41,7 @@ public class SonFrame {
 			BG = new JLabel(new ImageIcon("images/teams/background_teamcard.png"));
 		}
 		else if (str.endsWith(matchCard)) {
-			// contentPanel = new OneMatchPanel((GeneralInfoOfOneMatch) o);
+			// contentPanel = new OneGamePanel((GeneralInfoOfOneMatch) o);
 			BG = new JLabel(new ImageIcon("images/matchs/background_matchcard.png"));
 		}
 		BG.setBounds(0, 0, NUMBER.FRAME_WIDTH, NUMBER.FRAME_HEIGHT);
