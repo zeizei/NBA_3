@@ -5,9 +5,10 @@ import common.statics.Position;
 public class PlayerHotInfo {
 	private String field;
 	private String playerId;
+	private String playerName;
 	private Position position;
 	private String teamName;
-	private double upGradeRate;
+	private double upgradeRate;
 	private double value;
 
 	public String getField() {
@@ -42,12 +43,12 @@ public class PlayerHotInfo {
 		this.teamName = teamName;
 	}
 
-	public double getUpGradeRate() {
-		return upGradeRate;
+	public double getUpgradeRate() {
+		return upgradeRate;
 	}
 
-	public void setUpGradeRate(double upGradeRate) {
-		this.upGradeRate = upGradeRate;
+	public void setUpgradeRate(double upgradeRate) {
+		this.upgradeRate = upgradeRate;
 	}
 
 	public double getValue() {
@@ -56,6 +57,14 @@ public class PlayerHotInfo {
 
 	public void setValue(double value) {
 		this.value = value;
+	}
+
+	public String getPlayerName() {
+		return playerName;
+	}
+
+	public void setPlayerName(String playerName) {
+		this.playerName = playerName;
 	}
 
 }

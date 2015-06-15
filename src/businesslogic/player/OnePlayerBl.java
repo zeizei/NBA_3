@@ -30,13 +30,11 @@ public class OnePlayerBl implements OnePlayerBlService {
 
 	@Override
 	public ArrayList<GamePlayer> getGamePlayer(String playerId, Season season, Field sortField) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public ArrayList<GamePlayer> getLatestGamePlayer(String playerId) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

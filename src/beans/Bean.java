@@ -5,6 +5,10 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.math.BigDecimal;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Bean implements Serializable {
 
@@ -172,4 +176,58 @@ public class Bean implements Serializable {
 		}
 		return null;
 	}
+
+	@SuppressWarnings("unchecked")
+	public static <T> ArrayList<T> resultSetToList(ResultSet rs, T object) {
+		if (rs != null && object != null && (object instanceof Bean)) {
+			try {
+				ArrayList<T> resultList = new ArrayList<T>();
+				while (rs.next()) {
+					Class<?> c = object.getClass();
+					Field[] fields = c.getDeclaredFields();
+					Object bean = c.newInstance();
+					if (fields != null) {
+						for (int i = 0; i < fields.length; i++) {
+							String fieldName = fields[i].getName();
+							if (!fieldName.equals("serialVersionUID")) {
+								Class<?> methodType = fields[i].getType();
+								Object ob = rs.getObject(fields[i].getName());
+								if (ob != null) {
+									StringBuffer buffer = new StringBuffer();
+									buffer.append("set");
+									buffer.append(fieldName.substring(0, 1).toUpperCase());
+									buffer.append(fieldName.substring(1));
+									Method method = c.getDeclaredMethod(buffer.toString(), methodType);
+									method.invoke(bean, ob);
+								}
+							}
+						}
+						resultList.add((T) bean);
+					}
+				}
+				return resultList;
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} catch (InstantiationException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (NoSuchMethodException e) {
+				e.printStackTrace();
+			} catch (SecurityException e) {
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+
+	protected double cutTail(double number, int tail) {
+		BigDecimal bigDecimal = new BigDecimal(number);
+		double result = bigDecimal.setScale(tail, BigDecimal.ROUND_HALF_UP).doubleValue();
+		return result;
+	}//
 }

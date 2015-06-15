@@ -1,22 +1,23 @@
 package common.statics;
 
 public class AgeRange {
-	private int low;
-	private int high;
+	private String sql;
 
-	public AgeRange(int low, int high) {
-		this.low = low;
-		this.high = high;
+	public AgeRange(String str) {
+		this.sql = str;
 	}
 
 	public String toString() {
-		return String.valueOf(low) + "-" + String.valueOf(high);
+		return this.sql;
 	}
 
-	public static final AgeRange less_equal_22 = new AgeRange(0, 22);
-	public static final AgeRange more_22_less_equal_25 = new AgeRange(23, 25);
-	public static final AgeRange more_25_less_equal_30 = new AgeRange(26, 30);
-	public static final AgeRange more_30_less_equal_35 = new AgeRange(31, 35);
-	public static final AgeRange more_35 = new AgeRange(36, 60);
-	public static final AgeRange All = new AgeRange(0, 60);
+	public static final AgeRange less_equal_22 = new AgeRange("age <= 22");
+	public static final AgeRange more_equal_23_less_equal_25 = new AgeRange("age between 23 and 25");
+	public static final AgeRange more_equal_26_less_equal_30 = new AgeRange("age between 26 and 30");
+	public static final AgeRange more_equal_31_less_equal_35 = new AgeRange("age between 31 and 35");
+	public static final AgeRange more_equal_36 = new AgeRange("age >= 36");
+	public static final AgeRange All = new AgeRange("all_age");
+
+	//
+	public static final AgeRange[] ageRanges = { All, less_equal_22, more_equal_23_less_equal_25, more_equal_26_less_equal_30, more_equal_31_less_equal_35, more_equal_36 };
 }

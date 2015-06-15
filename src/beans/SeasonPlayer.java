@@ -61,6 +61,23 @@ public class SeasonPlayer extends Bean {
 	private double BoxPM;// 贡献值
 	private double replaceValue;// 替换价值
 
+	public static String getAvgSqlString() {
+		String[] changedField = { "minute", "totalHit", "totalShot", "threeHit", "threeShot", "twoShot", "twoHit", "freeHit", "freeShot", "offRebound", "defRebound", "totRebound", "assist", "steal",
+				"block", "fault", "foul", "point" };
+		String[] unchangedField = { "playerId", "season", "teamName", "isPlayOff", "playerName", "age", "position", "numOfGame", "numOfStart", "shot", "three", "two", "free", "shotEFF", "playerEFF",
+				"realShot", "threeEFF", "freeEFF", "offReboundEFF", "defReboundEFF", "totReboundEFF", "assistEFF", "stealEFF", "blockEFF", "faultEFF", "useEFF", "offWinShare", "offWinShare",
+				"defWinShare", "winShare", "winSharePer48", "offBoxPM", "offBoxPM", "defBoxPM", "BoxPM", "replaceValue" };
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("round(seasonplayer." + changedField[0]).append(" / ").append("numOfGame,2) as '").append(changedField[0]).append("'");
+		for (int i = 1; i < changedField.length; i++) {
+			buffer.append(",").append("round(seasonplayer." + changedField[i]).append(" / ").append("numOfGame,2) as '").append(changedField[i]).append("'");
+		}
+		for (int i = 0; i < unchangedField.length; i++) {
+			buffer.append(",").append("seasonplayer." + unchangedField[i]);
+		}
+		return buffer.toString();
+	}
+
 	public String getPlayerId() {
 		return playerId;
 	}

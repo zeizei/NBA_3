@@ -2,29 +2,33 @@ package businesslogic.hot;
 
 import java.util.ArrayList;
 
+import businesslogic.game.GameInfoBl;
+import businesslogicservice.game.GameInfoBlService;
+import businesslogicservice.hot.PlayerHotBlSrevice;
 import common.datastructure.PlayerHotInfo;
-import common.statics.DataKind;
+import common.datastructure.PlayerKingInfo;
 import common.statics.Field;
-import common.statics.GameKind;
 import common.statics.Season;
 import data.hot.PlayerHotData;
 import dataservice.hot.PlayerHotDataService;
-import beans.GamePlayer;
-import beans.SeasonPlayer;
-import businesslogicservice.hot.PlayerHotBlSrevice;
 
 public class PlayerHotBl implements PlayerHotBlSrevice {
 	private PlayerHotDataService playerHotData = new PlayerHotData();
+	private GameInfoBlService gameInfoBl = new GameInfoBl();
 
-	public ArrayList<PlayerHotInfo> getPlayerHot(String nowDate, String field) {
-		return null;
+	public ArrayList<PlayerHotInfo> getPlayerHot(Field field) {
+		return playerHotData.getPlayerHot(field);
 	}
 
-	public ArrayList<SeasonPlayer> getPlayerKingOfSeason(Season season, GameKind gameKind, DataKind dataKind, Field sortField) {
-		return playerHotData.getPlayerKingOfSeason(season, gameKind, dataKind, sortField);
+	public ArrayList<PlayerKingInfo> getPlayerKingOfSeason(Season season, Field sortField) {
+		return playerHotData.getPlayerKingOfSeason(season, sortField);
 	}
 
-	public ArrayList<GamePlayer> getPlayerKingOfDaily(String date, Field sortField) {
+	public ArrayList<PlayerKingInfo> getPlayerKingOfDaily(String date, Field sortField) {
 		return playerHotData.getPlayerKingOfDaily(date, sortField);
+	}
+
+	public String getLatestDate() {
+		return gameInfoBl.getLatestDate();
 	}
 }

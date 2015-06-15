@@ -46,8 +46,8 @@ public class SeasonTeam extends Bean {
 	private double oppFreeHit;// 罚球命中数
 	private double oppFreeShot;// 罚球出手数
 	private double oppFree;// 罚球命中率
-	private double oppOfdRebound;// 前场篮板
-	private double oppDfdRebound;// 后场篮板
+	private double oppOffRebound;// 前场篮板
+	private double oppDefRebound;// 后场篮板
 	private double oppTotRebound;// 总篮板
 	private double oppAssist;// 助攻数
 	private double oppSteal;// 抢断数
@@ -78,6 +78,24 @@ public class SeasonTeam extends Bean {
 	private double oppFreePerFieldGoal;//
 	private String arean;// 球馆
 	private double attendance;// 上座人数
+
+	public static String getAvgSqlString() {
+		String[] changedField = { "minute", "totalHit", "totalShot", "threeHit", "threeShot", "twoShot", "twoHit", "freeHit", "freeShot", "offRebound", "defRebound", "totRebound", "assist", "steal",
+				"block", "fault", "foul", "point", "oppTotalHit", "oppTotalShot", "oppThreeHit", "oppThreeShot", "oppTwoShot", "oppTwoHit", "oppFreeHit", "oppFreeShot", "oppOffRebound",
+				"oppDefRebound", "oppTotRebound", "oppAssist", "oppSteal", "oppBlock", "oppFault", "oppFoul", "oppPoint", "attendance" };
+		String[] unchangedField = { "teamName", "season", "numOfGame", "shot", "three", "two", "free", "oppShot", "oppThree", "oppTwo", "oppFree", "avgAge", "numOfWin", "numOfLose", "pointOfWin",
+				"strengthOfSchedule", "simpleRatingSystem", "offEFF", "defEFF", "pace", "freeEFF", "threeEFF", "realShot", "shotEFF", "faultEFF", "offReboundEFF", "freePerFieldGoal", "oppShotEFF",
+				"oppFaultEFF", "defReboundEFF", "oppFreePerFieldGoal", "arean" };
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("round(seasonteam." + changedField[0]).append(" / ").append("numOfGame,2) as '").append(changedField[0]).append("'");
+		for (int i = 1; i < changedField.length; i++) {
+			buffer.append(",").append("round(seasonteam." + changedField[i]).append(" / ").append("numOfGame,2) as '").append(changedField[i]).append("'");
+		}
+		for (int i = 0; i < unchangedField.length; i++) {
+			buffer.append(",").append("seasonteam." + unchangedField[i]);
+		}
+		return buffer.toString();
+	}
 
 	public String getTeamName() {
 		return teamName;
@@ -375,20 +393,20 @@ public class SeasonTeam extends Bean {
 		this.oppFree = oppFree;
 	}
 
-	public double getOppOfdRebound() {
-		return oppOfdRebound;
+	public double getOppOffRebound() {
+		return oppOffRebound;
 	}
 
-	public void setOppOfdRebound(double oppOfdRebound) {
-		this.oppOfdRebound = oppOfdRebound;
+	public void setOppOffRebound(double oppOffRebound) {
+		this.oppOffRebound = oppOffRebound;
 	}
 
-	public double getOppDfdRebound() {
-		return oppDfdRebound;
+	public double getOppDefRebound() {
+		return oppDefRebound;
 	}
 
-	public void setOppDfdRebound(double oppDfdRebound) {
-		this.oppDfdRebound = oppDfdRebound;
+	public void setOppDefRebound(double oppDefRebound) {
+		this.oppDefRebound = oppDefRebound;
 	}
 
 	public double getOppTotRebound() {
