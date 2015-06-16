@@ -8,6 +8,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import beans.GeneralGame;
+import beans.generalTeam;
 import presentation.game.OneGamePanel;
 import presentation.mycomponent.MyButton;
 import presentation.mycomponent.MyPanel;
@@ -21,7 +23,7 @@ public class SonFrame {
 	public static JFrame cardFrame;
 	public static String playerCard = "player";
 	public static String teamCard = "team";
-	public static String matchCard = "match";
+	public static String gameCard = "game";
 	private static JLabel BG;
 
 	public SonFrame(Object o, String str) {
@@ -33,15 +35,15 @@ public class SonFrame {
 		cardFrame.setBounds((NUMBER.SCREEN_WIDTH - NUMBER.FRAME_WIDTH) / 2, (NUMBER.SCREEN_HEIGHT - NUMBER.FRAME_HEIGHT) / 2 - 20, NUMBER.FRAME_WIDTH, NUMBER.FRAME_HEIGHT);
 		MyPanel contentPanel = null;
 		if (str.equals(playerCard)) {
-			// contentPanel = new OnePlayerPanel((String) o);
+			contentPanel = new OnePlayerPanel((String) o);
 			BG = new JLabel(new ImageIcon("images/players/background_playercard.png"));
 		}
 		else if (str.endsWith(teamCard)) {
-			// contentPanel = new OneTeamPanel((String) o);
+			contentPanel = new OneTeamPanel((generalTeam) o);
 			BG = new JLabel(new ImageIcon("images/teams/background_teamcard.png"));
 		}
-		else if (str.endsWith(matchCard)) {
-			// contentPanel = new OneGamePanel((GeneralInfoOfOneMatch) o);
+		else if (str.endsWith(gameCard)) {
+			contentPanel = new OneGamePanel((GeneralGame) o);
 			BG = new JLabel(new ImageIcon("images/matchs/background_matchcard.png"));
 		}
 		BG.setBounds(0, 0, NUMBER.FRAME_WIDTH, NUMBER.FRAME_HEIGHT);
@@ -64,7 +66,7 @@ public class SonFrame {
 		else if (afterStr.endsWith(teamCard)) {
 			SonFrame.changeBackGround(new ImageIcon("images/teams/background_teamcard.png"));
 		}
-		else if (afterStr.endsWith(matchCard)) {
+		else if (afterStr.endsWith(gameCard)) {
 			SonFrame.changeBackGround(new ImageIcon("images/matchs/background_matchcard.png"));
 		}
 		SonFrame.cardFrame.getContentPane().remove(before);

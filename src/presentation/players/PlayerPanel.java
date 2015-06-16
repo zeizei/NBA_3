@@ -37,6 +37,7 @@ import presentation.statics.PathOfFile;
 import beans.SeasonPlayer;
 import businesslogic.player.PlayerInfoBl;
 import businesslogicservice.player.PlayerInfoBlService;
+
 import common.datastructure.CombineSelectionCell;
 import common.statics.AgeRange;
 import common.statics.DataKind;
@@ -86,16 +87,16 @@ public class PlayerPanel extends MyPanel {
 			public void mouseClicked(MouseEvent e) {
 				if (rangeAndNameTable.getSelectedRow() >= 0 && rangeAndNameTable.getSelectedRow() < rangeAndNameTable.getRowCount()) {
 					int row = rangeAndNameTable.getSelectedRow();
-					String teamName = (String) rangeAndNameTable.getValueAt(row, 2);
-					new SonFrame(teamName, SonFrame.playerCard);
+					String playerId = (String) rangeAndNameTable.getValueAt(row, 2);
+					new SonFrame(playerId, SonFrame.playerCard);
 				}
 			}
 		});
 	}
 
 	private void initTable() {
-		ArrayList<SeasonPlayer> playerNormalList = this.playerInfoBl.getSeasonPlayer(Season.seasons_with_Career[1], GameKind.regular_game, DataKind.average, League.all_league, Position.All, AgeRange.All,
-				Field.point);
+		ArrayList<SeasonPlayer> playerNormalList = this.playerInfoBl.getSeasonPlayer(Season.seasons_with_Career[1], GameKind.regular_game, DataKind.average, League.all_league, Position.All,
+				AgeRange.All, Field.point);
 		this.fillTable(playerNormalList);
 	}
 

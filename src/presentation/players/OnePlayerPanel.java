@@ -1,6 +1,8 @@
 package presentation.players;
 
 import java.awt.CardLayout;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -8,11 +10,10 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JTextArea;
 
-import beans.GeneralPlayer;
-import businesslogic.player.OnePlayerBl;
-import businesslogicservice.player.OnePlayerBlService;
 import presentation.SonFrame;
+import presentation.game.OneGamePanel;
 import presentation.mycomponent.MyButton;
+import presentation.mycomponent.MyComboBox;
 import presentation.mycomponent.MyLabel;
 import presentation.mycomponent.MyPanel;
 import presentation.mycomponent.MyScrollPanel;
@@ -23,48 +24,56 @@ import presentation.statics.MyColor;
 import presentation.statics.MyFont;
 import presentation.statics.NUMBER;
 import presentation.statics.PathOfFile;
-import presentation.teams.OneTeamPanel;
+import beans.GamePlayer;
+import beans.GeneralGame;
+import beans.GeneralPlayer;
+import beans.SeasonPlayer;
+import businesslogic.game.GameInfoBl;
+import businesslogic.player.OnePlayerBl;
+import businesslogicservice.player.OnePlayerBlService;
+import common.statics.DataKind;
+import common.statics.Field;
+import common.statics.GameKind;
+import common.statics.Season;
 
 public class OnePlayerPanel extends MyPanel implements MouseListener {
-	private MyLabel playerActImage;
+	private static final long serialVersionUID = 1L;
 	private MyPanel thisPanel = this;
-	private String playerName;
 	private MyButton[] button = new MyButton[] { new MyButton("普通数据"), new MyButton("高级数据"), new MyButton("近期比赛") };
 	private MyPanel[] panel;
 	private GeneralInfoPanel generalInfoPanel;
-	private MyButton teamLogo;
 	private ContentPanel contentPanel;
 	private int buttonHeight = 40;
 	private int buttonWidth = 300;
-	private static final long serialVersionUID = 1L;
+
 	private OnePlayerBlService onePlayerInfoBl = new OnePlayerBl();
-	private GeneralPlayer PlayerGeneralInfo;
+	//
+	private String playerId;// 球员Id
+	private GeneralPlayer PlayerGeneralInfo;// 球员基本信息
+	private String[] regularSeasonArray;// 常规赛赛季
+	private String[] playOffSeasonArray;// 季后赛赛季
 	private int flag = 0;
 
-	public OnePlayerPanel(String playerName) {
-		this.playerName = playerName;
-//		PlayerGeneralInfo = onePlayerInfoBl.getPlayerGeneralInfo(playerName);
-//		playerNormal_avg = onePlayerInfoBl.getPlayerNormalInfo_avg(playerName);
-//		playerHigh = onePlayerInfoBl.getPlayerHighInfo(playerName);
-//		playerOneMatchInfoList = onePlayerInfoBl.getPlayerPerform(playerName);
-		panel = new MyPanel[] { new PlayerNormalInfoPanel(), new PlayerHighInfoPanel(), new AllMatchInfoPanel() };
-		this.createObjects();
-		this.setComponentsLocation();
-		this.setCompStyle();
-		this.addListener();
-		this.setVisible(true);
+	public OnePlayerPanel(String playerId) {
+		this.playerId = playerId;
+		this.PlayerGeneralInfo = onePlayerInfoBl.getGeneralPlayer(playerId);
+		this.regularSeasonArray = onePlayerInfoBl.getSeasonsOfPlayer(playerId, GameKind.regular_game);
+		this.playOffSeasonArray = onePlayerInfoBl.getSeasonsOfPlayer(playerId, GameKind.playOff_game);
+		if (playerId != null && PlayerGeneralInfo != null && regularSeasonArray != null && playOffSeasonArray != null) {
+			this.panel = new MyPanel[] { new PlayerNormalInfoPanel(), new PlayerHighInfoPanel(), new GameOfSeasonPanel() };
+			this.createObjects();
+			this.setComponentsLocation();
+			this.setCompStyle();
+			this.setVisible(true);
+		}
 	}
 
 	private void createObjects() {
-		playerActImage = new MyLabel();
 		generalInfoPanel = new GeneralInfoPanel();
 		contentPanel = new ContentPanel();
-//		teamLogo = new MyButton(new ImageIcon(PathOfFile.TEAM_LOGO_IMAGE + playerNormal_avg.getTeamName() + ".png"), 100, 100);
 	}
 
 	private void setComponentsLocation() {
-		playerActImage.setBounds(-20, 20, 350, 500);
-//		playerActImage.setMyIcon(new ImageIcon(PathOfFile.PLAYER_ACTION_IMAGE + playerName + ".png"));
 		for (int i = 0; i < 3; i++) {
 			button[i].setBounds(350 + buttonWidth * i, 200, buttonWidth, buttonHeight);
 			button[i].setBackground(MyColor.MIDDLE_COLOR);
@@ -74,36 +83,25 @@ public class OnePlayerPanel extends MyPanel implements MouseListener {
 			button[i].addMouseListener(this);
 			this.add(button[i]);
 		}
-		teamLogo.setBounds(1130, 30, 100, 100);
 		generalInfoPanel.setLocation(0, 0);
-		contentPanel.setBounds(0, 240, NUMBER.FRAME_WIDTH, NUMBER.FRAME_HEIGHT - -(280));
+		contentPanel.setBounds(0, 240, NUMBER.FRAME_WIDTH, NUMBER.FRAME_HEIGHT - 280);
 		this.add(generalInfoPanel);
 		this.add(contentPanel);
-		this.add(teamLogo);
-		this.add(playerActImage);
 	}
 
 	private void setCompStyle() {
 		button[flag].setBackground(MyColor.SELECTED);
 	}
 
-	private void addListener() {
-		teamLogo.addMouseListener(this);
-	}
-
 	public void mouseClicked(MouseEvent e) {
-//		for (int i = 0; i < 3; i++) {
-//			if (e.getSource().equals(button[i])) {
-//				contentPanel.showMyPanel(i);
-//				button[flag].setBackground(MyColor.MIDDLE_COLOR);
-//				button[i].setBackground(MyColor.SELECTED);
-//				flag = i;
-//			}
-//		}
-//		if (e.getSource().equals(teamLogo)) {
-//			OneTeamPanel teamPanel = new OneTeamPanel(playerNormal_avg.getTeamName());
-//			SonFrame.changePanel(this, teamPanel, new String("team"));
-//		}
+		for (int i = 0; i < 3; i++) {
+			if (e.getSource().equals(button[i])) {
+				contentPanel.showMyPanel(i);
+				button[flag].setBackground(MyColor.MIDDLE_COLOR);
+				button[i].setBackground(MyColor.SELECTED);
+				flag = i;
+			}
+		}
 	}
 
 	public void mouseEntered(MouseEvent e) {
@@ -111,9 +109,6 @@ public class OnePlayerPanel extends MyPanel implements MouseListener {
 			if (e.getSource().equals(button[i])) {
 				button[i].setBackground(MyColor.DEEP_COLOR);
 			}
-		}
-		if (e.getSource().equals(teamLogo)) {
-			teamLogo.setLocation(teamLogo.getX() - 3, teamLogo.getY() - 3);
 		}
 	}
 
@@ -128,15 +123,30 @@ public class OnePlayerPanel extends MyPanel implements MouseListener {
 				}
 			}
 		}
-		if (e.getSource().equals(teamLogo)) {
-			teamLogo.setLocation(teamLogo.getX() + (3), teamLogo.getY() + (3));
-		}
 	}
 
 	public void mousePressed(MouseEvent e) {
 	}
 
 	public void mouseReleased(MouseEvent e) {
+	}
+
+	class ContentPanel extends MyPanel {
+		private static final long serialVersionUID = 1L;
+		private CardLayout card;
+
+		ContentPanel() {
+			card = new CardLayout();
+			this.setLayout(card);
+			for (int i = 0; i < 3; i++) {
+				this.add(panel[i], String.valueOf(i));
+			}
+			this.setVisible(true);
+		}
+
+		public void showMyPanel(int i) {
+			this.card.show(contentPanel, String.valueOf(i));
+		}
 	}
 
 	class GeneralInfoPanel extends MyPanel {
@@ -185,148 +195,333 @@ public class OnePlayerPanel extends MyPanel implements MouseListener {
 		}
 
 		private void setContents() {
-			portrait.setMyIcon(new ImageIcon(PathOfFile.PLAYER_PORTRAIT_IMAGE + playerName + ".png"));
-//			playerNameText.setText(playerName);
-//			mainMatchInfoText[0].setText("得分\n" + playerNormal_avg.getPoint());
-//			mainMatchInfoText[1].setText("篮板\n" + playerNormal_avg.getRebound());
-//			mainMatchInfoText[2].setText("助攻\n" + playerNormal_avg.getAssist());
-//			normalInfoText.setText("号码：" + PlayerGeneralInfo.getPlayerNumber() + "\n位置：" + PlayerGeneralInfo.getPosition() + "\n身高：" + PlayerGeneralInfo.getHeight() + "\n体重："
-//					+ PlayerGeneralInfo.getWeight() + "\n生日：" + PlayerGeneralInfo.getBirthday() + "\n年龄：" + PlayerGeneralInfo.getAge() + "\n球龄：" + PlayerGeneralInfo.getTrainingYear() + "\n毕业院校："
-//					+ PlayerGeneralInfo.getSchool());
-		}
-	}
-
-	class ContentPanel extends MyPanel {
-		private static final long serialVersionUID = 1L;
-		private CardLayout card;
-
-		ContentPanel() {
-			card = new CardLayout();
-			this.setLayout(card);
-			for (int i = 0; i < 3; i++) {
-				this.add(panel[i], String.valueOf(i));
-			}
-			this.setVisible(true);
-		}
-
-		public void showMyPanel(int i) {
-			this.card.show(contentPanel, String.valueOf(i));
+			portrait.setMyIcon(new ImageIcon(PathOfFile.PLAYER_PORTRAIT_IMAGE + playerId + ".png"));
+			playerNameText.setText(PlayerGeneralInfo.getPlayerName());
+			ArrayList<SeasonPlayer> seasonPlayerList = onePlayerInfoBl.getSeasonPlayer(playerId, GameKind.regular_game, DataKind.average, Field.season);
+			SeasonPlayer career = seasonPlayerList.get(0);
+			mainMatchInfoText[0].setText("得分\n" + career.getPoint());
+			mainMatchInfoText[1].setText("篮板\n" + career.getTotRebound());
+			mainMatchInfoText[2].setText("助攻\n" + career.getAssist());
+			normalInfoText.setText("编号：" + PlayerGeneralInfo.getPlayerId() + "\n位置：" + PlayerGeneralInfo.getPosition() + "\n身高：" + PlayerGeneralInfo.getHeight() + "\n体重："
+					+ PlayerGeneralInfo.getWeight() + "\n生日：" + PlayerGeneralInfo.getBirthday() + "\n进入联盟时间：" + PlayerGeneralInfo.getStartYear() + "\n退役或现役时间：" + PlayerGeneralInfo.getFinishYear()
+					+ "\n毕业院校：" + PlayerGeneralInfo.getCollage());
 		}
 	}
 
 	class PlayerNormalInfoPanel extends MyPanel {
 		private static final long serialVersionUID = 1L;
-		private final int labelHeight = 50;
-		private final int labelWidth = 120;
-		private final int valueLabelWidth = 50;
-		private final int gap = 8;
-		private MyLabel fieldLabel[] = new MyLabel[25];
-		private MyLabel value[] = new MyLabel[25];
-		private String[] fieldString = { "所属球队:", "参赛场数:", "首发次数:", "在场时间:", "效率值:", "得分:", "投篮命中率:", "篮板:", "助攻:", "抢断:", "盖帽:", "两双次数:", "三双次数:", "失误:", "犯规:", "三分命中率:", "罚球命中率:", "进攻篮板数:",
-				"防守篮板:", "场均出手数:", "场均命中数:", "场均三分出手数:", "场均三分命中数:", "场均罚球出手数:", "场均罚球命中数:" };
+		private String[] title = { "赛季", "球队", "场数", "首发", "时间", "得分", "命中率", "篮板", "助攻", "抢断", "盖帽", "失误", "犯规", "前板", "后板", "出手", "命中", "三分出手", "三分命中", "三分命中率", "罚球出手", "罚球命中", "罚球命中率", };
+		private Field[] fields = { Field.season, Field.teamName, Field.numOfGame, Field.numOfStart, Field.minute, Field.point, Field.shot, Field.totRebound, Field.assist, Field.steal,
+				Field.block, Field.fault, Field.foul, Field.offRebound, Field.defRebound, Field.totalShot, Field.totalHit, Field.threeShot, Field.threeHit, Field.three, Field.freeShot, Field.freeHit,
+				Field.free };
+		private String[] fieldStr = new String[fields.length];
+		private MyTableModel model = new MyTableModel(title);
+		private MyTable table = new MyTable(model);
+		private MyScrollPanel scrollPanel = new MyScrollPanel(table);
+		private MyComboBox<Object> dataKindChoose, gameKindChoose, sortFieldChoose;
+		private MyButton search;
 
-////		private String[] valueString = { playerNormal_avg.getTeamName(), String.valueOf(playerNormal_avg.getNumOfGame()), String.valueOf(playerNormal_avg.getStart()),
-////				String.valueOf(playerNormal_avg.getMinute()), String.valueOf(playerNormal_avg.getEfficiency()), String.valueOf(playerNormal_avg.getPoint()),
-////				String.valueOf(playerNormal_avg.getShot()), String.valueOf(playerNormal_avg.getRebound()), String.valueOf(playerNormal_avg.getAssist()), String.valueOf(playerNormal_avg.getSteal()),
-////				String.valueOf(playerNormal_avg.getBlockShot()), String.valueOf(playerNormal_avg.getDoubleTwo()), String.valueOf(playerNormal_avg.getTripleTwo()),
-////				String.valueOf(playerNormal_avg.getFault()), String.valueOf(playerNormal_avg.getFoul()), String.valueOf(playerNormal_avg.getThree()), String.valueOf(playerNormal_avg.getPenalty()),
-////				String.valueOf(playerNormal_avg.getOffend()), String.valueOf(playerNormal_avg.getDefend()), String.valueOf(playerNormal_avg.getTotalShot()),
-////				String.valueOf(playerNormal_avg.getTotalHit()), String.valueOf(playerNormal_avg.getThreeShot()), String.valueOf(playerNormal_avg.getThreeHit()),
-////				String.valueOf(playerNormal_avg.getFreehot()), String.valueOf(playerNormal_avg.getFreeHit()) };
-//
-//		public PlayerNormalInfoPanel() {
-//			for (int i = 0; i < 25; i++) {
-//				fieldLabel[i] = new MyLabel(fieldString[i]);
-//				value[i] = new MyLabel(valueString[i]);
-//			}
-//			for (int i = 0; i < 25; i++) {
-//				fieldLabel[i].setBounds((labelWidth + gap + valueLabelWidth) * (i % 5) + 350, (i / 5) * labelHeight + 30, labelWidth, labelHeight);
-//				this.add(fieldLabel[i]);
-//				value[i].setBounds(fieldLabel[i].getX() + labelWidth, fieldLabel[i].getY(), valueLabelWidth, labelHeight);
-//				this.add(value[i]);
-//			}
-//			this.setVisible(true);
-//		}
+		public PlayerNormalInfoPanel() {
+			for (int i = 0; i < fields.length; i++) {
+				fieldStr[i] = fields[i].toString();
+			}
+			gameKindChoose = new MyComboBox<Object>(GameKind.gameKinds);
+			dataKindChoose = new MyComboBox<Object>(DataKind.dataKinds);
+			sortFieldChoose = new MyComboBox<>(title);
+			search = new MyButton("搜索");
+			search.setBackground(MyColor.MIDDLE_ORANGE);
+			search.setForeground(MyColor.MY_BLACK);
+			this.setComponentBounds();
+			this.initTable();
+			this.setVisible(true);
+			search.addMouseListener(new MouseListener() {
+
+				public void mouseReleased(MouseEvent e) {
+				}
+
+				public void mousePressed(MouseEvent e) {
+				}
+
+				public void mouseExited(MouseEvent e) {
+				}
+
+				public void mouseEntered(MouseEvent e) {
+				}
+
+				public void mouseClicked(MouseEvent e) {
+					int dataKindInt = dataKindChoose.getSelectedIndex();
+					int gameKindInt = gameKindChoose.getSelectedIndex();
+					int sortFieldInt = sortFieldChoose.getSelectedIndex();
+					ArrayList<SeasonPlayer> seasonPlayerList = onePlayerInfoBl.getSeasonPlayer(playerId, GameKind.gameKinds[gameKindInt], DataKind.dataKinds[dataKindInt], fields[sortFieldInt]);
+					model.removeAllRows();
+					table.updateUI();
+					if (seasonPlayerList != null) {
+						for (int i = 0; i < seasonPlayerList.size(); i++) {
+							Object[] contents = seasonPlayerList.get(i).getSpeContent(fieldStr);
+							model.addRow(contents);
+							table.updateUI();
+						}
+					}
+				}
+			});
+		}
+
+		private void setComponentBounds() {
+			gameKindChoose.setBounds(360, 10, 150, 30);
+			dataKindChoose.setBounds(530, 10, 150, 30);
+			sortFieldChoose.setBounds(700, 10, 150, 30);
+			search.setBounds(1000, 10, 150, 30);
+			scrollPanel.setBounds(300, 50, 975, 300);
+			table.setRowHeight(30);
+			table.setTableColumnWidth(1, 180);
+			for (int i = 2; i <= 5; i++) {
+				table.setTableColumnWidth(i, 60);
+			}
+			for (int i = 7; i <= 16; i++) {
+				table.setTableColumnWidth(i, 60);
+			}
+			table.setTableColumnWidth(19, 100);
+			table.setTableColumnWidth(22, 100);
+			this.add(gameKindChoose);
+			this.add(dataKindChoose);
+			this.add(sortFieldChoose);
+			this.add(search);
+			this.add(scrollPanel);
+		}
+
+		private void initTable() {
+			ArrayList<SeasonPlayer> seasonPlayerList = onePlayerInfoBl.getSeasonPlayer(playerId, GameKind.regular_game, DataKind.average, Field.season);
+			if (seasonPlayerList != null) {
+				for (int i = 0; i < seasonPlayerList.size(); i++) {
+					Object[] contents = seasonPlayerList.get(i).getSpeContent(fieldStr);
+					model.addRow(contents);
+					table.updateUI();
+				}
+			}
+		}
 	}
 
 	class PlayerHighInfoPanel extends MyPanel {
 
 		private static final long serialVersionUID = 1L;
-		private final int labelHeight = 50;
-		private final int labelWidth = 120;
-		private final int gap = 50;
-		private MyLabel fieldLabel[] = new MyLabel[15];
-		private MyLabel value[] = new MyLabel[15];
-		private String[] fieldString = { "所属球队:", "所属联盟", "使用率", "GmSc效率值", "投篮效率:", "真实命中率:", "篮板率:", "助攻率:", "抢断率:", "盖帽率:", "两双次数:", "三双次数:", "失误率:", "进攻篮板率:", "防守篮板率:", };
 
-//		private String[] valueString = { playerHigh.getTeamName(), String.valueOf(playerHigh.getLeague()), String.valueOf(playerHigh.getFrequency()), String.valueOf(playerHigh.getGmSc()),
-//				String.valueOf(playerHigh.getShotEfficient()), String.valueOf(playerHigh.getRealShot()), String.valueOf(playerHigh.getReboundEfficient()),
-//				String.valueOf(playerHigh.getAssistEfficient()), String.valueOf(playerHigh.getStealEfficient()), String.valueOf(playerHigh.getBlockShotEfficient()),
-//				String.valueOf(playerNormal_avg.getDoubleTwo()), String.valueOf(playerNormal_avg.getTripleTwo()), String.valueOf(playerHigh.getFaultEfficient()),
-//				String.valueOf(playerHigh.getOffendReboundEfficient()), String.valueOf(playerHigh.getDefendReboundEfficient()) };
-//
-//		public PlayerHighInfoPanel() {
-//			for (int i = 0; i < 15; i++) {
-//				fieldLabel[i] = new MyLabel(fieldString[i]);
-//				value[i] = new MyLabel(valueString[i]);
-//			}
-//			for (int i = 0; i < 15; i++) {
-//				fieldLabel[i].setBounds((labelWidth + gap) * (i % 3) * 2 + 350, (i / 3) * labelHeight + 30, labelWidth, labelHeight);
-//				this.add(fieldLabel[i]);
-//				value[i].setBounds(fieldLabel[i].getX() + labelWidth, fieldLabel[i].getY(), labelWidth, labelHeight);
-//				this.add(value[i]);
-//			}
-//			this.setVisible(true);
-//		}
-	}
+		private String[] title = { "赛季", "球队", "效率值", "使用率%", "投篮效率", "真实命中率", "贡献值", "篮板率%", "助攻率%", "抢断率%", "盖帽率%", "失误率%", "前板率%", "后板率%", "替换价值" };
 
-	class AllMatchInfoPanel extends MyPanel {
-		private static final long serialVersionUID = 1L;
-		private String[] title = { "球队", "日期", "时间", "得分", "篮板", "助攻", "抢断", "盖帽", "失误", "犯规", "命中", "出手", "三分命中", "三分出手", "罚球命中", "罚球出手", "前板", "后板" };
+		private Field[] highField = { Field.season, Field.teamName, Field.playerEFF, Field.useEFF, Field.shotEFF, Field.realShot, Field.BoxPM, Field.totReboundEFF, Field.assistEFF, Field.stealEFF,
+				Field.blockEFF, Field.faultEFF, Field.offReboundEFF, Field.defReboundEFF, Field.replaceValue };
+		private String[] highFieldStr = new String[highField.length];
 		private MyTableModel model = new MyTableModel(title);
 		private MyTable table = new MyTable(model);
 		private MyScrollPanel scrollPanel = new MyScrollPanel(table);
+		private MyComboBox<Object> gameKindChoose, sortFieldChoose;
+		private MyButton search;
 
-//		public AllMatchInfoPanel() {
-//			table.setTableColumnWidth(1, (90));
-//			table.setTableColumnWidth(12, (80));
-//			table.setTableColumnWidth(13, (80));
-//			table.setTableColumnWidth(14, (80));
-//			table.setTableColumnWidth(15, (80));
-//			if (playerOneMatchInfoList != null) {
-//				for (int i = playerOneMatchInfoList.size() - 1; i >= 0; i--) {
-//					model.addRow(playerOneMatchInfoList.get(i).toStringArray());
-//				}
-//			}
-//			scrollPanel.setBounds(350, 0, 900, 350);
-//			this.add(scrollPanel);
-//			table.addMouseListener(new MouseListener() {
-//
-//				public void mouseReleased(MouseEvent e) {
-//				}
-//
-//				public void mousePressed(MouseEvent e) {
-//				}
-//
-//				public void mouseExited(MouseEvent e) {
-//				}
-//
-//				public void mouseEntered(MouseEvent e) {
-//				}
-//
-//				public void mouseClicked(MouseEvent e) {
-//					if (table.getSelectedRow() >= 0 && table.getSelectedRow() < table.getRowCount()) {
-//						int row = table.getSelectedRow();
-//						String teamName = (String) table.getValueAt(row, 0);
-//						String dateString = (String) table.getValueAt(row, 1);
-//						MyDate date = new MyDate(dateString);
-//						GeneralInfoOfOneMatch generalMatch = new MatchInfoBl().getGeneralMatch(teamName, date);
-//						OneMatchPanel matchPanel = new OneMatchPanel(generalMatch);
-//						SonFrame.changePanel(thisPanel, matchPanel, "match");
-//					}
-//				}
-//			});
-//			this.setVisible(true);
-//		}
+		public PlayerHighInfoPanel() {
+			for (int i = 0; i < highField.length; i++) {
+				highFieldStr[i] = highField[i].toString();
+			}
+			gameKindChoose = new MyComboBox<Object>(GameKind.gameKinds);
+			sortFieldChoose = new MyComboBox<>(title);
+			search = new MyButton("搜索");
+			search.setBackground(MyColor.MIDDLE_ORANGE);
+			search.setForeground(MyColor.MY_BLACK);
+			this.setComponentBounds();
+			this.initTable();
+			this.setVisible(true);
+			search.addMouseListener(new MouseListener() {
+
+				public void mouseReleased(MouseEvent e) {
+				}
+
+				public void mousePressed(MouseEvent e) {
+				}
+
+				public void mouseExited(MouseEvent e) {
+				}
+
+				public void mouseEntered(MouseEvent e) {
+				}
+
+				public void mouseClicked(MouseEvent e) {
+					int gameKindInt = gameKindChoose.getSelectedIndex();
+					int sortFieldInt = sortFieldChoose.getSelectedIndex();
+					ArrayList<SeasonPlayer> seasonPlayerList = onePlayerInfoBl.getSeasonPlayer(playerId, GameKind.gameKinds[gameKindInt], DataKind.total, highField[sortFieldInt]);
+					model.removeAllRows();
+					table.updateUI();
+					if (seasonPlayerList != null) {
+						for (int i = 0; i < seasonPlayerList.size(); i++) {
+							Object[] contents = seasonPlayerList.get(i).getSpeContent(highFieldStr);
+							model.addRow(contents);
+							table.updateUI();
+						}
+					}
+				}
+			});
+		}
+
+		private void setComponentBounds() {
+			gameKindChoose.setBounds(360, 10, 150, 30);
+			sortFieldChoose.setBounds(700, 10, 150, 30);
+			search.setBounds(1000, 10, 150, 30);
+			scrollPanel.setBounds(300, 50, 975, 300);
+			table.setRowHeight(30);
+			table.setTableColumnWidth(1, 180);
+			table.setTableColumnWidth(5, 100);
+			this.add(gameKindChoose);
+			this.add(sortFieldChoose);
+			this.add(search);
+			this.add(scrollPanel);
+		}
+
+		private void initTable() {
+			ArrayList<SeasonPlayer> seasonPlayerList = onePlayerInfoBl.getSeasonPlayer(playerId, GameKind.regular_game, DataKind.average, Field.season);
+			if (seasonPlayerList != null) {
+				for (int i = 0; i < seasonPlayerList.size(); i++) {
+					Object[] contents = seasonPlayerList.get(i).getSpeContent(highFieldStr);
+					model.addRow(contents);
+					table.updateUI();
+				}
+			}
+		}
+	}
+
+	class GameOfSeasonPanel extends MyPanel {
+		private static final long serialVersionUID = 1L;
+		private String[] title = { "球队", "日期", "时间", "得分", "篮板", "助攻", "抢断", "盖帽", "失误", "犯规", "命中", "出手", "三分中", "三分出", "罚球中", "罚球出", "前板", "后板" };
+		private Field[] gameField = { Field.teamName, Field.date, Field.minute, Field.point, Field.totRebound, Field.assist, Field.steal, Field.block, Field.fault, Field.foul, Field.totHit,
+				Field.totShot, Field.threeHit, Field.threeShot, Field.freeHit, Field.freeShot, Field.offRebound, Field.defRebound };
+		private String[] gameFieldStr = new String[gameField.length];
+		private MyTableModel model = new MyTableModel(title);
+		private MyTable table = new MyTable(model);
+		private MyScrollPanel scrollPanel = new MyScrollPanel(table);
+		private MyComboBox<Object> gameKindChoose, seasonChoose, sortFieldChoose;
+		private MyButton search;
+
+		public GameOfSeasonPanel() {
+			for (int i = 0; i < gameField.length; i++) {
+				gameFieldStr[i] = gameField[i].toString();
+			}
+			gameKindChoose = new MyComboBox<Object>(GameKind.gameKinds);
+			seasonChoose = new MyComboBox<Object>(regularSeasonArray);
+			sortFieldChoose = new MyComboBox<Object>(title);
+			search = new MyButton("搜索");
+			search.setBackground(MyColor.MIDDLE_ORANGE);
+			search.setForeground(MyColor.MY_BLACK);
+			this.setComponentBounds();
+			this.initTable();
+			table.addMouseListener(new MouseListener() {
+
+				public void mouseReleased(MouseEvent e) {
+				}
+
+				public void mousePressed(MouseEvent e) {
+				}
+
+				public void mouseExited(MouseEvent e) {
+				}
+
+				public void mouseEntered(MouseEvent e) {
+				}
+
+				public void mouseClicked(MouseEvent e) {
+					if (table.getSelectedRow() >= 0 && table.getSelectedRow() < table.getRowCount()) {
+						int row = table.getSelectedRow();
+						String teamName = (String) table.getValueAt(row, 0);
+						String date = (String) table.getValueAt(row, 1);
+						GeneralGame generalMatch = new GameInfoBl().getGeneralMatch(teamName, date);
+						OneGamePanel matchPanel = new OneGamePanel(generalMatch);
+						SonFrame.changePanel(thisPanel, matchPanel, SonFrame.gameCard);
+					}
+				}
+			});
+			gameKindChoose.addItemListener(new ItemListener() {
+				public void itemStateChanged(ItemEvent e) {
+					if (e.getStateChange() == ItemEvent.SELECTED || e.getSource().equals(gameKindChoose)) {
+						if (gameKindChoose.getSelectedIndex() == 0) {
+							seasonChoose.removeAllItems();
+							if (regularSeasonArray != null) {
+								for (int i = 0; i < regularSeasonArray.length; i++) {
+									seasonChoose.addItem(regularSeasonArray[i]);
+								}
+							}
+						}
+						else if (gameKindChoose.getSelectedIndex() == 1) {
+							seasonChoose.removeAllItems();
+							if (playOffSeasonArray != null) {
+								for (int i = 0; i < playOffSeasonArray.length; i++) {
+									seasonChoose.addItem(playOffSeasonArray[i]);
+								}
+							}
+						}
+					}
+				}
+			});
+			this.setVisible(true);
+		}
+
+		private void setComponentBounds() {
+			table.setRowHeight(30);
+			table.setTableColumnWidth(0, 180);
+			table.setTableColumnWidth(1, 90);
+			for (int i = 2; i <= 11; i++) {
+				table.setTableColumnWidth(i, 38);
+			}
+			for (int i = 12; i <= 15; i++) {
+				table.setTableColumnWidth(i, 55);
+			}
+			table.setTableColumnWidth(16, 40);
+			table.setTableColumnWidth(17, 40);
+			gameKindChoose.setBounds(360, 10, 150, 30);
+			seasonChoose.setBounds(530, 10, 150, 30);
+			sortFieldChoose.setBounds(700, 10, 150, 30);
+			search.setBounds(1000, 10, 150, 30);
+			scrollPanel.setBounds(300, 50, 975, 300);
+			this.add(gameKindChoose);
+			this.add(seasonChoose);
+			this.add(sortFieldChoose);
+			this.add(scrollPanel);
+			this.add(search);
+			search.addMouseListener(new MouseListener() {
+
+				public void mouseReleased(MouseEvent e) {
+				}
+
+				public void mousePressed(MouseEvent e) {
+				}
+
+				public void mouseExited(MouseEvent e) {
+				}
+
+				public void mouseEntered(MouseEvent e) {
+				}
+
+				public void mouseClicked(MouseEvent e) {
+					int gameKindInt = gameKindChoose.getSelectedIndex();
+					String seasonStr = (String) seasonChoose.getSelectedItem();
+					int sortFieldInt = sortFieldChoose.getSelectedIndex();
+					ArrayList<GamePlayer> gamePlayerList = onePlayerInfoBl.getGamePlayer(playerId, Season.getSeason(seasonStr), GameKind.gameKinds[gameKindInt], gameField[sortFieldInt]);
+					model.removeAllRows();
+					table.updateUI();
+					if (gamePlayerList != null) {
+						for (int i = 0; i < gamePlayerList.size(); i++) {
+							Object[] contents = gamePlayerList.get(i).getSpeContent(gameFieldStr);
+							model.addRow(contents);
+							table.updateUI();
+						}
+					}
+				}
+			});
+		}
+
+		private void initTable() {
+			ArrayList<GamePlayer> gamePlayerList = onePlayerInfoBl.getGamePlayer(playerId, Season.getSeason(regularSeasonArray[0]), GameKind.regular_game, Field.date);
+			if (gamePlayerList != null) {
+				for (int i = 0; i < gamePlayerList.size(); i++) {
+					Object[] contents = gamePlayerList.get(i).getSpeContent(gameFieldStr);
+					model.addRow(contents);
+					table.updateUI();
+				}
+			}
+		}
 	}
 }

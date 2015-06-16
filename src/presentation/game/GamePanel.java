@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.SwingConstants;
 
+import presentation.SonFrame;
 import presentation.mycomponent.MyLabel;
 import presentation.mycomponent.MyPanel;
 import presentation.statics.MyColor;
@@ -27,7 +28,6 @@ import businesslogic.game.GameInfoBl;
 import businesslogic.team.TeamInfoBl;
 import businesslogicservice.game.GameInfoBlService;
 import businesslogicservice.team.TeamInfoBlService;
-
 import common.statics.Season;
 
 public class GamePanel extends MyPanel implements MouseListener {
@@ -178,14 +178,11 @@ public class GamePanel extends MyPanel implements MouseListener {
 		else {
 			for (int i = 0; i < oneDayGame.size(); i++) {
 				if (e.getSource().equals(generalGamePanelArray[i])) {
-					// new SonFrame(GameGeneral[i].getGeneralInfoOfMatch(),
-					// SonFrame.matchCard);
-					System.out.println(generalGamePanelArray[i].getGeneralInfoOfMatch());
+					new SonFrame(generalGamePanelArray[i].getGeneralGame(), SonFrame.gameCard);
 					break;
 				}
 			}
 		}
-
 	}
 
 	public void mouseEntered(MouseEvent e) {
@@ -267,7 +264,7 @@ public class GamePanel extends MyPanel implements MouseListener {
 			this.setVisible(true);
 		}
 
-		public GeneralGame getGeneralInfoOfMatch() {
+		public GeneralGame getGeneralGame() {
 			return this.oneGame;
 		}
 	}

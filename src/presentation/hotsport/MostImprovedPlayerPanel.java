@@ -15,16 +15,19 @@ import presentation.mycomponent.MyTextArea;
 import presentation.statics.MyColor;
 import presentation.statics.MyFont;
 import presentation.statics.PathOfFile;
+import beans.generalTeam;
 import businesslogic.game.GameInfoBl;
 import businesslogic.hot.PlayerHotBl;
+import businesslogic.team.TeamInfoBl;
 import businesslogicservice.hot.PlayerHotBlSrevice;
 import common.datastructure.PlayerHotInfo;
 import common.statics.Field;
+import common.statics.Season;
 
 public class MostImprovedPlayerPanel extends MyPanel implements MouseListener {
 
-	//
 	private String[] fieldString = new String[] { Field.point.toString(), Field.totRebound.toString(), Field.assist.toString(), Field.steal.toString(), Field.block.toString() };
+	private Field[] mostImproveField = new Field[] { Field.point, Field.totRebound, Field.assist, Field.steal, Field.block };
 	private final int labelHeight = 100;
 	private final int labelWidth = 180;
 	private final int buttonWidth = 180;
@@ -53,7 +56,7 @@ public class MostImprovedPlayerPanel extends MyPanel implements MouseListener {
 		this.setComponentsStyle();
 		this.addListener();
 		this.setVisible(true);
-		this.init();
+//		this.init();
 	}
 
 	private void createObjects() {
@@ -121,7 +124,7 @@ public class MostImprovedPlayerPanel extends MyPanel implements MouseListener {
 	}
 
 	private void init() {
-		playerHotList = this.playerHotBl.getPlayerHot(Field.point);
+		playerHotList = this.playerHotBl.getPlayerHot(Season.this_season, Field.point);
 		this.setContent();
 	}
 
@@ -132,9 +135,19 @@ public class MostImprovedPlayerPanel extends MyPanel implements MouseListener {
 				Portrait[i].setMyIcon(new ImageIcon(PathOfFile.PLAYER_PORTRAIT_IMAGE + temp.getPlayerId() + ".png"));
 				upgrade[i].setText(String.valueOf(temp.getUpgradeRate()));
 				value[i].setText(String.valueOf(temp.getValue()));
-				nameAndPosition[i].setText(temp.getPlayerId() + "\n" + temp.getPosition());
-				team[i].setMyIcon(new ImageIcon(PathOfFile.TEAM_LOGO_IMAGE + temp.getTeamName() + ".png"));
-
+				nameAndPosition[i].setText(temp.getPlayerName() + "\n" + temp.getPosition());
+				String teamName = temp.getTeamName();
+				ImageIcon teamIcon = null;
+				generalTeam generalTeam = new TeamInfoBl().getGeneralTeam(teamName, Season.this_season);
+				if (generalTeam != null) {
+					teamIcon = new ImageIcon(PathOfFile.TEAM_LOGO_IMAGE + generalTeam.getImgName() + ".png");
+				}
+				else {
+					teamIcon = new ImageIcon(PathOfFile.TEAM_LOGO_IMAGE + "NBA.png");
+				}
+				if (teamIcon != null) {
+					team[i].setMyIcon(teamIcon);
+				}
 			}
 		}
 	}
@@ -147,7 +160,7 @@ public class MostImprovedPlayerPanel extends MyPanel implements MouseListener {
 					fieldButton[j].setBackground(MyColor.MIDDLE_COLOR);
 				}
 				fieldButton[i].setBackground(MyColor.SELECTED);
-				this.playerHotList = this.playerHotBl.getPlayerHot(Field.point);
+				this.playerHotList = this.playerHotBl.getPlayerHot(Season.this_season, mostImproveField[i]);
 				this.setContent();
 				HotSportPanel.showRefreshed();
 				String date = new GameInfoBl().getLatestDate();
@@ -155,9 +168,9 @@ public class MostImprovedPlayerPanel extends MyPanel implements MouseListener {
 				break;
 			}
 			if (e.getSource().equals(Portrait[i])) {
-				// String playerName = playerHotList.get(i).getPlayerId();
-				// new SonFrame(playerName, SonFrame.playerCard);
-				// break;
+				String playerName = playerHotList.get(i).getPlayerId();
+				new SonFrame(playerName, SonFrame.playerCard);
+				break;
 			}
 			if (e.getSource().equals(team[i])) {
 				String teamName = playerHotList.get(i).getTeamName();

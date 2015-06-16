@@ -9,6 +9,7 @@ import common.statics.Season;
 import data.team.OneTeamData;
 import dataservice.team.OneTeamDataService;
 import beans.GameTeam;
+import beans.PlayOffSeries;
 import beans.SeasonPlayer;
 import beans.SeasonTeam;
 import businesslogicservice.team.OneTeamBlService;
@@ -16,34 +17,23 @@ import businesslogicservice.team.OneTeamBlService;
 public class OneTeamBl implements OneTeamBlService {
 	private OneTeamDataService oneTeamData = new OneTeamData();
 
-	@Override
 	public ArrayList<SeasonPlayer> getOneSeasonPlayers(String teamName, Season season, GameKind gameKind, DataKind dataKind, Field sortField) {
-		// TODO Auto-generated method stub
-		return null;
+		return oneTeamData.getOneSeasonPlayers(teamName, season, gameKind, dataKind, sortField);
 	}
 
-	@Override
-	public ArrayList<SeasonPlayer> getLatestSeasonPlayers(String teamName) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<SeasonTeam> getRegularSeasonTeam(String teamName, DataKind dataKind, Field sortField) {
+		return oneTeamData.getRegularSeasonTeam(teamName, dataKind, sortField);
 	}
 
-	@Override
-	public ArrayList<SeasonTeam> getSeasonTeam(String teamName, GameKind gameKind, DataKind dataKind, Field sortField) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<GameTeam> getRegularGameTeam(String teamName, Season season, Field sortField) {
+		return oneTeamData.getRegularGameTeam(teamName, season, sortField);
 	}
 
-	@Override
-	public ArrayList<GameTeam> getGameTeam(String teamName, Season season, Field sortField) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<PlayOffSeries> getPlayOffSeriesOfTeam(String teamName) {
+		return oneTeamData.getPlayOffSeriesOfTeam(teamName);
 	}
 
-	@Override
-	public ArrayList<GameTeam> getLatestGameTeam(String teamName) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<GameTeam> getSeriesGameTeam(String teamName, PlayOffSeries playOffSeries) {
+		return oneTeamData.getSeriesGameTeam(teamName, playOffSeries);
 	}
-
 }

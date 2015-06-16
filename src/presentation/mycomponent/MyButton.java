@@ -36,7 +36,7 @@ public class MyButton extends JButton {
 		super(string);
 		this.setFocusable(false);
 		this.setBorderPainted(false);
-		this.setContentAreaFilled(false);
+//		this.setContentAreaFilled(false);
 		this.setForeground(MyColor.MY_WHITE);
 		this.setFont(MyFont.SMALLEST_BOLD);
 		this.setBackground(MyColor.DEEP_COLOR);

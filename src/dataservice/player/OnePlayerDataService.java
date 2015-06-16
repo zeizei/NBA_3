@@ -10,7 +10,8 @@ import common.statics.Field;
 import common.statics.GameKind;
 import common.statics.Season;
 
-public interface OnePlayerDataService { // 获得球员的基本信息season,age是为了处理同名的球员
+public interface OnePlayerDataService {
+	// 获得球员的基本信息season,age是为了处理同名的球员
 	public GeneralPlayer getGeneralPlayer(String playerId);
 
 	// 球员编号，根据比赛类型,数据类型获得球员赛季比赛数据
@@ -18,4 +19,7 @@ public interface OnePlayerDataService { // 获得球员的基本信息season,age
 
 	// 根据赛季、球员编号比赛类型得到所有比赛信息
 	public ArrayList<GamePlayer> getGamePlayer(String playerId, Season season, GameKind gameKind, Field sortField);
+
+	// 得到球员常规赛/季后赛所有赛季
+	public ArrayList<String> getSeasonsOfPlayer(String playerId, GameKind gameKind);
 }
