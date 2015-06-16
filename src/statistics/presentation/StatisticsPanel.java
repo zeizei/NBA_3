@@ -22,8 +22,8 @@ public class StatisticsPanel extends MyPanel {
 	private FunctionPanel functionPanel;
 	private ContentPanel contentPanel;
 	private MyPanel panel[] = new MyPanel[] { new SeasonAnalysisPanel(player),
-			new OffenseAnalysisPanel(), new DefenseAnalysisPanel(player),
-			new CompareAnalysisPanel() };
+			new OffenseAnalysisPanel(player), new DefenseAnalysisPanel(player),
+			new CompareAnalysisPanel(player,comparePlayer) };
 	private JButton button[] = new JButton[] { new MyButton("赛季分析"),
 			new MyButton("进攻分析"), new MyButton("防守分析"), new MyButton("球员对比") };
 

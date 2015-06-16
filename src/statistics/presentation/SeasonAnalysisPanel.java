@@ -11,7 +11,6 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.ArrayList;
 
-import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -36,7 +35,6 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import common.datastructure.PlayerKingInfo;
 import common.statics.Field;
 import common.statics.Season;
-import beans.GamePlayer;
 import beans.SeasonPlayer;
 import businesslogic.hot.PlayerHotBl;
 import businesslogicservice.hot.PlayerHotBlSrevice;

@@ -43,7 +43,7 @@ public class CompareAnalysisPanel extends MyPanel implements MouseListener {
 	private int panel_w = mycombobox_width * 2 + mycombobox_height + 730;
 	private int panel_h = 360;
 
-	public CompareAnalysisPanel() {
+	public CompareAnalysisPanel(String player,String comparePlayer) {
 		this.createObjects();
 		this.init();
 		this.setComponentPosition();
