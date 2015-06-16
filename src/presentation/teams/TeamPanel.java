@@ -54,7 +54,7 @@ public class TeamPanel extends MyPanel {
 		playOffButton.setBounds(720, 20, 250, 30);
 		regularButton.setBackground(MyColor.MIDDLE_COLOR);
 		playOffButton.setBackground(MyColor.MIDDLE_COLOR);
-		contentPanel.setBounds(0, 20, 1200, 600);
+		contentPanel.setBounds(0, 20, 1250, 600);
 		this.add(regularButton);
 		regularButton.addMouseListener(new MouseListener() {
 
@@ -207,8 +207,11 @@ public class TeamPanel extends MyPanel {
 			teamShowPane.getViewport().setOpaque(false);
 			teamShowPane.setOpaque(false);
 			teamShowPane.setBorder(new EmptyBorder(0, 0, 0, 0));
-			teamShowTable.setAllTableColumnWidth(80);
-			rangeAndNameTable.setAllTableColumnWidth(96);
+			teamShowTable.setAllTableColumnWidth(120);
+			rangeAndNameTable.setTableColumnWidth(0, 40);
+			rangeAndNameTable.setTableColumnWidth(1, 60);
+			rangeAndNameTable.setTableColumnWidth(2, 180);
+			rangeAndNameTable.setTableColumnWidth(3, 70);
 			teamShowTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 				public void valueChanged(ListSelectionEvent arg0) {
 					checkSelection(false);
@@ -243,7 +246,7 @@ public class TeamPanel extends MyPanel {
 
 		private void setComponentsLocation() {
 			selectionPanel.setLocation(27, 20);
-			teamShowPane.setBounds(350, 30, 950, 530);
+			teamShowPane.setBounds(350, 40, 900, 530);
 			this.add(teamShowPane);
 			this.add(selectionPanel);
 		}

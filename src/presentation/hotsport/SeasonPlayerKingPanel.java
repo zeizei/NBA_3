@@ -8,7 +8,9 @@ import presentation.mycomponent.MyButton;
 import presentation.mycomponent.MyLabel;
 import presentation.statics.MyColor;
 import presentation.statics.MyFont;
-import businesslogic.game.GameInfoBl;
+import beans.generalTeam;
+import businesslogic.team.TeamInfoBl;
+
 import common.statics.Field;
 import common.statics.Season;
 
@@ -93,9 +95,6 @@ public class SeasonPlayerKingPanel extends PlayerKingPanel implements MouseListe
 				super.playerKing = super.playerHotBl.getPlayerKingOfSeason(Season.this_season, seasonPlayerKingFields[i]);
 				fieldButton[i].setBackground(MyColor.SELECTED);
 				this.setContent();
-				HotSportPanel.showRefreshed();
-				String date = new GameInfoBl().getLatestDate();
-				HotSportPanel.refreshDate(date);
 				break;
 			}
 		}
@@ -107,7 +106,8 @@ public class SeasonPlayerKingPanel extends PlayerKingPanel implements MouseListe
 			}
 			if (e.getSource().equals(team[i])) {
 				String teamName = this.playerKing.get(i).getTeamName();
-				new SonFrame(teamName, SonFrame.teamCard);
+				generalTeam generalTeam = new TeamInfoBl().getGeneralTeam(teamName, Season.this_season);
+				new SonFrame(generalTeam, SonFrame.teamCard);
 				break;
 			}
 		}

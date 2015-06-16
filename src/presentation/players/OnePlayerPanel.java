@@ -44,7 +44,7 @@ public class OnePlayerPanel extends MyPanel implements MouseListener {
 	private GeneralInfoPanel generalInfoPanel;
 	private ContentPanel contentPanel;
 	private int buttonHeight = 40;
-	private int buttonWidth = 300;
+	private int buttonWidth = 400;
 
 	private OnePlayerBlService onePlayerInfoBl = new OnePlayerBl();
 	//
@@ -75,7 +75,7 @@ public class OnePlayerPanel extends MyPanel implements MouseListener {
 
 	private void setComponentsLocation() {
 		for (int i = 0; i < 3; i++) {
-			button[i].setBounds(350 + buttonWidth * i, 200, buttonWidth, buttonHeight);
+			button[i].setBounds(50 + buttonWidth * i, 200, buttonWidth, buttonHeight);
 			button[i].setBackground(MyColor.MIDDLE_COLOR);
 			button[i].setForeground(MyColor.MY_WHITE);
 			button[i].setFont(MyFont.SMALL_BOLD);
@@ -174,11 +174,11 @@ public class OnePlayerPanel extends MyPanel implements MouseListener {
 		}
 
 		private void setComponentsLocation() {
-			portrait.setBounds(350, 10, 230, 200);
-			playerNameText.setBounds(630, 50, 250, 50);
-			normalInfoText.setBounds(880, 5, 300, 195);
+			portrait.setBounds(50, 10, 230, 200);
+			playerNameText.setBounds(430, 50, 250, 50);
+			normalInfoText.setBounds(780, 5, 300, 195);
 			for (int i = 0; i < 3; i++) {
-				mainMatchInfoText[i].setBounds(630 + i * 65, 150, 65, 50);
+				mainMatchInfoText[i].setBounds(430 + i * 65, 150, 65, 50);
 				this.add(mainMatchInfoText[i]);
 			}
 			this.add(portrait);
@@ -210,10 +210,9 @@ public class OnePlayerPanel extends MyPanel implements MouseListener {
 
 	class PlayerNormalInfoPanel extends MyPanel {
 		private static final long serialVersionUID = 1L;
-		private String[] title = { "赛季", "球队", "场数", "首发", "时间", "得分", "命中率", "篮板", "助攻", "抢断", "盖帽", "失误", "犯规", "前板", "后板", "出手", "命中", "三分出手", "三分命中", "三分命中率", "罚球出手", "罚球命中", "罚球命中率", };
-		private Field[] fields = { Field.season, Field.teamName, Field.numOfGame, Field.numOfStart, Field.minute, Field.point, Field.shot, Field.totRebound, Field.assist, Field.steal,
-				Field.block, Field.fault, Field.foul, Field.offRebound, Field.defRebound, Field.totalShot, Field.totalHit, Field.threeShot, Field.threeHit, Field.three, Field.freeShot, Field.freeHit,
-				Field.free };
+		private String[] title = { "赛季", "球队", "场数", "首发", "时间", "得分", "命中率", "篮板", "助攻", "抢断", "盖帽", "失误", "犯规", "前板", "后板", "出手", "命中", "三分出", "三分中", "三分率", "罚球出", "罚球中", "罚中率", };
+		private Field[] fields = { Field.season, Field.teamName, Field.numOfGame, Field.numOfStart, Field.minute, Field.point, Field.shot, Field.totRebound, Field.assist, Field.steal, Field.block,
+				Field.fault, Field.foul, Field.offRebound, Field.defRebound, Field.totalShot, Field.totalHit, Field.threeShot, Field.threeHit, Field.three, Field.freeShot, Field.freeHit, Field.free };
 		private String[] fieldStr = new String[fields.length];
 		private MyTableModel model = new MyTableModel(title);
 		private MyTable table = new MyTable(model);
@@ -271,17 +270,20 @@ public class OnePlayerPanel extends MyPanel implements MouseListener {
 			dataKindChoose.setBounds(530, 10, 150, 30);
 			sortFieldChoose.setBounds(700, 10, 150, 30);
 			search.setBounds(1000, 10, 150, 30);
-			scrollPanel.setBounds(300, 50, 975, 300);
+			scrollPanel.setBounds(30, 50, 1245, 300);
 			table.setRowHeight(30);
-			table.setTableColumnWidth(1, 180);
+			table.setTableColumnWidth(0, 65);
+			table.setTableColumnWidth(1, 160);
 			for (int i = 2; i <= 5; i++) {
-				table.setTableColumnWidth(i, 60);
+				table.setTableColumnWidth(i, 44);
 			}
+			table.setTableColumnWidth(6, 55);
 			for (int i = 7; i <= 16; i++) {
-				table.setTableColumnWidth(i, 60);
+				table.setTableColumnWidth(i, 44);
 			}
-			table.setTableColumnWidth(19, 100);
-			table.setTableColumnWidth(22, 100);
+			for (int i = 17; i <= 22; i++) {
+				table.setTableColumnWidth(i, 54);
+			}
 			this.add(gameKindChoose);
 			this.add(dataKindChoose);
 			this.add(sortFieldChoose);
@@ -363,10 +365,10 @@ public class OnePlayerPanel extends MyPanel implements MouseListener {
 			gameKindChoose.setBounds(360, 10, 150, 30);
 			sortFieldChoose.setBounds(700, 10, 150, 30);
 			search.setBounds(1000, 10, 150, 30);
-			scrollPanel.setBounds(300, 50, 975, 300);
+			scrollPanel.setBounds(30, 50, 1245, 300);
 			table.setRowHeight(30);
-			table.setTableColumnWidth(1, 180);
-			table.setTableColumnWidth(5, 100);
+			table.setTableColumnWidth(1, 160);
+			table.setTableColumnWidth(5, 85);
 			this.add(gameKindChoose);
 			this.add(sortFieldChoose);
 			this.add(search);
@@ -461,21 +463,16 @@ public class OnePlayerPanel extends MyPanel implements MouseListener {
 
 		private void setComponentBounds() {
 			table.setRowHeight(30);
-			table.setTableColumnWidth(0, 180);
+			table.setTableColumnWidth(0, 175);
 			table.setTableColumnWidth(1, 90);
-			for (int i = 2; i <= 11; i++) {
-				table.setTableColumnWidth(i, 38);
+			for (int i = 2; i <= 17; i++) {
+				table.setTableColumnWidth(i, 60);
 			}
-			for (int i = 12; i <= 15; i++) {
-				table.setTableColumnWidth(i, 55);
-			}
-			table.setTableColumnWidth(16, 40);
-			table.setTableColumnWidth(17, 40);
 			gameKindChoose.setBounds(360, 10, 150, 30);
 			seasonChoose.setBounds(530, 10, 150, 30);
 			sortFieldChoose.setBounds(700, 10, 150, 30);
 			search.setBounds(1000, 10, 150, 30);
-			scrollPanel.setBounds(300, 50, 975, 300);
+			scrollPanel.setBounds(30, 50, 1245, 300);
 			this.add(gameKindChoose);
 			this.add(seasonChoose);
 			this.add(sortFieldChoose);

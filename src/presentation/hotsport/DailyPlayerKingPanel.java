@@ -3,13 +3,16 @@ package presentation.hotsport;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import businesslogic.game.GameInfoBl;
 import presentation.SonFrame;
 import presentation.mycomponent.MyButton;
 import presentation.mycomponent.MyLabel;
 import presentation.statics.MyColor;
 import presentation.statics.MyFont;
+import beans.generalTeam;
+import businesslogic.team.TeamInfoBl;
+
 import common.statics.Field;
+import common.statics.Season;
 
 public class DailyPlayerKingPanel extends PlayerKingPanel implements MouseListener {
 
@@ -81,9 +84,6 @@ public class DailyPlayerKingPanel extends PlayerKingPanel implements MouseListen
 				flag = i;
 				super.playerKing = super.playerHotBl.getPlayerKingOfDaily(super.playerHotBl.getLatestDate(), dailyPlayerKingFields[i]);
 				this.setContent();
-				HotSportPanel.showRefreshed();
-				String date = new GameInfoBl().getLatestDate();
-				HotSportPanel.refreshDate(date);
 				break;
 			}
 			if (e.getSource().equals(portrait[i])) {
@@ -93,7 +93,8 @@ public class DailyPlayerKingPanel extends PlayerKingPanel implements MouseListen
 			}
 			if (e.getSource().equals(team[i])) {
 				String teamName = this.playerKing.get(i).getTeamName();
-				new SonFrame(teamName, SonFrame.teamCard);
+				generalTeam generalTeam = new TeamInfoBl().getGeneralTeam(teamName, Season.this_season);
+				new SonFrame(generalTeam, SonFrame.teamCard);
 				break;
 			}
 		}

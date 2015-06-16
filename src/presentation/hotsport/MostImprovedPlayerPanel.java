@@ -16,10 +16,10 @@ import presentation.statics.MyColor;
 import presentation.statics.MyFont;
 import presentation.statics.PathOfFile;
 import beans.generalTeam;
-import businesslogic.game.GameInfoBl;
 import businesslogic.hot.PlayerHotBl;
 import businesslogic.team.TeamInfoBl;
 import businesslogicservice.hot.PlayerHotBlSrevice;
+
 import common.datastructure.PlayerHotInfo;
 import common.statics.Field;
 import common.statics.Season;
@@ -56,7 +56,7 @@ public class MostImprovedPlayerPanel extends MyPanel implements MouseListener {
 		this.setComponentsStyle();
 		this.addListener();
 		this.setVisible(true);
-//		this.init();
+		// this.init();
 	}
 
 	private void createObjects() {
@@ -162,9 +162,6 @@ public class MostImprovedPlayerPanel extends MyPanel implements MouseListener {
 				fieldButton[i].setBackground(MyColor.SELECTED);
 				this.playerHotList = this.playerHotBl.getPlayerHot(Season.this_season, mostImproveField[i]);
 				this.setContent();
-				HotSportPanel.showRefreshed();
-				String date = new GameInfoBl().getLatestDate();
-				HotSportPanel.refreshDate(date);
 				break;
 			}
 			if (e.getSource().equals(Portrait[i])) {
