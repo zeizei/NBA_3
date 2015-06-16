@@ -20,11 +20,13 @@ public class StartWindow extends JWindow implements Runnable {
 
 	public StartWindow() {
 		JPanel splash = new JPanel(new BorderLayout());
-		splash.add(new JLabel(new ImageIcon("images/StartIcon.png")), BorderLayout.CENTER);
+		splash.add(new JLabel(new ImageIcon("images/StartIcon.png")),
+				BorderLayout.CENTER);
 		this.setContentPane(splash);
 		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();// 获得屏幕的大小
 		this.pack();
-		this.setLocation((screen.width - getSize().width) / 2, (screen.height - getSize().height) / 2);// 使启动窗口居中显示
+		this.setLocation((screen.width - getSize().width) / 2,
+				(screen.height - getSize().height) / 2);// 使启动窗口居中显示
 		this.start();
 	}
 
@@ -39,7 +41,7 @@ public class StartWindow extends JWindow implements Runnable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		new MainFrame();
+		Main.mainFrame = new MainFrame();
 		this.dispose();
 	}
 }
