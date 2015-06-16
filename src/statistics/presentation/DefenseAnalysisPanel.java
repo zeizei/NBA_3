@@ -30,6 +30,8 @@ import presentation.mycomponent.MyTextArea;
 import presentation.statics.MyFont;
 import presentation.statics.NUMBER;
 import presentation.statics.PathOfFile;
+import statistics.bl.StatisticsBl;
+import statistics.blservice.StatisticsBlService;
 
 public class DefenseAnalysisPanel extends MyPanel {
 	private static final long serialVersionUID = 1L;
@@ -42,9 +44,10 @@ public class DefenseAnalysisPanel extends MyPanel {
 	private String seasonStr[]={"13-14","14-15"};
 	private MyLabel defenseLabel;
 	private MyComboBox<String> season;
+	private StatisticsBlService statisticsBl=new StatisticsBl();
 	public DefenseAnalysisPanel(String playerID) {
 		navigationPanel=new NavigationPanel();
-		contentPanel=new ContentPanel();
+		contentPanel=new ContentPanel(playerID);
 		navigationPanel.setBounds(0, 0, NUMBER.FRAME_WIDTH-150,100);
 		contentPanel.setBounds(0,100,NUMBER.FRAME_WIDTH-150,NUMBER.FRAME_HEIGHT-NUMBER.NAVIGATION_PANEL_HEIGHT-100);
 		this.add(navigationPanel);
@@ -100,7 +103,7 @@ public class DefenseAnalysisPanel extends MyPanel {
 		private static final long serialVersionUID = 1L;
 		private MyTextArea analysis=new MyTextArea();
 		private MyLabel nickName=new MyLabel();
-		public ContentPanel(){
+		public ContentPanel(String playerID){
 			this.setOpaque(false);
 			defenseLabel=new MyLabel();
 			defenseLabel.setBounds(20,0,700,500);
@@ -110,10 +113,10 @@ public class DefenseAnalysisPanel extends MyPanel {
 			this.add(defenseLabel);
 			this.add(analysis);
 			this.add(nickName);
-			this.setContent();
+			this.setContent(playerID);
 		}
-		private void setContent() {
-			CategoryDataset dataset = getDataSet1();
+		private void setContent(String playerID) {
+			CategoryDataset dataset = getDataSet1(playerID);
 			 JFreeChart chart = ChartFactory.createLineChart(  
 					 "在场/下场对比", // 图表标题  
 		                "数据类型", // 目录轴的显示标签--横轴  
@@ -140,17 +143,18 @@ public class DefenseAnalysisPanel extends MyPanel {
 //			 chart.getPlot().setBackgroundPaint(null);
 //			 chart.getPlot().setBackgroundAlpha(0.0f);
 		        try {  
-		            File f = new File("images/hi.png");  
+		            File f = new File("images/"+playerID+".png");  
 		            ChartUtilities.saveChartAsPNG(f, chart, 700,500);  
 		        } catch (Exception e) {  
 		            e.printStackTrace();  
 		        }
 		        
-		        defenseLabel.setIcon(new ImageIcon("images/hi.png"));
+		        defenseLabel.setIcon(new ImageIcon("images/"+playerID+".png"));
 		        analysis.setText("根据Kobe Bryant的常规赛季后赛数据\n运用假设检验分析对比得知该球员:\n季后赛得分表现优于常规赛\n季后赛助攻表现优于常规赛\n季后赛助攻表现优于常规赛\n季后赛助攻表现优于常规赛\n季后赛助攻表现优于常规赛\n");
 		        nickName.setIcon(new ImageIcon("images/statistics/bigMatchPlayer.png"));
 		}
-		private CategoryDataset getDataSet1() {
+		private CategoryDataset getDataSet1(String playerID) {
+			 statisticsBl.getRegularSeasonCourtPerform(playerID);
 			 DefaultCategoryDataset dataset = new DefaultCategoryDataset(); 
 			 String[] x={
 					 "有效命中%","进攻篮板率","防守篮板率","总篮板率","助攻率","抢断率","盖帽率","失误率"
@@ -197,7 +201,9 @@ public class DefenseAnalysisPanel extends MyPanel {
 		public void mouseClicked(MouseEvent e) {
 			for(int i=0;i<10;i++){
 				if(e.getSource().equals(playerPanel.playerName[i])){
-					portrait.setMyIcon(new ImageIcon(PathOfFile.PLAYER_PORTRAIT_IMAGE+playerPanel.playerName[i].getText()+".png"));
+					portrait.setMyIcon(new ImageIcon(PathOfFile.PLAYER_PORTRAIT_IMAGE+playerPanel.playerName[i].getplayerID()+".png"));
+					playerInfo.setText(playerPanel.playerName[i].getText());
+					contentPanel.setContent(playerPanel.playerName[i].getplayerID());
 					break;
 				}
 			}
