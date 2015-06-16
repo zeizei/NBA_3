@@ -25,13 +25,13 @@ import presentation.statics.NUMBER;
 import presentation.statics.PathOfFile;
 import beans.GameTeam;
 import beans.GeneralGame;
+import beans.PlayOffSeries;
 import beans.SeasonPlayer;
 import beans.SeasonTeam;
 import beans.generalTeam;
 import businesslogic.game.GameInfoBl;
 import businesslogic.team.OneTeamBl;
 import businesslogicservice.team.OneTeamBlService;
-
 import common.statics.DataKind;
 import common.statics.Field;
 import common.statics.GameKind;
@@ -289,7 +289,6 @@ public class OneTeamPanel extends MyPanel implements MouseListener {
 	}// 球队常规赛普通数据界面
 
 	class TeamRegularHighPanel extends MyPanel {
-
 		private static final long serialVersionUID = 1L;
 		private String[] title = { "赛季", "球队平均年龄", "场均净胜分", "场均回合数", "进攻效率", "防守效率", "真实命中率", "投篮效率", "罚球效率", "三分效率", "前板率", "后板率", "失误率", "赛程密度", "观众数" };
 		private Field[] fields = { Field.season, Field.avgAge, Field.pointOfWin, Field.pace, Field.offEFF, Field.defEFF, Field.realShot, Field.shotEFF, Field.freeEFF, Field.threeEFF,
@@ -374,7 +373,42 @@ public class OneTeamPanel extends MyPanel implements MouseListener {
 	}// 球队常规赛高级数据界面
 
 	class TeamPlayOffSeriesPanel extends MyPanel {
+		private static final long serialVersionUID = 1L;
+		private String[] title = { "年份", "系列赛名称", "胜利队伍", "失败队伍", "胜队胜场", "负队胜场", "开始时间", "结束时间" };
+		private String[] fieldStr = { "year", "series", "winTeam", "loseTeam", "winTeamWin", "loseTeamWin", "startDate", "finishDate" };
+		private MyTableModel model = new MyTableModel(title);
+		private MyTable table = new MyTable(model);
+		private MyScrollPanel scrollPanel = new MyScrollPanel(table);
 
+		public TeamPlayOffSeriesPanel() {
+			this.setComponentBounds();
+			this.initTable();
+			this.setVisible(true);
+		}
+
+		private void setComponentBounds() {
+			scrollPanel.setBounds(30, 30, 1245, 320);
+			table.setRowHeight(30);
+			table.setTableColumnWidth(0, 65);
+			for (int i = 1; i <= 3; i++) {
+				table.setTableColumnWidth(i, 200);
+			}
+			for (int i = 4; i <= 7; i++) {
+				table.setTableColumnWidth(i, 140);
+			}
+			this.add(scrollPanel);
+		}
+
+		private void initTable() {
+			ArrayList<PlayOffSeries> playOffSeriesList = oneTeamInfoBl.getPlayOffSeriesOfTeam(teamName);
+			if (playOffSeriesList != null) {
+				for (int i = 0; i < playOffSeriesList.size(); i++) {
+					Object[] contents = playOffSeriesList.get(i).getSpeContent(fieldStr);
+					model.addRow(contents);
+					table.updateUI();
+				}
+			}
+		}
 	}// 球队季后赛系列赛界面
 
 	class PlayerNormalInfoPanel extends MyPanel {

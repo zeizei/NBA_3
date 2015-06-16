@@ -3,7 +3,7 @@ package data.team;
 import java.util.ArrayList;
 
 import common.statics.Season;
-
+import beans.PlayOffSeries;
 import beans.SeasonTeam;
 import beans.generalTeam;
 
@@ -23,14 +23,18 @@ public class TeamInfoData_driver {
 
 	}
 
-	public void testGetSeasonTeam() {
-
+	public void testGetPlayOffSeries() {
+		ArrayList<PlayOffSeries> playOffSeriesList = teamInfoData.getPlayOffSeries(Season.this_season, "Western Conf First Round");
+		for (int i = 0; i < playOffSeriesList.size(); i++) {
+			System.out.println(playOffSeriesList.get(i));
+		}
 	}
 
 	public static void main(String args[]) {
 		TeamInfoData_driver driver = new TeamInfoData_driver();
 		// driver.testVagueSearch();
-		driver.testGetGeneralTeam();
+		// driver.testGetGeneralTeam();
+		driver.testGetPlayOffSeries();
 	}
 
 }

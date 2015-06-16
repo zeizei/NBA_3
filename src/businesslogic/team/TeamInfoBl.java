@@ -2,6 +2,7 @@ package businesslogic.team;
 
 import java.util.ArrayList;
 
+import beans.PlayOffSeries;
 import beans.SeasonTeam;
 import beans.generalTeam;
 import businesslogicservice.team.TeamInfoBlService;
@@ -25,5 +26,13 @@ public class TeamInfoBl implements TeamInfoBlService {
 
 	public generalTeam getGeneralTeam(String teamName, Season season) {
 		return teamInfoData.getGeneralTeam(teamName, season);
+	}
+
+	public ArrayList<PlayOffSeries> getPlayOffSeries(Season season, String series) {
+		return teamInfoData.getPlayOffSeries(season, series);
+	}
+
+	public ArrayList<PlayOffSeries> getOneSeasonPlayerOffSeries(Season season) {
+		return teamInfoData.getOneSeasonPlayerOffSeries(season);
 	}
 }
