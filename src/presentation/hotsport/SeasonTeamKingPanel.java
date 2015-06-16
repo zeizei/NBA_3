@@ -15,10 +15,10 @@ import presentation.statics.MyColor;
 import presentation.statics.MyFont;
 import presentation.statics.PathOfFile;
 import beans.generalTeam;
-import businesslogic.game.GameInfoBl;
 import businesslogic.hot.TeamHotBl;
 import businesslogic.team.TeamInfoBl;
 import businesslogicservice.hot.TeamHotBlService;
+
 import common.datastructure.TeamHotInfo;
 import common.statics.Field;
 import common.statics.Number;
@@ -145,16 +145,14 @@ public class SeasonTeamKingPanel extends MyPanel implements MouseListener {
 				fieldButton[i].setBackground(MyColor.SELECTED);
 				this.teamHotInfo = this.teamHotBl.getTeamHot(Season.this_season, seasonTeamKingField[i]);
 				this.setContent();
-				HotSportPanel.showRefreshed();
-				String date = new GameInfoBl().getLatestDate();
-				HotSportPanel.refreshDate(date);
 				break;
 			}
 		}
 		for (int i = 0; i < Number.defaut_hot_num; i++) {
 			if (e.getSource().equals(logo[i])) {
 				String teamName = this.teamHotInfo.get(i).getTeamName();
-				new SonFrame(teamName, SonFrame.teamCard);
+				generalTeam generalTeam = new TeamInfoBl().getGeneralTeam(teamName, Season.this_season);
+				new SonFrame(generalTeam, SonFrame.teamCard);
 				break;
 			}
 		}

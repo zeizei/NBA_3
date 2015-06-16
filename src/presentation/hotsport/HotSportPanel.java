@@ -18,9 +18,8 @@ import businesslogic.game.GameInfoBl;
 public class HotSportPanel extends MyPanel implements MouseListener {
 
 	private static final long serialVersionUID = 1L;
-	public static MyLabel showNew = new MyLabel("没有更新");// 提示更新
-	private static MyLabel nowDate;
-	private static MyLabel nowYear;
+	private MyLabel nowDate;
+	private MyLabel nowYear;
 	private final int buttonWidth = 180;
 	private final int buttonHeight = 50;
 	private final int buttonX = 113;
@@ -35,7 +34,7 @@ public class HotSportPanel extends MyPanel implements MouseListener {
 		this.setComponentsLocation();
 		this.addListener();
 		String date = new GameInfoBl().getLatestDate();
-		HotSportPanel.refreshDate(date);
+		this.refreshDate(date);
 		this.setVisible(true);
 	}
 
@@ -44,15 +43,7 @@ public class HotSportPanel extends MyPanel implements MouseListener {
 		nowYear = new MyLabel();
 	}
 
-	public static void showNew() {
-		showNew.setText("有更新");
-	}
-
-	public static void showRefreshed() {
-		showNew.setText("没有更新");
-	}
-
-	public static void refreshDate(String dateString) {
+	public void refreshDate(String dateString) {
 		String[] splitStr = dateString.split("-");
 		nowDate.setText(splitStr[1] + "月" + splitStr[2] + "日");
 		nowYear.setText(splitStr[0] + "年");
@@ -70,11 +61,9 @@ public class HotSportPanel extends MyPanel implements MouseListener {
 			this.add(button[i]);
 		}
 		contentPanel.setBounds(180, 0, NUMBER.FRAME_WIDTH - 180, NUMBER.FRAME_HEIGHT - NUMBER.NAVIGATION_PANEL_HEIGHT);
-		showNew.setBounds(0, 7 * buttonHeight + buttonX, buttonWidth, buttonHeight);
 		nowDate.setBounds(0, 10, 180, 50);
 		nowYear.setBounds(0, 70, 180, 30);
 		this.add(contentPanel);
-		this.add(showNew);
 		this.add(nowDate);
 		this.add(nowYear);
 	}
@@ -85,10 +74,6 @@ public class HotSportPanel extends MyPanel implements MouseListener {
 			button[i].setBackground(MyColor.MIDDLE_COLOR);
 		}
 		button[0].setBackground(MyColor.SELECTED);
-		showNew.setFont(MyFont.SMALL_BOLD);
-		showNew.setForeground(Color.white);
-		showNew.setHorizontalAlignment(SwingConstants.CENTER);
-
 		nowDate.setFont(MyFont.LARGEST_BOLD);
 		nowDate.setForeground(Color.white);
 		nowDate.setHorizontalAlignment(SwingConstants.CENTER);
@@ -126,10 +111,8 @@ public class HotSportPanel extends MyPanel implements MouseListener {
 				else {
 					button[i].setBackground(MyColor.MIDDLE_COLOR);
 				}
-
 			}
 		}
-
 	}
 
 	public void mousePressed(MouseEvent e) {
