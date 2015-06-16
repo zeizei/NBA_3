@@ -26,13 +26,14 @@ import org.jfree.chart.title.TextTitle;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 
-import presentation.mycomponent.MyComboBox;
 import presentation.mycomponent.MyLabel;
 import presentation.mycomponent.MyPanel;
 import presentation.mycomponent.MyTextArea;
 import presentation.statics.MyFont;
 import presentation.statics.NUMBER;
 import presentation.statics.PathOfFile;
+import statistics.bl.StatisticsBl;
+import statistics.blservice.StatisticsBlService;
 
 
 public class SeasonAnalysisPanel extends MyPanel {
@@ -40,19 +41,22 @@ public class SeasonAnalysisPanel extends MyPanel {
 	private SeasonAnalysisPanel seasonAnalysisPanel=this;
 	private NavigationPanel navigationPanel;
 	private ContentPanel contentPanel;
+	private PlayerInfoPanel playerInfoPanel;
+	private StatisticsBlService statisticsBl=new StatisticsBl();
 	
-	private String seasonStr[]={"13-14","14-15"};
-	private MyLabel portrait;
+	
 	private MyLabel playOffRegularCompareLabel,forcastDataLabel;
-	private MyTextArea playerInfo;
-	private MyComboBox<String> season;
-	private MyLabel changeplayer,forecast,playOffRegularCompare;
+	
+	private MyLabel forecast,playOffRegularCompare;
 	public SeasonAnalysisPanel(String playerID){
+		playerInfoPanel=new PlayerInfoPanel();
 		navigationPanel=new NavigationPanel();
 		contentPanel=new ContentPanel();
-		navigationPanel.setBounds(0, 0, NUMBER.FRAME_WIDTH-150,100);
+		playerInfoPanel.setBounds(0, 0, 300, 100);
+		navigationPanel.setBounds(300, 0, NUMBER.FRAME_WIDTH-450,100);
 		contentPanel.setBounds(0,100,NUMBER.FRAME_WIDTH-150,NUMBER.FRAME_HEIGHT-NUMBER.NAVIGATION_PANEL_HEIGHT-100);
 		this.add(navigationPanel);
+		this.add(playerInfoPanel);
 		this.add(contentPanel);	
 	}
 	class SeasonFindPlayerPopupPanel extends FindPlayerPopupPanel implements MouseListener{
@@ -65,7 +69,7 @@ public class SeasonAnalysisPanel extends MyPanel {
 		public void mouseClicked(MouseEvent e) {
 			for(int i=0;i<5;i++){
 				if(e.getSource().equals(playerPanel.playerName[i])){
-					portrait.setMyIcon(new ImageIcon(PathOfFile.PLAYER_PORTRAIT_IMAGE+playerPanel.playerName[i].getplayerID()+".png"));
+//					portrait.setMyIcon(new ImageIcon(PathOfFile.PLAYER_PORTRAIT_IMAGE+playerPanel.playerName[i].getplayerID()+".png"));
 					break;
 				}
 			}
@@ -91,76 +95,103 @@ public class SeasonAnalysisPanel extends MyPanel {
 					
 		
 		}
-		@Override
 		public void mousePressed(MouseEvent arg0) {
-			// TODO Auto-generated method stub
 			
 		}
-		@Override
 		public void mouseReleased(MouseEvent arg0) {
-			// TODO Auto-generated method stub
 			
 		}
 		
 	}
 	class NavigationPanel extends MyPanel implements MouseListener{
-		
-		private static final long serialVersionUID = 1L;
-		public NavigationPanel(){
-		forecast=new MyLabel("实力预测");
-		playOffRegularCompare=new MyLabel("季后/常规对比");
-		changeplayer=new MyLabel("更换球员");
-		season=new MyComboBox<String>(seasonStr);
-		portrait=new MyLabel();
-		playerInfo=new MyTextArea();
-		changeplayer.setBounds(150,60,120,40);
-		season.setBounds(280, 35, 100, 30);
-		portrait.setBounds(30,10,100,80);
-		playerInfo.setBounds(150,10,120,50);
-		forecast.setBounds(410, 35, 100, 30);
-		playOffRegularCompare.setBounds(510, 35, 100, 30);
-		this.add(portrait);
-		this.add(season);
-		this.add(playerInfo);
-		this.add(changeplayer);
-		this.add(forecast);
-		this.add(playOffRegularCompare);
-		forecast.addMouseListener(this);
-		playOffRegularCompare.addMouseListener(this);
-		playerInfo.setFont(MyFont.SMALL_PLAIN);
-		changeplayer.setFont(MyFont.SMALLEST_PLAIN);
-		changeplayer.setHorizontalAlignment(SwingConstants.LEFT);
-		playerInfo.setForeground(Color.black);
-		portrait.setBorder(BorderFactory.createLineBorder(Color.black));
-		changeplayer.addMouseListener(this);
-		playerInfo.setText("Kobe Bryant\nSG/24");
-		portrait.setMyIcon(new ImageIcon(PathOfFile.PLAYER_PORTRAIT_IMAGE+"Kobe Bryant.png"));//初始化换成ID
-		}
-		
+
+		@Override
 		public void mouseClicked(MouseEvent e) {
-			if(e.getSource().equals(changeplayer)){
-				SeasonFindPlayerPopupPanel seasonFindPlayerPopupPanel=new SeasonFindPlayerPopupPanel();
-				Point p=changeplayer.getLocation();
-				seasonFindPlayerPopupPanel.show(seasonAnalysisPanel,p.x, p.y+40);
-			}
-			else if(e.getSource().equals(forecast)){
-				contentPanel.showMyPanel("forcastPanel");
-			}
-			else if(e.getSource().equals(playOffRegularCompare)){
-				contentPanel.showMyPanel("playOffRegularCompare");
-			}
-		}
-		public void mouseEntered(MouseEvent arg0) {
-		
-		}
-		public void mouseExited(MouseEvent arg0) {
+			// TODO Auto-generated method stub
 			
 		}
-		public void mousePressed(MouseEvent arg0) {
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
 			
 		}
-		public void mouseReleased(MouseEvent arg0) {
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
 		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+//		
+//		private static final long serialVersionUID = 1L;
+//		public NavigationPanel(){
+//		forecast=new MyLabel("实力预测");
+//		playOffRegularCompare=new MyLabel("季后/常规对比");
+//		changeplayer=new MyLabel("更换球员");
+//		portrait=new MyLabel();
+//		playerInfo=new MyTextArea();
+//		changeplayer.setBounds(150,60,120,40);
+//		portrait.setBounds(30,10,100,80);
+//		playerInfo.setBounds(150,10,120,50);
+//		forecast.setBounds(410, 35, 100, 30);
+//		playOffRegularCompare.setBounds(510, 35, 100, 30);
+//		this.add(portrait);
+//		this.add(playerInfo);
+//		this.add(changeplayer);
+//		this.add(forecast);
+//		this.add(playOffRegularCompare);
+//		forecast.addMouseListener(this);
+//		playOffRegularCompare.addMouseListener(this);
+//		playerInfo.setFont(MyFont.SMALL_PLAIN);
+//		changeplayer.setFont(MyFont.SMALLEST_PLAIN);
+//		changeplayer.setHorizontalAlignment(SwingConstants.LEFT);
+//		playerInfo.setForeground(Color.black);
+//		portrait.setBorder(BorderFactory.createLineBorder(Color.black));
+//		changeplayer.addMouseListener(this);
+//		playerInfo.setText("Kobe Bryant\nSG/24");
+//		portrait.setMyIcon(new ImageIcon(PathOfFile.PLAYER_PORTRAIT_IMAGE+"Kobe Bryant.png"));//初始化换成ID
+//		}
+//		
+//		public void mouseClicked(MouseEvent e) {
+//			if(e.getSource().equals(changeplayer)){
+//				SeasonFindPlayerPopupPanel seasonFindPlayerPopupPanel=new SeasonFindPlayerPopupPanel();
+//				Point p=changeplayer.getLocation();
+//				seasonFindPlayerPopupPanel.show(seasonAnalysisPanel,p.x, p.y+40);
+//			}
+//			else if(e.getSource().equals(forecast)){
+//				contentPanel.showMyPanel("forcastPanel");
+//			}
+//			else if(e.getSource().equals(playOffRegularCompare)){
+//				contentPanel.showMyPanel("playOffRegularCompare");
+//			}
+//		}
+//		public void mouseEntered(MouseEvent e) {
+//			if(e.getSource().equals(changeplayer)){
+//				changeplayer.setForeground(Color.pink);
+//			}
+//		}
+//		public void mouseExited(MouseEvent e) {
+//			if(e.getSource().equals(changeplayer)){
+//				changeplayer.setForeground(Color.white);
+//			}
+//		}
+//		public void mousePressed(MouseEvent arg0) {
+//			
+//		}
+//		public void mouseReleased(MouseEvent arg0) {
+//		}
 	}
 	class ContentPanel extends JPanel{
 		CardLayout card=new CardLayout();

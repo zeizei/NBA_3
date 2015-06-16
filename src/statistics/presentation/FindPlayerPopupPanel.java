@@ -61,13 +61,8 @@ public class FindPlayerPopupPanel extends JPopupMenu {
 				playerName[i] = new SearchButton(initArray.get(i).getPlayerName(),initArray.get(i).getPlayerId());
 				playerName[i].setForeground(Color.black);
 				playerName[i].setFont(MyFont.SMALLEST_PLAIN);
-				if (i <= 4) {
-					playerPortrait[i].setBounds(25, i * 65 + 60, 65, 50);
-					playerName[i].setBounds(100, i * 65 + 60, 200, 50);
-				} else {
-					playerPortrait[i].setBounds(310, (i - 5) * 65 + 60, 65, 50);
-					playerName[i].setBounds(390, (i - 5) * 65 + 60, 200, 50);
-				}
+				playerPortrait[i].setBounds(25, i * 65 + 60, 65, 50);
+				playerName[i].setBounds(100, i * 65 + 60, 200, 50);
 				playerPortrait[i].setMyIcon(new ImageIcon(
 						PathOfFile.PLAYER_PORTRAIT_IMAGE
 								+ initArray.get(i).getPlayerId() + ".png"));

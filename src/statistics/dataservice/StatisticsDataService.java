@@ -13,6 +13,7 @@ public interface StatisticsDataService {
 	
 	public ArrayList<GamePlayer>  getRegularSeasonPlayersGames(String playerID);//得到一个球员14-15常规赛的所有比赛数据
 	public ArrayList<GamePlayer>  getPlayOffSeasonPlayersGames(String playerID);//季后赛数据
+	
 	public SeasonPlayer getRegularSeasonPlayer(String playerID);//14-15赛季常规赛一个球员的平均数据
 	public SeasonPlayer getPlayOffSeasonPlayer(String playerID);//14-15赛季季后赛一个球员的平均数据
 	
