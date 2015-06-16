@@ -2,6 +2,7 @@ package dataservice.team;
 
 import java.util.ArrayList;
 
+import beans.PlayOffSeries;
 import beans.SeasonTeam;
 import beans.generalTeam;
 import common.statics.DataKind;
@@ -9,7 +10,7 @@ import common.statics.Field;
 import common.statics.League;
 import common.statics.Season;
 
-public interface TeamInfoDataService { 
+public interface TeamInfoDataService {
 	// 筛选球队
 	public ArrayList<SeasonTeam> getSeasonTeam(Season season, DataKind dataKind, League league, Field sortField);
 
@@ -18,4 +19,10 @@ public interface TeamInfoDataService {
 
 	// 根据队名和当时的赛季得到该支球队的基本信息
 	public generalTeam getGeneralTeam(String teamName, Season season);
+
+	//
+	public ArrayList<PlayOffSeries> getPlayOffSeries(Season season, String series);
+
+	//
+	public ArrayList<PlayOffSeries> getOneSeasonPlayerOffSeries(Season season);
 }

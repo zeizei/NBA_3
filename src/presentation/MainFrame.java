@@ -25,29 +25,24 @@ public class MainFrame extends JFrame {
 	private NavigationPanel navigationPanel;// 导航栏
 	private ContentPanel contentPanel;// 内容栏
 	private JLabel background;
+	public int isPlayOff = 0;
 
 	public MainFrame() {
 		this.setUndecorated(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLayout(null);
-		this.setBounds((NUMBER.SCREEN_WIDTH - NUMBER.FRAME_WIDTH) / 2,
-				(NUMBER.SCREEN_HEIGHT - NUMBER.FRAME_HEIGHT) / 2 - 20,
-				NUMBER.FRAME_WIDTH, NUMBER.FRAME_HEIGHT);
-		background = new JLabel(new ImageIcon(
-				"images/players/background_player.png"));
+		this.setBounds((NUMBER.SCREEN_WIDTH - NUMBER.FRAME_WIDTH) / 2, (NUMBER.SCREEN_HEIGHT - NUMBER.FRAME_HEIGHT) / 2 - 20, NUMBER.FRAME_WIDTH, NUMBER.FRAME_HEIGHT);
+		background = new JLabel(new ImageIcon("images/players/background_player.png"));
 		background.setBounds(0, 0, NUMBER.FRAME_WIDTH, NUMBER.FRAME_HEIGHT);
 		this.getLayeredPane().add(background, new Integer(1));
 		JPanel jp = (JPanel) this.getContentPane();
 		jp.setOpaque(false);
 
 		navigationPanel = new NavigationPanel();
-		navigationPanel.setBounds(0, 0, NUMBER.NAVIGATION_PANEL_WIDTH,
-				NUMBER.NAVIGATION_PANEL_HEIGHT);
+		navigationPanel.setBounds(0, 0, NUMBER.NAVIGATION_PANEL_WIDTH, NUMBER.NAVIGATION_PANEL_HEIGHT);
 		this.getLayeredPane().add(navigationPanel, new Integer(2));
 		contentPanel = new ContentPanel();
-		contentPanel.setBounds(0, NUMBER.NAVIGATION_PANEL_HEIGHT,
-				NUMBER.FRAME_WIDTH,
-				(NUMBER.FRAME_HEIGHT - NUMBER.NAVIGATION_PANEL_HEIGHT));
+		contentPanel.setBounds(0, NUMBER.NAVIGATION_PANEL_HEIGHT, NUMBER.FRAME_WIDTH, (NUMBER.FRAME_HEIGHT - NUMBER.NAVIGATION_PANEL_HEIGHT));
 		this.getLayeredPane().add(contentPanel, new Integer(2));
 		this.setVisible(true);
 	}
@@ -102,40 +97,25 @@ public class MainFrame extends JFrame {
 		 * 导航栏
 		 */
 		private static final long serialVersionUID = 1L;
-		private NavigationButton quitSystem, playerPanelButton,
-				teamPanelButton, matchPanelButton, hotSportPanelButton;
+		private NavigationButton quitSystem, playerPanelButton, teamPanelButton, matchPanelButton, hotSportPanelButton;
 		private int button_w = 150;
 		private int button_h = 50;
 		private int button_y = 10;
 		private int gap = 170;
-		private ImageIcon player_normal = new ImageIcon(
-				PathOfFile.NAVIGATION_IMAGE + "players_normal.png");
-		private ImageIcon player_press = new ImageIcon(
-				"images/navigation/players_press.png");
-		private ImageIcon player_enter = new ImageIcon(
-				"images/navigation/players_enter.png");
-		private ImageIcon teams_normal = new ImageIcon(
-				"images/navigation/teams_normal.png");
-		private ImageIcon teams_press = new ImageIcon(
-				"images/navigation/teams_press.png");
-		private ImageIcon teams_enter = new ImageIcon(
-				"images/navigation/teams_enter.png");
-		private ImageIcon match_normal = new ImageIcon(
-				"images/navigation/match_normal.png");
-		private ImageIcon match_press = new ImageIcon(
-				"images/navigation/match_press.png");
-		private ImageIcon match_enter = new ImageIcon(
-				"images/navigation/match_enter.png");
-		private ImageIcon hot_normal = new ImageIcon(
-				"images/navigation/hot_normal.png");
-		private ImageIcon hot_press = new ImageIcon(
-				"images/navigation/hot_press.png");
-		private ImageIcon hot_enter = new ImageIcon(
-				"images/navigation/hot_enter.png");
-		private ImageIcon exit_normal = new ImageIcon(
-				"images/navigation/exit_normal.png");
-		private ImageIcon exit_enter = new ImageIcon(
-				"images/navigation/exit_enter.png");
+		private ImageIcon player_normal = new ImageIcon(PathOfFile.NAVIGATION_IMAGE + "players_normal.png");
+		private ImageIcon player_press = new ImageIcon("images/navigation/players_press.png");
+		private ImageIcon player_enter = new ImageIcon("images/navigation/players_enter.png");
+		private ImageIcon teams_normal = new ImageIcon("images/navigation/teams_normal.png");
+		private ImageIcon teams_press = new ImageIcon("images/navigation/teams_press.png");
+		private ImageIcon teams_enter = new ImageIcon("images/navigation/teams_enter.png");
+		private ImageIcon match_normal = new ImageIcon("images/navigation/match_normal.png");
+		private ImageIcon match_press = new ImageIcon("images/navigation/match_press.png");
+		private ImageIcon match_enter = new ImageIcon("images/navigation/match_enter.png");
+		private ImageIcon hot_normal = new ImageIcon("images/navigation/hot_normal.png");
+		private ImageIcon hot_press = new ImageIcon("images/navigation/hot_press.png");
+		private ImageIcon hot_enter = new ImageIcon("images/navigation/hot_enter.png");
+		private ImageIcon exit_normal = new ImageIcon("images/navigation/exit_normal.png");
+		private ImageIcon exit_enter = new ImageIcon("images/navigation/exit_enter.png");
 
 		public NavigationPanel() {
 			this.setLayout(null);
@@ -159,10 +139,8 @@ public class MainFrame extends JFrame {
 		private void setComponentsLocation() {
 			playerPanelButton.setBounds(450, button_y, button_w, button_h);
 			teamPanelButton.setBounds(450 + gap, button_y, button_w, button_h);
-			matchPanelButton.setBounds(450 + gap * 2, button_y, button_w,
-					button_h);
-			hotSportPanelButton.setBounds(450 + gap * 3, button_y, button_w,
-					button_h);
+			matchPanelButton.setBounds(450 + gap * 2, button_y, button_w, button_h);
+			hotSportPanelButton.setBounds(450 + gap * 3, button_y, button_w, button_h);
 			quitSystem.setBounds(450 + gap * 4, button_y, button_w, button_h);
 			this.add(teamPanelButton);
 			this.add(playerPanelButton);
@@ -183,39 +161,45 @@ public class MainFrame extends JFrame {
 			if (e.getSource().equals(quitSystem)) {
 				Main.mainFrame.dispose();
 				System.exit(0);
-			} else if (e.getSource().equals(playerPanelButton)) {
+			}
+			else if (e.getSource().equals(playerPanelButton)) {
 				changeAllBackground();
 				playerPanelButton.setIcon(player_press);
 				changeAllIsPress();
 				playerPanelButton.setIsPress(true);
-				Main.mainFrame.changeBackGround(new ImageIcon(
-						"images/players/background_player.png"));
+				Main.mainFrame.changeBackGround(new ImageIcon("images/players/background_player.png"));
 				contentPanel.showPlayerPanel();
-			} else if (e.getSource().equals(teamPanelButton)) {
+			}
+			else if (e.getSource().equals(teamPanelButton)) {
 				changeAllBackground();
 				teamPanelButton.setIcon(teams_press);
 				changeAllIsPress();
 				teamPanelButton.setIsPress(true);
-				Main.mainFrame.changeBackGround(new ImageIcon(
-						"images/teams/background_team.png"));
+				if (isPlayOff == 0) {
+					Main.mainFrame.changeBackGround(new ImageIcon("images/teams/background_team.png"));
+				}
+				else if (isPlayOff == 1) {
+					Main.mainFrame.changeBackGround(new ImageIcon(PathOfFile.HOTSPOT + "background_hotspot.png"));
+				}
+
 				contentPanel.showTeamPanel();
-			} else if (e.getSource().equals(matchPanelButton)) {
+			}
+			else if (e.getSource().equals(matchPanelButton)) {
 				changeAllBackground();
 				matchPanelButton.setIcon(match_press);
 				changeAllIsPress();
 				matchPanelButton.setIsPress(true);
-				Main.mainFrame.changeBackGround(new ImageIcon(
-						"images/matchs/background_match.png"));
+				Main.mainFrame.changeBackGround(new ImageIcon("images/matchs/background_match.png"));
 				contentPanel.showMatchPanel();
-			} else if (e.getSource().equals(hotSportPanelButton)) {
+			}
+			else if (e.getSource().equals(hotSportPanelButton)) {
 				changeAllBackground();
 				hotSportPanelButton.setIcon(hot_press);
 				changeAllIsPress();
 				hotSportPanelButton.setIsPress(true);
-				Main.mainFrame.changeBackGround(new ImageIcon(
-						"images/statistics/background_season.png"));
-//				Main.mainFrame.changeBackGround(new ImageIcon(
-//						PathOfFile.HOTSPOT + "background_hotspot.png"));
+				Main.mainFrame.changeBackGround(new ImageIcon("images/statistics/background_season.png"));
+				// Main.mainFrame.changeBackGround(new ImageIcon(
+				// PathOfFile.HOTSPOT + "background_hotspot.png"));
 				contentPanel.showHotPanel();
 			}
 		}
@@ -223,24 +207,33 @@ public class MainFrame extends JFrame {
 		public void mouseEntered(MouseEvent e) {
 			if (e.getSource().equals(quitSystem)) {
 				if (quitSystem.isPress) {
-				} else {
+				}
+				else {
 					quitSystem.setIcon(exit_enter);
 				}
-			} else if (e.getSource().equals(playerPanelButton)) {
+			}
+			else if (e.getSource().equals(playerPanelButton)) {
 				if (playerPanelButton.isPress) {
-				} else
+				}
+				else
 					playerPanelButton.setIcon(player_enter);
-			} else if (e.getSource().equals(teamPanelButton)) {
+			}
+			else if (e.getSource().equals(teamPanelButton)) {
 				if (teamPanelButton.isPress) {
-				} else
+				}
+				else
 					teamPanelButton.setIcon(teams_enter);
-			} else if (e.getSource().equals(matchPanelButton)) {
+			}
+			else if (e.getSource().equals(matchPanelButton)) {
 				if (matchPanelButton.isPress) {
-				} else
+				}
+				else
 					matchPanelButton.setIcon(match_enter);
-			} else if (e.getSource().equals(hotSportPanelButton)) {
+			}
+			else if (e.getSource().equals(hotSportPanelButton)) {
 				if (hotSportPanelButton.isPress) {
-				} else
+				}
+				else
 					hotSportPanelButton.setIcon(hot_enter);
 			}
 		}
@@ -248,21 +241,29 @@ public class MainFrame extends JFrame {
 		public void mouseExited(MouseEvent e) {
 			if (e.getSource().equals(quitSystem)) {
 				quitSystem.setIcon(exit_normal);
-			} else if (e.getSource().equals(playerPanelButton)) {
+			}
+			else if (e.getSource().equals(playerPanelButton)) {
 				if (playerPanelButton.isPress) {
-				} else
+				}
+				else
 					playerPanelButton.setIcon(player_normal);
-			} else if (e.getSource().equals(teamPanelButton)) {
+			}
+			else if (e.getSource().equals(teamPanelButton)) {
 				if (teamPanelButton.isPress) {
-				} else
+				}
+				else
 					teamPanelButton.setIcon(teams_normal);
-			} else if (e.getSource().equals(matchPanelButton)) {
+			}
+			else if (e.getSource().equals(matchPanelButton)) {
 				if (matchPanelButton.isPress) {
-				} else
+				}
+				else
 					matchPanelButton.setIcon(match_normal);
-			} else if (e.getSource().equals(hotSportPanelButton)) {
+			}
+			else if (e.getSource().equals(hotSportPanelButton)) {
 				if (hotSportPanelButton.isPress) {
-				} else
+				}
+				else
 					hotSportPanelButton.setIcon(hot_normal);
 			}
 		}

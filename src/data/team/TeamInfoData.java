@@ -5,14 +5,13 @@ import java.util.ArrayList;
 
 import mysqldatabase.DB;
 import beans.Bean;
+import beans.PlayOffSeries;
 import beans.SeasonTeam;
 import beans.generalTeam;
-
 import common.statics.DataKind;
 import common.statics.Field;
 import common.statics.League;
 import common.statics.Season;
-
 import dataservice.team.TeamInfoDataService;
 
 public class TeamInfoData implements TeamInfoDataService {
@@ -68,4 +67,30 @@ public class TeamInfoData implements TeamInfoDataService {
 		}
 		return null;
 	}// 得到球队基本信息
+
+	public ArrayList<PlayOffSeries> getPlayOffSeries(Season season, String series) {
+		if (season != null && series != null) {
+			String year = season.getFinishDate().substring(0, 4);
+			String sql = "select * from playoffseries where year = '" + year + "' and series = '" + series + "'";
+			ResultSet rs = this.db.find(sql);
+			ArrayList<PlayOffSeries> playOffSeriesList = Bean.resultSetToList(rs, new PlayOffSeries());
+			if (playOffSeriesList != null && playOffSeriesList.size() != 0) {
+				return playOffSeriesList;
+			}
+		}
+		return null;
+	}// 根据系列赛名称和赛季得到某一轮季后赛
+
+	public ArrayList<PlayOffSeries> getOneSeasonPlayerOffSeries(Season season) {
+		if (season != null) {
+			String year = season.getFinishDate().substring(0, 4);
+			String sql = "select * from playoffseries where year = '" + year + "'";
+			ResultSet rs = this.db.find(sql);
+			ArrayList<PlayOffSeries> playOffSeriesList = Bean.resultSetToList(rs, new PlayOffSeries());
+			if (playOffSeriesList != null && playOffSeriesList.size() != 0) {
+				return playOffSeriesList;
+			}
+		}
+		return null;
+	}
 }
