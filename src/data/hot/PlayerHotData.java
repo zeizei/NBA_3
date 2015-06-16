@@ -20,7 +20,7 @@ public class PlayerHotData implements PlayerHotDataService {
 	public ArrayList<PlayerHotInfo> getPlayerHot(Field field) {
 
 		return null;
-	}
+	}// 进步最快球员
 
 	public ArrayList<PlayerKingInfo> getPlayerKingOfSeason(Season season, Field sortField) {
 		if (season != null && sortField != null) {

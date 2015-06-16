@@ -1,7 +1,6 @@
 package presentation.mycomponent;
 
 import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
 
 import presentation.statics.MyColor;
 import presentation.statics.MyFont;

@@ -15,6 +15,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import presentation.SonFrame;
 import presentation.mycomponent.MyButton;
 import presentation.mycomponent.MyComboBox;
 import presentation.mycomponent.MyPanel;
@@ -155,10 +156,11 @@ public class TeamPanel extends MyPanel {
 
 				public void mouseClicked(MouseEvent arg0) {
 					if (rangeAndNameTable.getSelectedRow() >= 0 && rangeAndNameTable.getSelectedRow() < rangeAndNameTable.getRowCount()) {
-						// int row = rangeAndNameTable.getSelectedRow();
-						// String teamName = (String) *
-						// rangeAndNameTable.getValueAt(row, 2);
-						// new SonFrame(teamName, SonFrame.teamCard);
+						int row = rangeAndNameTable.getSelectedRow();
+						String teamName = (String) rangeAndNameTable.getValueAt(row, 2);
+						String season = (String) rangeAndNameTable.getValueAt(row, 3);
+						generalTeam generalTeam = teamInfoBl.getGeneralTeam(teamName, Season.getSeason(season));
+						new SonFrame(generalTeam, SonFrame.teamCard);
 					}
 				}
 			});

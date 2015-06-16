@@ -21,4 +21,7 @@ public interface PlayerInfoDataService {
 
 	// 组合筛选
 	public ArrayList<SeasonPlayer> getSeasonPlayer(Season season, GameKind gameKind, DataKind dataKind, League league, Position position, AgeRange ageRange, ArrayList<CombineSelectionCell> cellList);
+
+	//
+	public ArrayList<String> getTargetPlayerIdsOfSeason(Season season);
 }

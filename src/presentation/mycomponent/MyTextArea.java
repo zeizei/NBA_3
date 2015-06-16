@@ -1,7 +1,5 @@
 package presentation.mycomponent;
 
-import java.awt.Color;
-
 import javax.swing.JTextArea;
 
 import presentation.statics.MyColor;

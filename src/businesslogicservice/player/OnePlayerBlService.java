@@ -18,8 +18,8 @@ public interface OnePlayerBlService {
 	public ArrayList<SeasonPlayer> getSeasonPlayer(String playerId, GameKind gameKind, DataKind dataKind, Field sortField);
 
 	// 根据赛季、球员编号得到所有比赛信息
-	public ArrayList<GamePlayer> getGamePlayer(String playerId, Season season, Field sortField);
+	public ArrayList<GamePlayer> getGamePlayer(String playerId, Season season, GameKind gameKind, Field sortField);
 
-	// 根据球员Id得到最近一个赛季的所有比赛
-	public ArrayList<GamePlayer> getLatestGamePlayer(String playerId);
+	// 得到该球员的常规赛/季后赛所有赛季
+	public String[] getSeasonsOfPlayer(String playerId, GameKind gameKind);
 }

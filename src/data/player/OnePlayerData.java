@@ -1,6 +1,7 @@
 package data.player;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import mysqldatabase.DB;
@@ -65,4 +66,27 @@ public class OnePlayerData implements OnePlayerDataService {
 		}
 		return null;
 	}// 得到一个球员一个赛季里的所有比赛
+
+	public ArrayList<String> getSeasonsOfPlayer(String playerId, GameKind gameKind) {
+		if (playerId != null && gameKind != null) {
+			ArrayList<String> playerIdList = new ArrayList<String>();
+			int isPlayOff = 0;
+			if (GameKind.playOff_game.equals(gameKind)) {
+				isPlayOff = 1;
+			}
+			String sql = "select distinct season from seasonplayer where playerId = '" + playerId + "' and isPlayOff =" + isPlayOff + " and season <> 'Career' order by season desc";
+			ResultSet rs = this.db.find(sql);
+			try {
+				while (rs.next()) {
+					playerIdList.add(rs.getString("season"));
+				}
+				if (playerIdList != null && playerIdList.size() != 0) {
+					return playerIdList;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
 }

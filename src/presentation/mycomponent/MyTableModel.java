@@ -20,10 +20,10 @@ public class MyTableModel extends AbstractTableModel {
 		content = new Vector<Vector<Object>>();
 	}
 
-	public void addRow(Object[] str) {
+	public void addRow(Object[] o) {
 		Vector<Object> v = new Vector<Object>(title_name.length);
-		for (int i = 0; i < str.length; i++) {
-			v.add(i, str[i]);
+		for (int i = 0; i < o.length; i++) {
+			v.add(i, o[i]);
 		}
 		content.add(v);
 	}

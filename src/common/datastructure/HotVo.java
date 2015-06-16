@@ -3,6 +3,7 @@ package common.datastructure;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 
 public class HotVo {
 	public String toString() {
@@ -61,4 +62,10 @@ public class HotVo {
 		}
 		return isSucceed;
 	}
+
+	public double cutTail(double number, int tail) {
+		BigDecimal bigDecimal = new BigDecimal(number);
+		double result = bigDecimal.setScale(tail, BigDecimal.ROUND_HALF_UP).doubleValue();
+		return result;
+	}// 保留四位小数
 }

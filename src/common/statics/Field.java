@@ -25,6 +25,8 @@ public class Field {
 	public static final Field minute = new Field("minute");
 	public static final Field totalHit = new Field("totalHit");
 	public static final Field totalShot = new Field("totalShot");
+	public static final Field totHit = new Field("totHit");
+	public static final Field totShot = new Field("totShot");
 	public static final Field shot = new Field("shot");
 	public static final Field threeHit = new Field("threeHit");
 	public static final Field threeShot = new Field("threeShot");

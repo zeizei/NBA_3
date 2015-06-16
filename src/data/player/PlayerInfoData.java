@@ -1,11 +1,13 @@
 package data.player;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import mysqldatabase.DB;
 import beans.Bean;
 import beans.SeasonPlayer;
+
 import common.datastructure.CombineSelectionCell;
 import common.statics.AgeRange;
 import common.statics.DataKind;
@@ -14,6 +16,7 @@ import common.statics.GameKind;
 import common.statics.League;
 import common.statics.Position;
 import common.statics.Season;
+
 import dataservice.player.PlayerInfoDataService;
 
 public class PlayerInfoData implements PlayerInfoDataService {
@@ -110,4 +113,23 @@ public class PlayerInfoData implements PlayerInfoDataService {
 		}
 		return null;
 	}// 高级筛选
+
+	public ArrayList<String> getTargetPlayerIdsOfSeason(Season season) {
+		if (season != null) {
+			ArrayList<String> playerIdList = new ArrayList<String>();
+			String sql = "select distinct playerId from seasonplayer where season = '" + season.toString() + "' and numOfGame>=58 and minute/numOfGame>=15";
+			ResultSet rs = this.db.find(sql);
+			try {
+				while (rs.next()) {
+					playerIdList.add(rs.getString("playerId"));
+				}
+				if (playerIdList != null && playerIdList.size() != 0) {
+					return playerIdList;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}// 得到某个赛季里所有的参赛球员的名称
 }
