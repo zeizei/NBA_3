@@ -23,4 +23,6 @@ public interface StatisticsDataService {
 
 	public ArrayList<PlayerShootType> getShootType(String playerID, int isPlayOff);// 14-15赛季常规赛球员不同出手类型命中率
 
+	public ArrayList<SeasonPlayer> vagueSearchPlayer(String str);// 模糊查询球员
+
 }
