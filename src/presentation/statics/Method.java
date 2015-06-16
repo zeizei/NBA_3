@@ -1,6 +1,7 @@
 package presentation.statics;
 
 import java.awt.Image;
+import java.math.BigDecimal;
 
 import javax.swing.ImageIcon;
 
@@ -15,4 +16,10 @@ public class Method {
 		}
 		return null;
 	}
+	
+	public static double cutTail(double number) {
+		BigDecimal bigDecimal = new BigDecimal(number);
+		double result = bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+		return result;
+	}// 保留2位小数
 }

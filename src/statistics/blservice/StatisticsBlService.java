@@ -11,6 +11,10 @@ import beans.SeasonPlayer;
 
 public interface StatisticsBlService {
 	
+	public boolean isBetterThanRegular(String playerID,String field);
+	
+	public double[] forcast(String playerID,String field);
+	
 	public double[] getRangeEstimation(double aver,double s,int n,double alpha);//单总体均值区间估计      返回数组第一个值是下限，第二个值是上限
 	
 	public boolean hypothesisTest_z(double newAverage,double oldAverage,double s,int n,int type,double alpha);//参数假设检验   z检验  条件：方差已知或方差未知但样本容量大
