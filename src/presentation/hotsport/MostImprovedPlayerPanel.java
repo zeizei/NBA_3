@@ -174,7 +174,8 @@ public class MostImprovedPlayerPanel extends MyPanel implements MouseListener {
 			}
 			if (e.getSource().equals(team[i])) {
 				String teamName = playerHotList.get(i).getTeamName();
-				new SonFrame(teamName, SonFrame.teamCard);
+				generalTeam generalTeam = new TeamInfoBl().getGeneralTeam(teamName, Season.this_season);
+				new SonFrame(generalTeam, SonFrame.teamCard);
 				break;
 			}
 		}
