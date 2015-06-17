@@ -300,7 +300,7 @@ public class StatisticsBl implements StatisticsBlService {
 			s = s + (playOffMatchList.get(i).getShotEFF() - aver) * (playOffMatchList.get(i).getShotEFF() - aver);
 		}
 		s = Math.sqrt(s)/(playOffMatchList.size()-1);
-		boolean isOut = hypothesisTest_z(aver,aver_regular, s, playOffMatchList.size(), 2, 0.025);
+		boolean isOut = hypothesisTest_z(aver,aver_regular, s, playOffMatchList.size(), 1, 0.025);
 		return isOut;
 	}
 
@@ -329,5 +329,11 @@ public class StatisticsBl implements StatisticsBlService {
 
 	public ArrayList<SeasonPlayer> vagueSearchPlayer(String str) {
 		return statisticsDataBl.vagueSearchPlayer(str);
+	}
+
+	@Override
+	public ArrayList<SeasonPlayer> getPlayOffPlayer() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

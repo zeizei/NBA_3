@@ -39,9 +39,9 @@ public class FindPlayerPopupPanel extends JPopupMenu {
 	}
 
 	class FindPlayerPanel extends MyPanel implements MouseListener {
-		private JTextField nameInput;
-		private JButton search;
-		private MyLabel playerPortrait[] = new MyLabel[5];
+		JTextField nameInput;
+		JButton search;
+		MyLabel playerPortrait[] = new MyLabel[5];
 		public SearchButton playerName[] = new SearchButton[5];
 		private static final long serialVersionUID = 1L;
 
@@ -120,6 +120,8 @@ public class FindPlayerPopupPanel extends JPopupMenu {
 		public String getplayerID(){
 			return this.playerID;
 		}
-		
+		public void setID(String playerID){
+			this.playerID=playerID;
+		}
 	}
 }

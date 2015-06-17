@@ -357,7 +357,7 @@ public class SeasonAnalysisPanel extends MyPanel {
 			playerNameLabel=new MyLabel();
 			changeplayer.setBounds(150,60,120,40);
 			portrait.setBounds(30,10,100,80);
-			playerNameLabel.setBounds(150,10,120,50);
+			playerNameLabel.setBounds(150,10,180,50);
 			this.add(portrait);
 			this.add(playerNameLabel);
 			this.add(changeplayer);
@@ -439,8 +439,8 @@ public class SeasonAnalysisPanel extends MyPanel {
 						playerName[i] = new SearchButton(initArray.get(i).getPlayerName(),initArray.get(i).getPlayerId());
 						playerName[i].setForeground(Color.black);
 						playerName[i].setFont(MyFont.SMALLEST_PLAIN);
-						playerPortrait[i].setBounds(25, i * 65 + 60, 65, 50);
-						playerName[i].setBounds(100, i * 65 + 60, 200, 50);
+						playerPortrait[i].setBounds(100, i * 65 + 60, 65, 50);
+						playerName[i].setBounds(180, i * 65 + 60, 200, 50);
 						playerPortrait[i].setMyIcon(new ImageIcon(
 								PathOfFile.PLAYER_PORTRAIT_IMAGE
 										+ initArray.get(i).getPlayerId() + ".png"));
@@ -465,11 +465,29 @@ public class SeasonAnalysisPanel extends MyPanel {
 					}
 				
 					if (e.getSource().equals(search)) {
-						for (int i = 0; i < 5; i++) {
-							// playerName[i].setText("");
-							// playerPortrait[i].setMyIcon(new
-							// ImageIcon(PathOfFile.PLAYER_PORTRAIT_IMAGE+initArray.get(i).getName()+".png"));
+						 ArrayList<SeasonPlayer> searchResult=statisticsBl.vagueSearchPlayer(nameInput.getText());
+						 for(int i=0;i<5;i++){
+							 playerName[i].setText("");
+							 playerName[i].setID("");
+							 playerPortrait[i].setMyIcon(new
+									 ImageIcon(""));
+						 }
+						 if(searchResult.size()<5){
+						for (int i = 0; i < searchResult.size(); i++) {
+							 playerName[i].setText(searchResult.get(i).getPlayerName());
+							 playerName[i].setID(searchResult.get(i).getPlayerId());
+							 playerPortrait[i].setMyIcon(new
+							 ImageIcon(PathOfFile.PLAYER_PORTRAIT_IMAGE+searchResult.get(i).getPlayerId()+".png"));
 						}
+					}
+						 else{
+								for (int i = 0; i < 5; i++) {
+									 playerName[i].setText(searchResult.get(i).getPlayerName());
+									 playerName[i].setID(searchResult.get(i).getPlayerId());
+									 playerPortrait[i].setMyIcon(new
+									 ImageIcon(PathOfFile.PLAYER_PORTRAIT_IMAGE+searchResult.get(i).getPlayerId()+".png"));
+								}
+							}
 					}
 				}
 
@@ -520,6 +538,9 @@ public class SeasonAnalysisPanel extends MyPanel {
 				}
 				public String getplayerID(){
 					return this.playerID;
+				}
+				public void setID(String playerID){
+					this.playerID=playerID;
 				}
 				
 			}
