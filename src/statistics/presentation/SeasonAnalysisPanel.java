@@ -192,10 +192,10 @@ public class SeasonAnalysisPanel extends MyPanel {
 		}
 		private String isBetter(boolean isBetter){
 			if(!isBetter){
-				return "优于";
+				return "显著优于";
 			}
 			else{
-				return "差于";
+				return "不显著优于";
 			}
 		}
 		private CategoryDataset getDataSet1(String playerID) {
@@ -424,9 +424,7 @@ public class SeasonAnalysisPanel extends MyPanel {
 				private static final long serialVersionUID = 1L;
 
 				public FindPlayerPanel() {
-					PlayerHotBlSrevice pbs = new PlayerHotBl();
-					ArrayList<PlayerKingInfo> initArray = pbs.getPlayerKingOfSeason(
-							Season.this_season, Field.point);
+					ArrayList<SeasonPlayer> initArray =statisticsBl.getPlayOffPlayer(); 
 					search = new JButton("查找");
 					search.setBounds(415, 10, 100, 40);
 					search.addMouseListener(this);

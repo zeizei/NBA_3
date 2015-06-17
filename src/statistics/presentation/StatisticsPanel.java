@@ -25,7 +25,7 @@ public class StatisticsPanel extends MyPanel {
 			new OffenseAnalysisPanel(player), new DefenseAnalysisPanel(player),
 			new CompareAnalysisPanel(player,comparePlayer) };
 	private JButton button[] = new JButton[] { new MyButton("赛季分析"),
-			new MyButton("进攻分析"), new MyButton("防守分析"), new MyButton("球员对比") };
+			new MyButton("进攻分析"), new MyButton("防守分析")};
 
 	public StatisticsPanel() {
 		functionPanel = new FunctionPanel();
@@ -43,7 +43,7 @@ public class StatisticsPanel extends MyPanel {
 
 		public FunctionPanel() {
 
-			for (int i = 0; i < 4; i++) {
+			for (int i = 0; i < 3; i++) {
 				this.add(button[i]);
 				button[i].addMouseListener(this);
 				button[i].setBounds(0, i * 50, 150, 50);
@@ -51,7 +51,7 @@ public class StatisticsPanel extends MyPanel {
 		}
 
 		public void mouseClicked(MouseEvent e) {
-			for (int i = 0; i < 4; i++) {
+			for (int i = 0; i < 3; i++) {
 				if (e.getSource().equals(button[i])) {
 					contentPanel.showMyPanel(i);
 					break;
@@ -85,7 +85,7 @@ public class StatisticsPanel extends MyPanel {
 			this.setOpaque(false);
 			card = new CardLayout();
 			this.setLayout(card);
-			for (int i = 0; i < 4; i++) {
+			for (int i = 0; i < 3; i++) {
 				this.add(panel[i], String.valueOf(i));
 			}
 //			Main.mainFrame.changeBackGround(new ImageIcon(

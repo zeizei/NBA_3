@@ -160,10 +160,10 @@ public class DefenseAnalysisPanel extends MyPanel {
 		}
 		private String isBetter(boolean isBetter){
 			if(!isBetter){
-				return "优于";
+				return "显著优于";
 			}
 			else{
-				return "差于";
+				return "不显著优于";
 			}
 		}
 		private CategoryDataset getDataSet1(String playerID) {

@@ -40,6 +40,7 @@ import presentation.mycomponent.MyTableModel;
 import presentation.mycomponent.MyTextArea;
 import presentation.statics.MyFont;
 import presentation.statics.PathOfFile;
+import statistics.analysisbeans.PlayerOnOrOff;
 import statistics.analysisbeans.PlayerShootDistance;
 import statistics.analysisbeans.PlayerShootOpponent;
 import statistics.analysisbeans.PlayerShootType;
@@ -240,28 +241,90 @@ public class OffenseAnalysisPanel extends MyPanel {
 	class FaceToTeamsPanel extends MyPanel{
 		
 		private static final long serialVersionUID = 1L;
-		MyTableModel tableModel;
-		MyTable table;
 		String[] head={"对手","命中数","出手数","命中率","有效命中率","受助功数","受助攻率"};
 		String[] field={"opponent","fg","fga","fgr","efg","astd","astdr"};
+		private MyLabel opponentShotLabel;
 		public FaceToTeamsPanel(String playerID){
-			tableModel=new MyTableModel(head);
-			table=new MyTable(tableModel);
-			JScrollPane j=new JScrollPane();
-			j.getViewport().add(table);
-			j.setBounds(100, 100, 900, 400);
-			table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
-			this.add(j);
+			opponentShotLabel=new MyLabel();
+			opponentShotLabel.setBounds(20,0,1100,550);
+			this.add(opponentShotLabel);
 			setContent(playerID);
 		}
 		private void setContent(String playerID) {
-			tableModel.removeAllRows();
-			ArrayList<PlayerShootOpponent> playerShootOpponentList= statisticsBl.getRegularSeasonOpponentShoot(playerID);
-			for(int i=0;i<playerShootOpponentList.size();i++){
-				tableModel.addRow(playerShootOpponentList.get(i).getSpeContent(field));
-			}
-			table.updateUI();
+
+			CategoryDataset dataset = getDataSet1(playerID);
+			 JFreeChart chart = ChartFactory.createLineChart(  
+					 "面对不同对手命中率", // 图表标题  
+		                "数据类型", // 目录轴的显示标签--横轴  
+		                "", // 数值轴的显示标签--纵轴  
+		                dataset, // 数据集  
+		                PlotOrientation.VERTICAL, // 图表方向：水平、  
+		                true, // 是否显示图例(对于简单的柱状图必须  
+		                false, // 是否生成工具  
+		                false // 是否生成URL链接  
+		                );
+			 processChart(chart);
+			 chart.setBackgroundPaint(null);
+			 chart.getPlot().setBackgroundAlpha(0.0f);
+			 
+//			 CategoryPlot plot = (CategoryPlot) chart.getCategoryPlot(); 
+//		     BarRenderer3D customBarRenderer = (BarRenderer3D) plot.getRenderer(); 
+//		     customBarRenderer.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
+//		     customBarRenderer.setBaseItemLabelsVisible(true);
+//		     customBarR/enderer.setSeriesItemLabelsVisible(0,true);
+//		     customBarRenderer.setBasePositiveItemLabelPosition(new ItemLabelPosition( 
+//		    		 ItemLabelAnchor.OUTSIDE12, TextAnchor.BASELINE_CENTER)); 
+//		    		 customBarRenderer.setItemLabelAnchorOffset(10D);// 设置柱形图上的文字偏离值 
+//		    		 customBarRenderer.setItemLabelsVisible(true); 
+//			 chart.getPlot().setBackgroundPaint(null);
+//			 chart.getPlot().setBackgroundAlpha(0.0f);
+			   File f=null;
+		        try {  
+		           f = new File("images/"+playerID+"_oppoentShot.png");  
+		            ChartUtilities.saveChartAsPNG(f, chart, 1100,550);  
+		        } catch (Exception e) {  
+		            e.printStackTrace();  
+		        }
+				opponentShotLabel.setIcon(new ImageIcon("images/"+playerID+"_oppoentShot.png"));
+				f.delete();
 		}
+		private CategoryDataset getDataSet1(String playerID) {
+			 ArrayList<PlayerShootOpponent> faceToOppontShootPerform=statisticsBl.getRegularSeasonOpponentShoot(playerID);
+			 DefaultCategoryDataset dataset = new DefaultCategoryDataset(); 
+			 String[] opponent = new String[faceToOppontShootPerform.size()];
+			 double[] value = new double[faceToOppontShootPerform.size()];
+			 double[] value_Shot =new double[faceToOppontShootPerform.size()];
+			 for(int i=0;i<faceToOppontShootPerform.size();i++){
+				 opponent[i]=faceToOppontShootPerform.get(i).getOpponent();
+				 value[i]=faceToOppontShootPerform.get(i).getFgr();
+				 value_Shot[i]=faceToOppontShootPerform.get(i).getEfg();
+			 }
+			 String line_fgr="命中率%";
+			 String line_efgr="有效命中率";
+		     
+			 for(int i=0;i<opponent.length;i++){
+				 dataset.setValue(value[i], line_fgr, opponent[i]);
+				 dataset.setValue(value_Shot[i], line_efgr, opponent[i]);
+			 }
+		        return dataset;  
+		}
+		private  void processChart(JFreeChart chart) {  
+		       CategoryPlot plot = chart.getCategoryPlot();  
+		       CategoryAxis domainAxis = plot.getDomainAxis();  
+		       ValueAxis rAxis = plot.getRangeAxis();  
+		       chart.getRenderingHints().put(RenderingHints.KEY_TEXT_ANTIALIASING,  
+		               RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);  
+		       TextTitle textTitle = chart.getTitle();  
+		       textTitle.setFont(MyFont.SMALL_PLAIN);  
+		       domainAxis.setTickLabelFont(MyFont.SMALLEST_PLAIN);  
+		       domainAxis.setLabelFont(MyFont.SMALL_PLAIN);  
+		       rAxis.setTickLabelFont(MyFont.SMALL_PLAIN);  
+		       rAxis.setLabelFont(MyFont.SMALL_PLAIN);  
+		       chart.getLegend().setItemFont(MyFont.SMALLEST_PLAIN); 
+		       // renderer.setItemLabelGenerator(new LabelGenerator(0.0));  
+		       // renderer.setItemLabelFont(new Font("宋体", Font.PLAIN, 12));  
+		       // renderer.setItemLabelsVisible(true);  
+		   }
 		
 	}
 	class ShootDistanceTypePanel extends MyPanel{
@@ -277,12 +340,12 @@ public class OffenseAnalysisPanel extends MyPanel {
 			shotDistancetable=new MyTable(shotDistanceTableModel);
 			JScrollPane shotDistanceJScrollPane=new JScrollPane();
 			shotDistanceJScrollPane.getViewport().add(shotDistancetable);
-			shotDistanceJScrollPane.setBounds(400, 50, 600, 250);
+			shotDistanceJScrollPane.setBounds(500, 20, 500, 300);
 			shotDistancetable.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
 			this.add(shotDistanceJScrollPane);
 			
 			shotTypePieIcon=new MyLabel();
-			shotTypePieIcon.setBounds(100, 50, 250, 250);
+			shotTypePieIcon.setBounds(20, 20, 400, 400);
 			this.add(shotTypePieIcon);
 			setContent(playerID);
 		}
@@ -315,7 +378,7 @@ public class OffenseAnalysisPanel extends MyPanel {
 				 File f = null;
 			        try {  
 			             f= new File("images/"+playerID+"_shotType.png");  
-			            ChartUtilities.saveChartAsPNG(f, chart, 250,250);  
+			            ChartUtilities.saveChartAsPNG(f, chart, 400,400);  
 			        } catch (Exception e) {  
 			            e.printStackTrace();  
 			        }
@@ -392,10 +455,10 @@ public class OffenseAnalysisPanel extends MyPanel {
 		      }
 		private String isBetter(boolean isBetter){
 			if(!isBetter){
-				return "优于";
+				return "显著优于";
 			}
 			else{
-				return "差于";
+				return "不显著优于";
 			}
 		}
 		private CategoryDataset getDataSet(String playerID) { 
