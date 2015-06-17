@@ -37,7 +37,6 @@ import presentation.statics.PathOfFile;
 import beans.SeasonPlayer;
 import businesslogic.player.PlayerInfoBl;
 import businesslogicservice.player.PlayerInfoBlService;
-
 import common.datastructure.CombineSelectionCell;
 import common.statics.AgeRange;
 import common.statics.DataKind;
@@ -57,8 +56,12 @@ public class PlayerPanel extends MyPanel {
 	private String fieldList[] = { "teamName", "age", "position", "numOfGame", "numOfStart", "minute", "point", "shot", "totRebound", "assist", "steal", "block", "fault", "foul", "totalHit",
 			"totalShot", "threeHit", "threeShot", "three", "twoShot", "twoHit", "two", "shotEFF", "freeHit", "freeShot", "free", "offRebound", "defRebound", "playerEFF", "realShot", "threeEFF",
 			"freeEFF", "offReboundEFF", "defReboundEFF", "totReboundEFF", "assistEFF", "stealEFF", "blockEFF", "faultEFF", "useEFF", "offWinShare", "defWinShare", "winShare", "winSharePer48",
-			"offBoxPM", "defBoxPM", "BoxPM", "replaceValue" };
-	private String identity[] = { "rank", "photo", "playerId", "name" };
+			"offBoxPM", "defBoxPM", "BoxPM", "replaceValue"};
+	private String field[]={"球队", "年龄", "位置", "场数", "首发", "分钟", "得分", "命中率", "篮板", "助攻", "抢断", "盖帽", "失误", "犯规", "命中",
+			"出手", "三分命中", "三分出手", "三分命中率", "两分出手", "两分命中", "两分命中率", "投篮效率", "罚球命中", "罚球出手", "罚球命中率", "前篮板", "后篮板", "球员效率", "真实命中率", "三分效率",
+			"罚球效率", "进攻篮板效率", "防守篮板效率", "篮板效率", "助攻效率", "抢断效率", "盖帽效率", "失误率", "使用率", "offWinShare", "defWinShare", "winShare", "winSharePer48",
+			"进攻贡献", "防守贡献", "贡献", "替换价值"};
+	private String identity[] = { "排名", "头像", "球员编号", "姓名" };
 	private PlayerInfoBlService playerInfoBl = new PlayerInfoBl();
 
 	public PlayerPanel() {
@@ -122,7 +125,7 @@ public class PlayerPanel extends MyPanel {
 	}
 
 	private void createObjects() {
-		playerTableModel = new MyTableModel(fieldList);
+		playerTableModel = new MyTableModel(field);
 		rangeAndNameTableModel = new MyTableModel(identity);
 		playerShowTable = new MyTable(playerTableModel);
 		rangeAndNameTable = new MyTable(rangeAndNameTableModel) {
@@ -217,13 +220,19 @@ public class PlayerPanel extends MyPanel {
 			searchButton = new JButton("搜索");
 			playerInput = new JTextField();
 			//
-			ageRangeChoose = new MyComboBox<Object>(AgeRange.ageRanges);
-			positionChoose = new MyComboBox<Object>(Position.positions);
-			leagueChoose = new MyComboBox<Object>(League.leagues);
-			sortFieldChoose = new MyComboBox<Object>(Field.player_sort_fields);
-			dataKindChoose = new MyComboBox<Object>(DataKind.dataKinds);
+			String[] totOrAvg = { "场均数据", "总数据" };
+			String[] ageList = { "全部年龄", "小于等于22岁", "大于22岁小于等于25岁", "大于25岁小于等于30", "大于30岁小于等于35","大于36" };
+			String[] conferenceList = { "全联盟", "西部", "东部" };
+			String[] positionList = { "全部位置", "中锋", "前锋", "后卫" ,"控球后卫","得分后卫","大前锋","小前锋"};
+			String[] gameKind={"常规赛","季后赛"};
+			
+			ageRangeChoose = new MyComboBox<Object>(ageList);
+			positionChoose = new MyComboBox<Object>(positionList);
+			leagueChoose = new MyComboBox<Object>(conferenceList);
+			sortFieldChoose = new MyComboBox<Object>(field);
+			dataKindChoose = new MyComboBox<Object>(totOrAvg);
 			seasonChoose = new MyComboBox<Object>(Season.seasons_with_Career);
-			gameKindChoose = new MyComboBox<Object>(GameKind.gameKinds);
+			gameKindChoose = new MyComboBox<Object>(gameKind);
 		}
 
 		private void setComponentsLocation() {
