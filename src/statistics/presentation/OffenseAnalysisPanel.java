@@ -3,10 +3,10 @@ package statistics.presentation;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Point;
+import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -19,12 +19,19 @@ import javax.swing.SwingConstants;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
+import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
+import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PiePlot;
-import org.jfree.chart.servlet.ServletUtilities;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.BarRenderer3D;
+import org.jfree.chart.title.TextTitle;
 import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
+import beans.SeasonPlayer;
 import presentation.mycomponent.MyButton;
 import presentation.mycomponent.MyLabel;
 import presentation.mycomponent.MyPanel;
@@ -54,6 +61,7 @@ public class OffenseAnalysisPanel extends MyPanel {
 	private ShootDistanceTypePanel shootDistanceTypePanel;
 	private OnOFFPanel onOFFPanel;
 	private String playerID;
+	private MyLabel OnOFFPanelDataLabel;
 	private StatisticsBlService statisticsBl=new StatisticsBl();
 	public OffenseAnalysisPanel(String playerID){
 		this.playerID=playerID;
@@ -79,7 +87,7 @@ public class OffenseAnalysisPanel extends MyPanel {
 		public NavigationPanel(){
 		faceToOpponent=new MyLabel("面向对手进攻");
 		shotDistance=new MyLabel("个人进攻方式");
-		onOff=new MyLabel("在场/不在场对手表现");
+		onOff=new MyLabel("季后赛/常规赛进攻对比");
 		changeplayer=new MyLabel("更换球员");
 		portrait=new MyLabel();
 		playerInfo=new MyTextArea();
@@ -88,7 +96,7 @@ public class OffenseAnalysisPanel extends MyPanel {
 		playerInfo.setBounds(150,10,120,50);
 		faceToOpponent.setBounds(410, 35, 100, 30);
 		shotDistance.setBounds(510, 35, 100, 30);
-		onOff.setBounds(610, 35, 150, 30);
+		onOff.setBounds(610, 35, 180, 30);
 		this.add(portrait);
 		this.add(playerInfo);
 		this.add(changeplayer);
@@ -104,8 +112,8 @@ public class OffenseAnalysisPanel extends MyPanel {
 		playerInfo.setForeground(Color.black);
 		portrait.setBorder(BorderFactory.createLineBorder(Color.black));
 		changeplayer.addMouseListener(this);
-		playerInfo.setText("Kobe Bryant\nSG/24");
-		portrait.setMyIcon(new ImageIcon(PathOfFile.PLAYER_PORTRAIT_IMAGE+"Kobe Bryant.png"));//初始化换成ID
+		playerInfo.setText(playerID);
+		portrait.setMyIcon(new ImageIcon(PathOfFile.PLAYER_PORTRAIT_IMAGE+playerID+".png"));//初始化换成ID
 		}
 		
 		public void mouseClicked(MouseEvent e) {
@@ -149,6 +157,7 @@ public class OffenseAnalysisPanel extends MyPanel {
 					portrait.setMyIcon(new ImageIcon(PathOfFile.PLAYER_PORTRAIT_IMAGE+playerPanel.playerName[i].getplayerID()+".png"));
 					faceToTeamsPanel.setContent(playerPanel.playerName[i].getplayerID());
 					shootDistanceTypePanel.setContent(playerPanel.playerName[i].getplayerID());
+					onOFFPanel.setContent(playerPanel.playerName[i].getplayerID());
 					break;
 				}
 			}
@@ -198,7 +207,7 @@ public class OffenseAnalysisPanel extends MyPanel {
 		private void createObjects() {
 			faceToTeamsPanel=new FaceToTeamsPanel(playerID);
 			shootDistanceTypePanel=new ShootDistanceTypePanel(playerID);
-			onOFFPanel=new OnOFFPanel();
+			onOFFPanel=new OnOFFPanel(playerID);
 		}
 		private void setContainerPanel() {
 			card=new CardLayout();
@@ -324,11 +333,106 @@ public class OffenseAnalysisPanel extends MyPanel {
 		}
 	}
 	class OnOFFPanel extends MyPanel{
-		
 		private static final long serialVersionUID = 1L;
-
-		public OnOFFPanel(){
-			
+		private MyTextArea analysis=new MyTextArea();
+		public OnOFFPanel(String playerID){
+			OnOFFPanelDataLabel=new MyLabel();
+			OnOFFPanelDataLabel.setBounds(20,0,700,500);
+			analysis.setBounds(750, 50, 400, 250);
+			analysis.setFont(MyFont.SMALL_BOLD);
+			this.add(OnOFFPanelDataLabel);
+			this.add(analysis);
+			this.setContent(playerID);
 		}
+		private void setContent(String playerID) {
+			CategoryDataset dataset = getDataSet(playerID);
+			 JFreeChart chart = ChartFactory.createBarChart3D(  
+		                "季后赛/常规赛进攻对比", // 图表标题  
+		                "数据类型", // 目录轴的显示标签--横轴  
+		                "", // 数值轴的显示标签--纵轴  
+		                dataset, // 数据集  
+		                PlotOrientation.VERTICAL, // 图表方向：水平、  
+		                false, // 是否显示图例(对于简单的柱状图必须  
+		                false, // 是否生成工具  
+		                false // 是否生成URL链接  
+		                );
+			 processChart(chart);
+			 chart.setBackgroundPaint(null);
+			 chart.getPlot().setBackgroundAlpha(0.0f);
+			 
+			 CategoryPlot plot = (CategoryPlot) chart.getCategoryPlot(); 
+		     BarRenderer3D customBarRenderer = (BarRenderer3D) plot.getRenderer(); 
+		     customBarRenderer.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
+		     customBarRenderer.setBaseItemLabelsVisible(true);
+//		     customBarR/enderer.setSeriesItemLabelsVisible(0,true);
+//		     customBarRenderer.setBasePositiveItemLabelPosition(new ItemLabelPosition( 
+//		    		 ItemLabelAnchor.OUTSIDE12, TextAnchor.BASELINE_CENTER)); 
+//		    		 customBarRenderer.setItemLabelAnchorOffset(10D);// 设置柱形图上的文字偏离值 
+//		    		 customBarRenderer.setItemLabelsVisible(true); 
+//			 chart.getPlot().setBackgroundPaint(null);
+//			 chart.getPlot().setBackgroundAlpha(0.0f);
+		     File f =null;
+		        try {  
+		            f= new File("images/"+playerID+"offenseforcast.png");  
+		            ChartUtilities.saveChartAsPNG(f, chart, 700,500);  
+		        } catch (Exception e) {  
+		            e.printStackTrace();  
+		        }
+		        
+		        boolean isshotEFFBetter=statisticsBl.isBetterThanRegular(playerID, "shotEFF");
+				boolean isassistEFFBetter=statisticsBl.isBetterThanRegular(playerID, "assistEFF");
+				boolean isoffEFFBetter=statisticsBl.isBetterThanRegular(playerID, "offEFF");
+		        
+		        OnOFFPanelDataLabel.setIcon(new ImageIcon("images/"+playerID+"offenseforcast.png"));
+		        f.delete();
+		        statisticsBl=new StatisticsBl();
+
+				analysis.setText("根据"+playerID+"的常规赛季后赛数据\n运用假设检验分析对比得知该球员:\n季后赛投篮效率表现"+isBetter(isshotEFFBetter)+"常规赛"
+		        		+ "\n季后赛助攻效率表现"+isBetter(isassistEFFBetter)+"常规赛\n进攻效率表现"+isBetter(isoffEFFBetter)+"常规赛");
+		      }
+		private String isBetter(boolean isBetter){
+			if(!isBetter){
+				return "优于";
+			}
+			else{
+				return "差于";
+			}
+		}
+		private CategoryDataset getDataSet(String playerID) { 
+		 SeasonPlayer playerRegularPerform=statisticsBl.getRegularSeasonPlayer(playerID);
+		 SeasonPlayer playerPlayOffPerform=statisticsBl.getPlayOffSeasonPlayer(playerID);
+		 String xLine[]={"投篮效率%","助攻效率","进攻贡献值","贡献值"};
+		 String valueField[]={"shotEFF","assistEFF","offWinShare","winShare"};
+		 Object[] regular_value=playerRegularPerform.getSpeContent(valueField);
+		 Object[] playOff_value=playerPlayOffPerform.getSpeContent(valueField);
+		 DefaultCategoryDataset dataset = new DefaultCategoryDataset();  
+	       for(int i=0;i<xLine.length;i++){
+	    	   if(i==0){
+	    		   dataset.addValue((double)regular_value[i]*100,"常规赛",xLine[i]);
+		    	   dataset.addValue((double)playOff_value[i]*100,"季后赛",xLine[i]);
+	    	   }
+	    	   else{
+	    	   dataset.addValue((double)regular_value[i],"常规赛",xLine[i]);
+	    	   dataset.addValue((double)playOff_value[i],"季后赛",xLine[i]);
+	       }
+	       }
+	        return dataset;  }
+		private  void processChart(JFreeChart chart) {  
+		       CategoryPlot plot = chart.getCategoryPlot();  
+		       CategoryAxis domainAxis = plot.getDomainAxis();  
+		       ValueAxis rAxis = plot.getRangeAxis();  
+		       chart.getRenderingHints().put(RenderingHints.KEY_TEXT_ANTIALIASING,  
+		               RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);  
+		       TextTitle textTitle = chart.getTitle();  
+		       textTitle.setFont(MyFont.SMALL_PLAIN);  
+		       domainAxis.setTickLabelFont(MyFont.SMALLEST_PLAIN);  
+		       domainAxis.setLabelFont(MyFont.SMALL_PLAIN);  
+		       rAxis.setTickLabelFont(MyFont.SMALL_PLAIN);  
+		       rAxis.setLabelFont(MyFont.SMALL_PLAIN);  
+//		       chart.getLegend().setItemFont(MyFont.SMALLEST_PLAIN); 
+		       // renderer.setItemLabelGenerator(new LabelGenerator(0.0));  
+		       // renderer.setItemLabelFont(new Font("宋体", Font.PLAIN, 12));  
+		       // renderer.setItemLabelsVisible(true);  
+		   }
 	}
 }

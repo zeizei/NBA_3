@@ -311,9 +311,9 @@ public class SeasonAnalysisPanel extends MyPanel {
 		        double resultStl[]=statisticsBl.forcast(playerID, "steal");
 		        double resultFau[]=statisticsBl.forcast(playerID, "fault");
 
-				analysis.setText("根据"+playerID+"的常规赛数据\n运用参数估计得知该球员95%几率:\n得分在："+resultPoint[0]
-		        		+ "\n篮板在："+resultRebound[0]+"\n助攻在："+resultAst[0]+"\n抢断在："+resultStl[0]
-		        				+ "\n失误在："+resultFau[0]);
+				analysis.setText("根据"+playerID+"的常规赛数据\n运用参数估计得知该球员95%几率:\n得分在区间："+resultPoint[0]+"-"+resultPoint[1]
+		        		+ "\n篮板在："+resultRebound[0]+"-"+resultRebound[1]+"\n助攻在："+resultAst[0]+"-"+resultAst[1]+"\n抢断在："+resultStl[0]+"-"+resultStl[1]
+		        				+ "\n失误在："+resultFau[0]+"-"+resultFau[1]);
 		}
 		private CategoryDataset getDataSet(String playerID) { 
 		 SeasonPlayer playerRegularPerform=statisticsBl.getRegularSeasonPlayer(playerID);
