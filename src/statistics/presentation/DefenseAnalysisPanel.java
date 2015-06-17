@@ -119,7 +119,7 @@ public class DefenseAnalysisPanel extends MyPanel {
 		private void setContent(String playerID) {
 			CategoryDataset dataset = getDataSet1(playerID);
 			 JFreeChart chart = ChartFactory.createLineChart(  
-					 "在场/下场对比", // 图表标题  
+					 "常规赛季后赛对比", // 图表标题  
 		                "数据类型", // 目录轴的显示标签--横轴  
 		                "", // 数值轴的显示标签--纵轴  
 		                dataset, // 数据集  
@@ -217,9 +217,10 @@ public class DefenseAnalysisPanel extends MyPanel {
 			for(int i=0;i<playerPanel.playerName.length;i++){
 				this.playerPanel.playerName[i].addMouseListener(this);
 			}
+			playerPanel.search.addMouseListener(this);
 		}
 		public void mouseClicked(MouseEvent e) {
-			for(int i=0;i<10;i++){
+			for(int i=0;i<5;i++){
 				if(e.getSource().equals(playerPanel.playerName[i])){
 					portrait.setMyIcon(new ImageIcon(PathOfFile.PLAYER_PORTRAIT_IMAGE+playerPanel.playerName[i].getplayerID()+".png"));
 					playerInfo.setText(playerPanel.playerName[i].getText());
@@ -227,9 +228,35 @@ public class DefenseAnalysisPanel extends MyPanel {
 					break;
 				}
 			}
+			if(e.getSource().equals(playerPanel.search)){
+				 ArrayList<SeasonPlayer> searchResult=statisticsBl.vagueSearchPlayer(playerPanel.nameInput.getText());
+				 for(int i=0;i<5;i++){
+					 playerPanel.playerName[i].setText("");
+					 playerPanel.playerName[i].setID("");
+					 playerPanel.playerPortrait[i].setMyIcon(new
+							 ImageIcon(""));
+				 }
+				 if(searchResult.size()<5){
+				for (int i = 0; i < searchResult.size(); i++) {
+					playerPanel.playerName[i].setText(searchResult.get(i).getPlayerName());
+					playerPanel.playerName[i].setID(searchResult.get(i).getPlayerId());
+					playerPanel.playerPortrait[i].setMyIcon(new
+					 ImageIcon(PathOfFile.PLAYER_PORTRAIT_IMAGE+searchResult.get(i).getPlayerId()+".png"));
+				}
+			}
+				 else{
+						for (int i = 0; i < 5; i++) {
+							playerPanel.playerName[i].setText(searchResult.get(i).getPlayerName());
+							playerPanel.playerName[i].setID(searchResult.get(i).getPlayerId());
+							playerPanel.playerPortrait[i].setMyIcon(new
+							 ImageIcon(PathOfFile.PLAYER_PORTRAIT_IMAGE+searchResult.get(i).getPlayerId()+".png"));
+						}
+					}
+			
+			}
 		}
 		public void mouseEntered(MouseEvent e) {
-			for(int i=0;i<10;i++){
+			for(int i=0;i<5;i++){
 				if(e.getSource().equals(playerPanel.playerName[i])){
 					Point p=playerPanel.playerName[i].getLocation();
 					playerPanel.playerName[i].setLocation(p.x+3, p.y+3);
@@ -239,7 +266,7 @@ public class DefenseAnalysisPanel extends MyPanel {
 					
 		}
 		public void mouseExited(MouseEvent e) {
-			for(int i=0;i<10;i++){
+			for(int i=0;i<5;i++){
 				if(e.getSource().equals(playerPanel.playerName[i])){
 					Point p=playerPanel.playerName[i].getLocation();
 					playerPanel.playerName[i].setLocation(p.x-3, p.y-3);
