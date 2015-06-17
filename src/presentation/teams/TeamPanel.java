@@ -144,7 +144,6 @@ public class TeamPanel extends MyPanel {
 			this.setComponentsLocation();
 			this.setComponentsStyle();
 			this.initTable();
-			this.setTableStyle();
 			rangeAndNameTable.addMouseListener(new MouseListener() {
 
 				public void mouseReleased(MouseEvent e) {
@@ -201,6 +200,7 @@ public class TeamPanel extends MyPanel {
 			}
 			teamShowTable.updateUI();
 			rangeAndNameTable.updateUI();
+			setTableStyle();
 		}
 
 		private void setTableStyle() {
@@ -328,7 +328,7 @@ public class TeamPanel extends MyPanel {
 				this.setButton(searchButton);
 				this.setButton(findTeamButton);
 				teamInput.setOpaque(false);
-				teamInput.setForeground(MyColor.MY_WHITE);
+				teamInput.setForeground(MyColor.MY_BLACK);
 				teamInput.setFont(MyFont.SMALL_BOLD);
 			}
 

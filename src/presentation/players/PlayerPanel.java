@@ -65,7 +65,6 @@ public class PlayerPanel extends MyPanel {
 		this.createObjects();
 		this.setComponentsLocation();
 		this.initTable();
-		this.setTableStyle();
 		rangeAndNameTable.addMouseListener(new MouseListener() {
 
 			public void mouseReleased(MouseEvent e) {
@@ -111,6 +110,7 @@ public class PlayerPanel extends MyPanel {
 			}
 			playerShowTable.updateUI();
 			rangeAndNameTable.updateUI();
+			setTableStyle();
 		}
 	}
 

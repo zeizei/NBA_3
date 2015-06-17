@@ -278,43 +278,48 @@ public class StatisticsBl implements StatisticsBlService {
 	public ArrayList<PlayerShootType> getPlayOffSeasonShootType(String playerID) {
 		return statisticsDataBl.getShootType(playerID, 1);
 	}
-	public boolean isBetterThanRegular(String playerID,String field){
-	 SeasonPlayer playerPerform=getRegularSeasonPlayer(playerID);
-     ArrayList<GamePlayer> list=getPlayOffSeasonPlayersGames(playerID);
-     String[] field1={field};
-     double sum=0;
-     for(int i=0;i<list.size();i++){
-    	 Object[] o=list.get(i).getSpeContent(field1);
-     	sum+=(double)o[0];
-     }
-     double aver=sum/list.size();
-     double s=0;
-     for(int i=0;i<list.size();i++){
-     	s=s+(list.get(i).getShotEFF()-aver)*(list.get(i).getShotEFF()-aver);
-     }
-     s=Math.sqrt(s);
-     boolean isOut=hypothesisTest_z(aver, playerPerform.getPlayerEFF(), s, list.size(), 2, 0.025);
-     return isOut;
+
+	public boolean isBetterThanRegular(String playerID, String field) {
+		SeasonPlayer playerPerform = getRegularSeasonPlayer(playerID);
+		ArrayList<GamePlayer> list = getPlayOffSeasonPlayersGames(playerID);
+		String[] field1 = { field };
+		double sum = 0;
+		for (int i = 0; i < list.size(); i++) {
+			Object[] o = list.get(i).getSpeContent(field1);
+			sum += (double) o[0];
+		}
+		double aver = sum / list.size();
+		double s = 0;
+		for (int i = 0; i < list.size(); i++) {
+			s = s + (list.get(i).getShotEFF() - aver) * (list.get(i).getShotEFF() - aver);
+		}
+		s = Math.sqrt(s);
+		boolean isOut = hypothesisTest_z(aver, playerPerform.getPlayerEFF(), s, list.size(), 2, 0.025);
+		return isOut;
 	}
 
 	@Override
 	public double[] forcast(String playerID, String field) {
-	     ArrayList<GamePlayer> list=getRegularSeasonPlayersGames(playerID);
-	     String[] field1={field};
-	     double sum=0;
-	     for(int i=0;i<list.size();i++){
-	    	 Object[] o=list.get(i).getSpeContent(field1);
-	     	sum+=(double)o[0];
-	     }
-	     double aver=sum/list.size();
-	     double s=0;
-	     for(int i=0;i<list.size();i++){
-	     	s=s+(list.get(i).getShotEFF()-aver)*(list.get(i).getShotEFF()-aver);
-	     }
-	     s=Math.sqrt(s);
-	     double result[]=getRangeEstimation(aver,s,list.size(),0.025);
-	     result[0]=Method.cutTail(result[0]);
-	     result[1]=Method.cutTail(result[1]);
-	     return result;
+		ArrayList<GamePlayer> list = getRegularSeasonPlayersGames(playerID);
+		String[] field1 = { field };
+		double sum = 0;
+		for (int i = 0; i < list.size(); i++) {
+			Object[] o = list.get(i).getSpeContent(field1);
+			sum += (double) o[0];
 		}
+		double aver = sum / list.size();
+		double s = 0;
+		for (int i = 0; i < list.size(); i++) {
+			s = s + (list.get(i).getShotEFF() - aver) * (list.get(i).getShotEFF() - aver);
+		}
+		s = Math.sqrt(s);
+		double result[] = getRangeEstimation(aver, s, list.size(), 0.025);
+		result[0] = Method.cutTail(result[0]);
+		result[1] = Method.cutTail(result[1]);
+		return result;
+	}
+
+	public ArrayList<SeasonPlayer> vagueSearchPlayer(String str) {
+		return statisticsDataBl.vagueSearchPlayer(str);
+	}
 }
