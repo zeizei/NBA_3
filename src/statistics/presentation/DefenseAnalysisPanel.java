@@ -6,6 +6,7 @@ import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -23,6 +24,8 @@ import org.jfree.chart.title.TextTitle;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 
+import beans.GamePlayer;
+import beans.SeasonPlayer;
 import presentation.mycomponent.MyComboBox;
 import presentation.mycomponent.MyLabel;
 import presentation.mycomponent.MyPanel;
@@ -30,6 +33,7 @@ import presentation.mycomponent.MyTextArea;
 import presentation.statics.MyFont;
 import presentation.statics.NUMBER;
 import presentation.statics.PathOfFile;
+import statistics.analysisbeans.PlayerOnOrOff;
 import statistics.bl.StatisticsBl;
 import statistics.blservice.StatisticsBlService;
 
@@ -41,11 +45,11 @@ public class DefenseAnalysisPanel extends MyPanel {
 	private MyLabel portrait;
 	private MyTextArea playerInfo;
 	private MyLabel changeplayer;
-	private String seasonStr[]={"13-14","14-15"};
 	private MyLabel defenseLabel;
-	private MyComboBox<String> season;
+	private String playerID;
 	private StatisticsBlService statisticsBl=new StatisticsBl();
 	public DefenseAnalysisPanel(String playerID) {
+		this.playerID=playerID;
 		navigationPanel=new NavigationPanel();
 		contentPanel=new ContentPanel(playerID);
 		navigationPanel.setBounds(0, 0, NUMBER.FRAME_WIDTH-150,100);
@@ -58,15 +62,12 @@ public class DefenseAnalysisPanel extends MyPanel {
 		private static final long serialVersionUID = 1L;
 		public NavigationPanel(){
 		changeplayer=new MyLabel("更换球员");
-		season=new MyComboBox<String>(seasonStr);
 		portrait=new MyLabel();
 		playerInfo=new MyTextArea();
 		changeplayer.setBounds(130,60,120,40);
-		season.setBounds(260, 35, 100, 30);
 		portrait.setBounds(10,10,100,80);
 		playerInfo.setBounds(130,10,120,50);
 		this.add(portrait);
-		this.add(season);
 		this.add(playerInfo);
 		this.add(changeplayer);
 		playerInfo.setFont(MyFont.SMALL_PLAIN);
@@ -75,8 +76,8 @@ public class DefenseAnalysisPanel extends MyPanel {
 		playerInfo.setForeground(Color.black);
 		portrait.setBorder(BorderFactory.createLineBorder(Color.black));
 		changeplayer.addMouseListener(this);
-		playerInfo.setText("Kobe Bryant\nSG/24");
-		portrait.setMyIcon(new ImageIcon(PathOfFile.PLAYER_PORTRAIT_IMAGE+"Kobe Bryant.png"));
+		playerInfo.setText(playerID);
+		portrait.setMyIcon(new ImageIcon(PathOfFile.PLAYER_PORTRAIT_IMAGE+playerID+".png"));//初始化换成ID
 		}
 		
 		public void mouseClicked(MouseEvent e) {
@@ -143,34 +144,53 @@ public class DefenseAnalysisPanel extends MyPanel {
 //			 chart.getPlot().setBackgroundPaint(null);
 //			 chart.getPlot().setBackgroundAlpha(0.0f);
 		        try {  
-		            File f = new File("images/"+playerID+".png");  
+		            File f = new File("images/"+playerID+"_defense.png");  
 		            ChartUtilities.saveChartAsPNG(f, chart, 700,500);  
 		        } catch (Exception e) {  
 		            e.printStackTrace();  
 		        }
-		        
-		        defenseLabel.setIcon(new ImageIcon("images/"+playerID+".png"));
-		        analysis.setText("根据Kobe Bryant的常规赛季后赛数据\n运用假设检验分析对比得知该球员:\n季后赛得分表现优于常规赛\n季后赛助攻表现优于常规赛\n季后赛助攻表现优于常规赛\n季后赛助攻表现优于常规赛\n季后赛助攻表现优于常规赛\n");
+				boolean isoffReboundEFFBetter=statisticsBl.isBetterThanRegular(playerID, "offReboundEFF");
+				boolean isdefReboundEFFBetter=statisticsBl.isBetterThanRegular(playerID, "defReboundEFF");
+				boolean istotReboundEFFBetter=statisticsBl.isBetterThanRegular(playerID, "totReboundEFF");
+				boolean isdefEFFReboundEFFBetter=statisticsBl.isBetterThanRegular(playerID, "defEFF");
+		        defenseLabel.setIcon(new ImageIcon("images/"+playerID+"_defense.png"));
+		        analysis.setText("根据"+playerID+"的常规赛季后赛数据\n运用假设检验分析对比得知该球员:\n季后赛进攻篮板表现"+isBetter(isoffReboundEFFBetter)+"常规赛"
+		        		+ "\n季后赛防守篮板表现"+isBetter(isdefReboundEFFBetter)+"常规赛\n总篮板表现"+isBetter(istotReboundEFFBetter)+"常规赛\n季后赛防守效率"+isBetter(isdefEFFReboundEFFBetter)+"常规赛");
 		        nickName.setIcon(new ImageIcon("images/statistics/bigMatchPlayer.png"));
 		}
+		private String isBetter(boolean isBetter){
+			if(!isBetter){
+				return "优于";
+			}
+			else{
+				return "差于";
+			}
+		}
 		private CategoryDataset getDataSet1(String playerID) {
-			 statisticsBl.getRegularSeasonCourtPerform(playerID);
+			 SeasonPlayer playOffSeasonPerform=statisticsBl.getPlayOffSeasonPlayer(playerID);
+			 SeasonPlayer regularSeasonPerform=statisticsBl.getRegularSeasonPlayer(playerID);
+			
 			 DefaultCategoryDataset dataset = new DefaultCategoryDataset(); 
 			 String[] x={
-					 "有效命中%","进攻篮板率","防守篮板率","总篮板率","助攻率","抢断率","盖帽率","失误率"
-			 };//x轴
-			 double[] onCourt_Value={
-					 50,27,75,51,5,8,7,15
+					"offReboundEFF","defReboundEFF","defWinShare","winShare"
 			 };
-			 double[] offCourt_Value={
-					 53,11,21,4,3,1,1,15
-			 };
-			 String onCourtLine="在场";
-			 String offCourtLine="不在场";
-		        for(int i=0;i<x.length;i++){
-		        	dataset.addValue(onCourt_Value[i], onCourtLine, x[i]);
-		        	dataset.addValue(offCourt_Value[i], offCourtLine, x[i]);
-		        }
+			 boolean hasPlayOff=true;
+			 String line_playOff="季后赛";
+			 String line_regular="常规赛";
+			 Object[]  playOffValue = null;
+			 if(playOffSeasonPerform.getSpeContent(x)==null){
+				 hasPlayOff=false;
+			 }
+			 else{
+				 playOffValue= playOffSeasonPerform.getSpeContent(x);
+			 }
+			 Object[]  regularValue= regularSeasonPerform.getSpeContent(x);
+			 for(int i=0;i<x.length;i++){
+				 dataset.setValue((double)regularValue[i], line_regular, x[i]);
+				 if(hasPlayOff){
+				 dataset.setValue((double)playOffValue[i], line_playOff, x[i]);
+				 }
+			 }
 		        return dataset;  
 		}
 		private  void processChart(JFreeChart chart) {  
