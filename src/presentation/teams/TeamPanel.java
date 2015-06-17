@@ -52,8 +52,8 @@ public class TeamPanel extends MyPanel {
 		playOffButton = new MyButton("季后赛");
 		regularButton.setBounds(600, 20, 100, 30);
 		playOffButton.setBounds(900, 20, 100, 30);
-		regularButton.setBackground(MyColor.MIDDLE_COLOR);
-		playOffButton.setBackground(MyColor.MIDDLE_COLOR);
+		regularButton.setBackground(MyColor.MIDDLE_ORANGE);
+		playOffButton.setBackground(MyColor.MIDDLE_ORANGE);
 		contentPanel.setBounds(0, 20, 1250, 600);
 		this.add(regularButton);
 		regularButton.addMouseListener(new MouseListener() {
@@ -65,11 +65,11 @@ public class TeamPanel extends MyPanel {
 			}
 
 			public void mouseExited(MouseEvent arg0) {
-				regularButton.setBackground(MyColor.MIDDLE_COLOR);
+				regularButton.setBackground(MyColor.MIDDLE_ORANGE);
 			}
 
 			public void mouseEntered(MouseEvent arg0) {
-				regularButton.setBackground(MyColor.DEEP_COLOR);
+				regularButton.setBackground(MyColor.DEEP_ORANGE);
 			}
 
 			public void mouseClicked(MouseEvent arg0) {
@@ -87,16 +87,16 @@ public class TeamPanel extends MyPanel {
 			}
 
 			public void mouseExited(MouseEvent arg0) {
-				playOffButton.setBackground(MyColor.MIDDLE_COLOR);
+				playOffButton.setBackground(MyColor.MIDDLE_ORANGE);
 			}
 
 			public void mouseEntered(MouseEvent arg0) {
-				playOffButton.setBackground(MyColor.DEEP_COLOR);
+				playOffButton.setBackground(MyColor.DEEP_ORANGE);
 			}
 
 			public void mouseClicked(MouseEvent arg0) {
 				contentPanel.showPlayOffPanel();
-				Main.mainFrame.changeBackGround(new ImageIcon(PathOfFile.HOTSPOT + "background_hotspot.png"));
+				Main.mainFrame.changeBackGround(new ImageIcon(PathOfFile.TEAM_IMAGE + "background_playOff_team.png"));
 				Main.mainFrame.isPlayOff = 1;
 			}
 		});
@@ -137,8 +137,11 @@ public class TeamPanel extends MyPanel {
 		private JScrollPane teamShowPane;// 展示界面
 		private MyTable teamShowTable, rangeAndNameTable;
 		private MyTableModel teamShowTableModel, rangeAndNameTableModel;
-		private String fieldList[] = { "numOfWin", "numOfLose", "avgAge", "point", "shot", "three", "two", "free", "totRebound", "assist", "steal", "block", "fault", "foul", "minute", "totalHit", "totalShot", "threeHit", "threeShot", "twoShot", "twoHit", "freeHit", "freeShot", "offRebound", "defRebound", "offEFF", "defEFF", "pace", "freeEFF", "threeEFF", "realShot", "shotEFF", "faultEFF", "offReboundEFF", "defReboundEFF" };// 数据展示
-		private String field[] = { "赢场数", "输场数", "球队平均年龄", "得分", "命中率", "三分命中率", "两分命中率", "罚球命中率", "篮板", "助攻", "抢断", "盖帽", "失误","犯规", "分钟", "命中", "出手", "三分命中", "三分出手", " 两分出手", " 两分命中", "罚球命中", "罚球出手", "前篮板", "后篮板", "进攻效率", "防守效率", "回合数", "罚球效率", "三分效率", "真实命中率", "投篮效率", "失误率" ,"进攻篮板效率","防守篮板效率"};
+		private String fieldList[] = { "numOfWin", "numOfLose", "avgAge", "point", "shot", "three", "two", "free", "totRebound", "assist", "steal", "block", "fault", "foul", "minute", "totalHit",
+				"totalShot", "threeHit", "threeShot", "twoShot", "twoHit", "freeHit", "freeShot", "offRebound", "defRebound", "offEFF", "defEFF", "pace", "freeEFF", "threeEFF", "realShot", "shotEFF",
+				"faultEFF", "offReboundEFF", "defReboundEFF" };// 数据展示
+		private String field[] = { "赢场数", "输场数", "球队平均年龄", "得分", "命中率", "三分命中率", "两分命中率", "罚球命中率", "篮板", "助攻", "抢断", "盖帽", "失误", "犯规", "分钟", "命中", "出手", "三分命中", "三分出手", " 两分出手", " 两分命中", "罚球命中",
+				"罚球出手", "前篮板", "后篮板", "进攻效率", "防守效率", "回合数", "罚球效率", "三分效率", "真实命中率", "投篮效率", "失误率", "进攻篮板效率", "防守篮板效率" };
 		private String identity[] = { "排名", "队标", "队名", "赛季" };// 球队标识
 		private TeamInfoBlService teamInfoBl = new TeamInfoBl();
 
@@ -240,7 +243,8 @@ public class TeamPanel extends MyPanel {
 			if (fixedSelectedIndex != selectedIndex) {
 				if (isFixedTable) {
 					teamShowTable.setRowSelectionInterval(fixedSelectedIndex, fixedSelectedIndex);
-				} else {
+				}
+				else {
 					rangeAndNameTable.setRowSelectionInterval(selectedIndex, selectedIndex);
 				}
 			}
@@ -265,7 +269,8 @@ public class TeamPanel extends MyPanel {
 				public Class getColumnClass(int column) {
 					if (column == 1) {// 要这样定义table，要重写这个方法0，0的意思就是别的格子的类型都跟0,0的一样。
 						return ImageIcon.class;
-					} else {
+					}
+					else {
 						return getValueAt(0, 0).getClass();
 					}
 				}
@@ -301,9 +306,9 @@ public class TeamPanel extends MyPanel {
 				searchButton = new JButton("搜索");
 				findTeamButton = new JButton(new ImageIcon("images/players/find_normal.png"));
 
-				String[] league={"全联盟", "西部", "东部" };
-				String[] dataKind={"场均数据","总数据"};
-				
+				String[] league = { "全联盟", "西部", "东部" };
+				String[] dataKind = { "场均数据", "总数据" };
+
 				seasonChoose = new MyComboBox<>(Season.all_seasons);
 				dataKindChoose = new MyComboBox<Object>(dataKind);
 				leagueChoose = new MyComboBox<Object>(league);
@@ -341,7 +346,7 @@ public class TeamPanel extends MyPanel {
 				button.setBorderPainted(false);
 				button.setFont(MyFont.SMALLEST_BOLD);
 				button.setForeground(MyColor.MY_WHITE);
-				button.setBackground(MyColor.MIDDLE_COLOR);
+				button.setBackground(MyColor.MIDDLE_ORANGE);
 				button.addMouseListener(this);
 			}
 
@@ -351,13 +356,16 @@ public class TeamPanel extends MyPanel {
 					int dataKindInt = dataKindChoose.getSelectedIndex();
 					int leagueInt = leagueChoose.getSelectedIndex();
 					int sortCellInt = sortFieldChoose.getSelectedIndex();
-					ArrayList<SeasonTeam> seasonTeamList = teamInfoBl.getSeasonTeam(Season.all_seasons[seasonInt], DataKind.dataKinds[dataKindInt], League.leagues[leagueInt], Field.team_sort_field[sortCellInt]);
+					ArrayList<SeasonTeam> seasonTeamList = teamInfoBl.getSeasonTeam(Season.all_seasons[seasonInt], DataKind.dataKinds[dataKindInt], League.leagues[leagueInt],
+							Field.team_sort_field[sortCellInt]);
 					fillTable(seasonTeamList);
-				} else if (e.getSource().equals(findTeamButton)) {
+				}
+				else if (e.getSource().equals(findTeamButton)) {
 					String str = teamInput.getText();
 					if (str.equals("") || str == null) {
 						JOptionPane.showMessageDialog(Main.mainFrame, "请输入要查找的球队");// 弹出提示
-					} else {
+					}
+					else {
 						ArrayList<SeasonTeam> seasonTeamList = teamInfoBl.vagueSearch(str);
 						fillTable(seasonTeamList);
 					}
@@ -366,17 +374,19 @@ public class TeamPanel extends MyPanel {
 
 			public void mouseEntered(MouseEvent e) {
 				if (e.getSource().equals(searchButton)) {
-					searchButton.setBackground(MyColor.DEEP_COLOR);
-				} else if (e.getSource().equals(findTeamButton)) {
-					findTeamButton.setBackground(MyColor.DEEP_COLOR);
+					searchButton.setBackground(MyColor.DEEP_ORANGE);
+				}
+				else if (e.getSource().equals(findTeamButton)) {
+					findTeamButton.setBackground(MyColor.DEEP_ORANGE);
 				}
 			}
 
 			public void mouseExited(MouseEvent e) {
 				if (e.getSource().equals(searchButton)) {
-					searchButton.setBackground(MyColor.MIDDLE_COLOR);
-				} else if (e.getSource().equals(findTeamButton)) {
-					findTeamButton.setBackground(MyColor.MIDDLE_COLOR);
+					searchButton.setBackground(MyColor.MIDDLE_ORANGE);
+				}
+				else if (e.getSource().equals(findTeamButton)) {
+					findTeamButton.setBackground(MyColor.MIDDLE_ORANGE);
 				}
 			}
 
@@ -417,7 +427,7 @@ public class TeamPanel extends MyPanel {
 			search = new MyButton("搜索");
 			search.setBounds(200, 0, 100, 30);
 			search.setBackground(MyColor.MIDDLE_ORANGE);
-			search.setForeground(MyColor.MY_BLACK);
+			search.setForeground(MyColor.MY_WHITE);
 			this.add(search);
 			search.addMouseListener(new MouseListener() {
 
@@ -428,9 +438,11 @@ public class TeamPanel extends MyPanel {
 				}
 
 				public void mouseExited(MouseEvent e) {
+					search.setBackground(MyColor.MIDDLE_ORANGE);
 				}
 
 				public void mouseEntered(MouseEvent e) {
+					search.setBackground(MyColor.DEEP_ORANGE);
 				}
 
 				public void mouseClicked(MouseEvent e) {

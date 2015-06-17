@@ -108,7 +108,7 @@ public class Field {
 	public static final Field attendance = new Field("attendance");
 	//
 
-	public static final Field[] player_sort_fields = { teamName, age, position, numOfGame, numOfStart, minute, point, shot, totRebound, assist, steal, block, fault, foul, totalHit, totalShot,
+	public static final Field[] player_sort_fields = { point, teamName, age, position, numOfGame, numOfStart, minute, shot, totRebound, assist, steal, block, fault, foul, totalHit, totalShot,
 			threeHit, threeShot, three, twoShot, twoHit, two, shotEFF, freeHit, freeShot, free, offRebound, defRebound, playerEFF, realShot, threeEFF, freeEFF, offReboundEFF, defReboundEFF,
 			totReboundEFF, assistEFF, stealEFF, blockEFF, faultEFF, useEFF, offWinShare, defWinShare, winShare, winSharePer48, offBoxPM, defBoxPM, BoxPM, replaceValue };
 

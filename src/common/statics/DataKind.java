@@ -20,4 +20,5 @@ public class DataKind {
 	public static final DataKind total = new DataKind(1);
 	//
 	public static final DataKind[] dataKinds = { average, total };
+	public static final String[] dataKindsStr = { "场均数据", "总和数据" };
 }

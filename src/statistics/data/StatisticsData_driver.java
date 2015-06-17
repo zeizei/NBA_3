@@ -53,7 +53,14 @@ public class StatisticsData_driver {
 	}
 
 	public void testVagueSearch() {
-		ArrayList<SeasonPlayer> seasonPlayerList = data.vagueSearchPlayer("du");
+		ArrayList<SeasonPlayer> seasonPlayerList = data.vagueSearchPlayer("brook");
+		for (int i = 0; i < seasonPlayerList.size(); i++) {
+			System.out.println(seasonPlayerList.get(i));
+		}
+	}
+
+	public void testGetPlayOffPlayer() {
+		ArrayList<SeasonPlayer> seasonPlayerList = data.getPlayOffPlayer();
 		for (int i = 0; i < seasonPlayerList.size(); i++) {
 			System.out.println(seasonPlayerList.get(i));
 		}
@@ -67,7 +74,7 @@ public class StatisticsData_driver {
 		// driver.testGetDistanceShoot();
 		// driver.testGetOpponentShoot();
 		// driver.testGetTypeShoot();
-		driver.testVagueSearch();
+		// driver.testVagueSearch();
+		driver.testGetPlayOffPlayer();
 	}
-
 }

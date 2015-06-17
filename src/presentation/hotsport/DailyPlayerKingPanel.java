@@ -17,7 +17,7 @@ import common.statics.Season;
 public class DailyPlayerKingPanel extends PlayerKingPanel implements MouseListener {
 
 	private static final long serialVersionUID = 1L;
-	private String[] fieldString = new String[] { Field.point.toString(), Field.totRebound.toString(), Field.assist.toString(), Field.steal.toString(), Field.block.toString() };
+	private String[] fieldString = new String[] { "得分", "篮板", "助攻", "抢断", "盖帽" };
 	private Field[] dailyPlayerKingFields = { Field.point, Field.totRebound, Field.assist, Field.steal, Field.block };
 	private MyButton[] fieldButton = new MyButton[5];// 属性按钮
 	private final int buttonWidth = 180;

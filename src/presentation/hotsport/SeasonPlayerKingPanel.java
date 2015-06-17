@@ -20,8 +20,7 @@ public class SeasonPlayerKingPanel extends PlayerKingPanel implements MouseListe
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String[] fieldString = new String[] { Field.point.toString(), Field.totRebound.toString(), Field.assist.toString(), Field.steal.toString(), Field.block.toString(), Field.shot.toString(),
-			Field.three.toString(), Field.free.toString() };
+	private String[] fieldString = new String[] { "得分", "篮板", "助攻", "抢断", "盖帽", "总命中率", "三分命中率", "罚球命中率" };
 	private Field[] seasonPlayerKingFields = { Field.point, Field.totRebound, Field.assist, Field.steal, Field.block, Field.shot, Field.three, Field.free };
 	private MyButton[] fieldButton = new MyButton[8];// 属性按钮
 	private MyLabel[] type = new MyLabel[5];// 标识
@@ -118,7 +117,6 @@ public class SeasonPlayerKingPanel extends PlayerKingPanel implements MouseListe
 		for (int i = 0; i < 8; i++) {
 			if (e.getSource().equals(fieldButton[i])) {
 				fieldButton[i].setBackground(MyColor.DEEP_COLOR);
-				;
 				break;
 			}
 		}

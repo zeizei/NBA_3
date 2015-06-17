@@ -21,4 +21,5 @@ public class GameKind {
 	public static final GameKind playOff_game = new GameKind(1);
 	//
 	public static final GameKind[] gameKinds = { regular_game, playOff_game };
+	public static final String[] gameKindStr = { "常规赛", "季后赛" };
 }
