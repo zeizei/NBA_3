@@ -331,9 +331,7 @@ public class StatisticsBl implements StatisticsBlService {
 		return statisticsDataBl.vagueSearchPlayer(str);
 	}
 
-	@Override
 	public ArrayList<SeasonPlayer> getPlayOffPlayer() {
-		// TODO Auto-generated method stub
-		return null;
+		return statisticsDataBl.getPlayOffPlayer();
 	}
 }

@@ -18,6 +18,9 @@ import presentation.mycomponent.MyLabel;
 import presentation.mycomponent.MyPanel;
 import presentation.statics.MyFont;
 import presentation.statics.PathOfFile;
+import statistics.bl.StatisticsBl;
+import statistics.blservice.StatisticsBlService;
+import beans.SeasonPlayer;
 import businesslogic.hot.PlayerHotBl;
 import businesslogicservice.hot.PlayerHotBlSrevice;
 import common.datastructure.PlayerKingInfo;
@@ -27,7 +30,8 @@ import common.statics.Season;
 public class FindPlayerPopupPanel extends JPopupMenu {
 	private static final long serialVersionUID = 1L;
 	public FindPlayerPanel playerPanel;
-
+	private StatisticsBlService statisticsBl=new StatisticsBl();
+	
 	public FindPlayerPopupPanel() {
 		playerPanel = new FindPlayerPanel();
 		playerPanel.setPreferredSize(new Dimension(600, 400));
@@ -46,9 +50,7 @@ public class FindPlayerPopupPanel extends JPopupMenu {
 		private static final long serialVersionUID = 1L;
 
 		public FindPlayerPanel() {
-			PlayerHotBlSrevice pbs = new PlayerHotBl();
-			ArrayList<PlayerKingInfo> initArray = pbs.getPlayerKingOfSeason(
-					Season.this_season, Field.point);
+			ArrayList<SeasonPlayer> initArray =statisticsBl.getPlayOffPlayer(); 
 			search = new JButton("查找");
 			search.setBounds(415, 10, 100, 40);
 			search.addMouseListener(this);
