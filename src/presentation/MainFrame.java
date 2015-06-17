@@ -222,7 +222,7 @@ public class MainFrame extends JFrame {
 				changeAllBackground();
 				statisticsPanelButton.setIcon(statistics_press);
 				changeAllIsPress();
-				hotSportPanelButton.setIsPress(true);
+				statisticsPanelButton.setIsPress(true);
 				Main.mainFrame.changeBackGround(new ImageIcon("images/statistics/background_season.png"));
 				contentPanel.showStatisticsPanel();
 			}
