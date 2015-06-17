@@ -31,8 +31,7 @@ public class SeasonTeamKingPanel extends MyPanel implements MouseListener {
 	 */
 	private static final long serialVersionUID = 1L;
 	private MyButton[] fieldButton = new MyButton[8];// 属性按钮
-	private String[] fieldString = new String[] { Field.point.toString(), Field.totRebound.toString(), Field.assist.toString(), Field.steal.toString(), Field.block.toString(), Field.shot.toString(),
-			Field.three.toString(), Field.free.toString() };
+	private String[] fieldString = new String[] { "得分", "篮板", "助攻", "抢断", "盖帽", "总命中率", "三分命中率", "罚球命中率" };
 	private Field[] seasonTeamKingField = { Field.point, Field.totRebound, Field.assist, Field.steal, Field.block, Field.shot, Field.three, Field.free };
 	private final int labelHeight = 100;
 	private final int labelWidth = 220;
@@ -176,8 +175,11 @@ public class SeasonTeamKingPanel extends MyPanel implements MouseListener {
 					logo[i].setMyIcon(teamIcon);
 				}
 				team[i].setText(temp.getTeamName());
+				team[i].setForeground(MyColor.MY_WHITE);
 				value[i].setText(String.valueOf(temp.getValue()));
+				value[i].setForeground(MyColor.MY_WHITE);
 				league[i].setText(temp.getLeague());
+				league[i].setForeground(MyColor.MY_WHITE);
 			}
 		}
 	}

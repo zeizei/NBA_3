@@ -7,6 +7,7 @@ import javax.swing.SwingConstants;
 
 import presentation.mycomponent.MyLabel;
 import presentation.mycomponent.MyPanel;
+import presentation.statics.MyColor;
 import presentation.statics.MyFont;
 import presentation.statics.NUMBER;
 import presentation.statics.PathOfFile;
@@ -14,7 +15,6 @@ import beans.generalTeam;
 import businesslogic.hot.PlayerHotBl;
 import businesslogic.team.TeamInfoBl;
 import businesslogicservice.hot.PlayerHotBlSrevice;
-
 import common.datastructure.PlayerKingInfo;
 import common.statics.Season;
 
@@ -76,8 +76,11 @@ public class PlayerKingPanel extends MyPanel {
 				PlayerKingInfo temp = this.playerKing.get(i);
 				portrait[i].setMyIcon(new ImageIcon(PathOfFile.PLAYER_PORTRAIT_IMAGE + temp.getPlayerId() + ".png"));
 				name[i].setText(temp.getPlayerName());
+				name[i].setForeground(MyColor.MY_WHITE);
 				position[i].setText(temp.getPosition());
+				position[i].setForeground(MyColor.MY_WHITE);
 				value[i].setText(String.valueOf(temp.getValue()));
+				value[i].setForeground(MyColor.MY_WHITE);
 				String teamName = temp.getTeamName();
 				ImageIcon teamIcon = null;
 				if (teamName.equals("TOT")) {
