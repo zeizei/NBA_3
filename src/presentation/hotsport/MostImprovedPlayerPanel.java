@@ -26,7 +26,7 @@ import common.statics.Season;
 
 public class MostImprovedPlayerPanel extends MyPanel implements MouseListener {
 
-	private String[] fieldString = new String[] { Field.point.toString(), Field.totRebound.toString(), Field.assist.toString(), Field.steal.toString(), Field.block.toString() };
+	private String[] fieldString = new String[] { "得分", "篮板", "助攻", "抢断", "盖帽" };
 	private Field[] mostImproveField = new Field[] { Field.point, Field.totRebound, Field.assist, Field.steal, Field.block };
 	private final int labelHeight = 100;
 	private final int labelWidth = 180;
@@ -134,8 +134,11 @@ public class MostImprovedPlayerPanel extends MyPanel implements MouseListener {
 				PlayerHotInfo temp = this.playerHotList.get(i);
 				Portrait[i].setMyIcon(new ImageIcon(PathOfFile.PLAYER_PORTRAIT_IMAGE + temp.getPlayerId() + ".png"));
 				upgrade[i].setText(String.valueOf(temp.getUpgradeRate()));
+				upgrade[i].setForeground(MyColor.MY_WHITE);
 				value[i].setText(String.valueOf(temp.getValue()));
+				value[i].setForeground(MyColor.MY_WHITE);
 				nameAndPosition[i].setText(temp.getPlayerName() + "\n" + temp.getPosition());
+				nameAndPosition[i].setForeground(MyColor.MY_WHITE);
 				String teamName = temp.getTeamName();
 				ImageIcon teamIcon = null;
 				generalTeam generalTeam = new TeamInfoBl().getGeneralTeam(teamName, Season.this_season);
@@ -171,7 +174,8 @@ public class MostImprovedPlayerPanel extends MyPanel implements MouseListener {
 			}
 			if (e.getSource().equals(team[i])) {
 				String teamName = playerHotList.get(i).getTeamName();
-				new SonFrame(teamName, SonFrame.teamCard);
+				generalTeam generalTeam = new TeamInfoBl().getGeneralTeam(teamName, Season.this_season);
+				new SonFrame(generalTeam, SonFrame.teamCard);
 				break;
 			}
 		}

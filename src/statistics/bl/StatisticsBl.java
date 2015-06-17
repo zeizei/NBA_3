@@ -280,21 +280,27 @@ public class StatisticsBl implements StatisticsBlService {
 	}
 
 	public boolean isBetterThanRegular(String playerID, String field) {
-		SeasonPlayer playerPerform = getRegularSeasonPlayer(playerID);
-		ArrayList<GamePlayer> list = getPlayOffSeasonPlayersGames(playerID);
+		ArrayList<GamePlayer> playOffMatchList =getPlayOffSeasonPlayersGames(playerID);
+		 ArrayList<GamePlayer> regularMatchList =getRegularSeasonPlayersGames(playerID);
 		String[] field1 = { field };
 		double sum = 0;
-		for (int i = 0; i < list.size(); i++) {
-			Object[] o = list.get(i).getSpeContent(field1);
+		double sum_regular=0;
+		for (int i = 0; i < regularMatchList.size(); i++) {
+			Object[] o = regularMatchList.get(i).getSpeContent(field1);
+			sum_regular += (double) o[0];
+		}
+		for (int i = 0; i < playOffMatchList.size(); i++) {
+			Object[] o = playOffMatchList.get(i).getSpeContent(field1);
 			sum += (double) o[0];
 		}
-		double aver = sum / list.size();
+		double aver = sum / playOffMatchList.size();
+		double aver_regular =sum_regular /regularMatchList.size();
 		double s = 0;
-		for (int i = 0; i < list.size(); i++) {
-			s = s + (list.get(i).getShotEFF() - aver) * (list.get(i).getShotEFF() - aver);
+		for (int i = 0; i < playOffMatchList.size(); i++) {
+			s = s + (playOffMatchList.get(i).getShotEFF() - aver) * (playOffMatchList.get(i).getShotEFF() - aver);
 		}
-		s = Math.sqrt(s);
-		boolean isOut = hypothesisTest_z(aver, playerPerform.getPlayerEFF(), s, list.size(), 2, 0.025);
+		s = Math.sqrt(s)/(playOffMatchList.size()-1);
+		boolean isOut = hypothesisTest_z(aver,aver_regular, s, playOffMatchList.size(), 1, 0.025);
 		return isOut;
 	}
 
@@ -312,14 +318,22 @@ public class StatisticsBl implements StatisticsBlService {
 		for (int i = 0; i < list.size(); i++) {
 			s = s + (list.get(i).getShotEFF() - aver) * (list.get(i).getShotEFF() - aver);
 		}
-		s = Math.sqrt(s);
-		double result[] = getRangeEstimation(aver, s, list.size(), 0.025);
+		s = Math.sqrt(s)/(list.size()-1);
+		double result[] = getRangeEstimation(aver, s,81, 0.025);
 		result[0] = Method.cutTail(result[0]);
 		result[1] = Method.cutTail(result[1]);
+		System.out.println();
+		System.out.println(result[0]+" "+result[1]);
 		return result;
 	}
 
 	public ArrayList<SeasonPlayer> vagueSearchPlayer(String str) {
 		return statisticsDataBl.vagueSearchPlayer(str);
+	}
+
+	@Override
+	public ArrayList<SeasonPlayer> getPlayOffPlayer() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

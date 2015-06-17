@@ -216,7 +216,7 @@ public class OneTeamPanel extends MyPanel implements MouseListener {
 			for (int i = 0; i < fields.length; i++) {
 				fieldStr[i] = fields[i].toString();
 			}
-			dataKindChoose = new MyComboBox<Object>(DataKind.dataKinds);
+			dataKindChoose = new MyComboBox<Object>(DataKind.dataKindsStr);
 			sortFieldChoose = new MyComboBox<>(title);
 			search = new MyButton("搜索");
 			search.setBackground(MyColor.MIDDLE_ORANGE);
@@ -233,9 +233,11 @@ public class OneTeamPanel extends MyPanel implements MouseListener {
 				}
 
 				public void mouseExited(MouseEvent e) {
+					search.setBackground(MyColor.MIDDLE_ORANGE);
 				}
 
 				public void mouseEntered(MouseEvent e) {
+					search.setBackground(MyColor.DEEP_ORANGE);
 				}
 
 				public void mouseClicked(MouseEvent e) {
@@ -304,7 +306,7 @@ public class OneTeamPanel extends MyPanel implements MouseListener {
 			for (int i = 0; i < fields.length; i++) {
 				fieldStr[i] = fields[i].toString();
 			}
-			dataKindChoose = new MyComboBox<Object>(DataKind.dataKinds);
+			dataKindChoose = new MyComboBox<Object>(DataKind.dataKindsStr);
 			sortFieldChoose = new MyComboBox<>(title);
 			search = new MyButton("搜索");
 			search.setBackground(MyColor.MIDDLE_ORANGE);
@@ -321,9 +323,11 @@ public class OneTeamPanel extends MyPanel implements MouseListener {
 				}
 
 				public void mouseExited(MouseEvent e) {
+					search.setBackground(MyColor.MIDDLE_ORANGE);
 				}
 
 				public void mouseEntered(MouseEvent e) {
+					search.setBackground(MyColor.DEEP_ORANGE);
 				}
 
 				public void mouseClicked(MouseEvent e) {
@@ -428,8 +432,8 @@ public class OneTeamPanel extends MyPanel implements MouseListener {
 				fieldStr[i] = fields[i].toString();
 			}
 			seasonChoose = new MyComboBox<Object>(allSeasonArray);
-			gameKindChoose = new MyComboBox<Object>(GameKind.gameKinds);
-			dataKindChoose = new MyComboBox<Object>(DataKind.dataKinds);
+			gameKindChoose = new MyComboBox<Object>(GameKind.gameKindStr);
+			dataKindChoose = new MyComboBox<Object>(DataKind.dataKindsStr);
 			sortFieldChoose = new MyComboBox<>(title);
 			search = new MyButton("搜索");
 			search.setBackground(MyColor.MIDDLE_ORANGE);
@@ -446,9 +450,11 @@ public class OneTeamPanel extends MyPanel implements MouseListener {
 				}
 
 				public void mouseExited(MouseEvent e) {
+					search.setBackground(MyColor.MIDDLE_ORANGE);
 				}
 
 				public void mouseEntered(MouseEvent e) {
+					search.setBackground(MyColor.DEEP_ORANGE);
 				}
 
 				public void mouseClicked(MouseEvent e) {
@@ -595,9 +601,11 @@ public class OneTeamPanel extends MyPanel implements MouseListener {
 				}
 
 				public void mouseExited(MouseEvent e) {
+					search.setBackground(MyColor.MIDDLE_ORANGE);
 				}
 
 				public void mouseEntered(MouseEvent e) {
+					search.setBackground(MyColor.DEEP_ORANGE);
 				}
 
 				public void mouseClicked(MouseEvent e) {

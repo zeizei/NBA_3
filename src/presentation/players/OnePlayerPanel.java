@@ -224,8 +224,8 @@ public class OnePlayerPanel extends MyPanel implements MouseListener {
 			for (int i = 0; i < fields.length; i++) {
 				fieldStr[i] = fields[i].toString();
 			}
-			gameKindChoose = new MyComboBox<Object>(GameKind.gameKinds);
-			dataKindChoose = new MyComboBox<Object>(DataKind.dataKinds);
+			gameKindChoose = new MyComboBox<Object>(GameKind.gameKindStr);
+			dataKindChoose = new MyComboBox<Object>(DataKind.dataKindsStr);
 			sortFieldChoose = new MyComboBox<>(title);
 			search = new MyButton("搜索");
 			search.setBackground(MyColor.MIDDLE_ORANGE);
@@ -242,9 +242,11 @@ public class OnePlayerPanel extends MyPanel implements MouseListener {
 				}
 
 				public void mouseExited(MouseEvent e) {
+					search.setBackground(MyColor.MIDDLE_ORANGE);
 				}
 
 				public void mouseEntered(MouseEvent e) {
+					search.setBackground(MyColor.DEEP_ORANGE);
 				}
 
 				public void mouseClicked(MouseEvent e) {
@@ -322,7 +324,7 @@ public class OnePlayerPanel extends MyPanel implements MouseListener {
 			for (int i = 0; i < highField.length; i++) {
 				highFieldStr[i] = highField[i].toString();
 			}
-			gameKindChoose = new MyComboBox<Object>(GameKind.gameKinds);
+			gameKindChoose = new MyComboBox<Object>(GameKind.gameKindStr);
 			sortFieldChoose = new MyComboBox<>(title);
 			search = new MyButton("搜索");
 			search.setBackground(MyColor.MIDDLE_ORANGE);
@@ -339,9 +341,11 @@ public class OnePlayerPanel extends MyPanel implements MouseListener {
 				}
 
 				public void mouseExited(MouseEvent e) {
+					search.setBackground(MyColor.MIDDLE_ORANGE);
 				}
 
 				public void mouseEntered(MouseEvent e) {
+					search.setBackground(MyColor.DEEP_ORANGE);
 				}
 
 				public void mouseClicked(MouseEvent e) {
@@ -403,7 +407,7 @@ public class OnePlayerPanel extends MyPanel implements MouseListener {
 			for (int i = 0; i < gameField.length; i++) {
 				gameFieldStr[i] = gameField[i].toString();
 			}
-			gameKindChoose = new MyComboBox<Object>(GameKind.gameKinds);
+			gameKindChoose = new MyComboBox<Object>(GameKind.gameKindStr);
 			seasonChoose = new MyComboBox<Object>(regularSeasonArray);
 			sortFieldChoose = new MyComboBox<Object>(title);
 			search = new MyButton("搜索");
@@ -487,9 +491,11 @@ public class OnePlayerPanel extends MyPanel implements MouseListener {
 				}
 
 				public void mouseExited(MouseEvent e) {
+					search.setBackground(MyColor.MIDDLE_ORANGE);
 				}
 
 				public void mouseEntered(MouseEvent e) {
+					search.setBackground(MyColor.DEEP_ORANGE);
 				}
 
 				public void mouseClicked(MouseEvent e) {

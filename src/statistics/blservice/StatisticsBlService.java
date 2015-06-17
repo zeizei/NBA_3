@@ -1,5 +1,6 @@
 package statistics.blservice;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import statistics.analysisbeans.PlayerOnOrOff;
@@ -12,6 +13,8 @@ import beans.SeasonPlayer;
 public interface StatisticsBlService {
 
 	public boolean isBetterThanRegular(String playerID, String field);
+	
+	
 
 	public double[] forcast(String playerID, String field);
 
@@ -52,4 +55,6 @@ public interface StatisticsBlService {
 	public ArrayList<PlayerShootType> getPlayOffSeasonShootType(String playerID);// 14-15赛季季后赛球员不同出手类型命中率
 
 	public ArrayList<SeasonPlayer> vagueSearchPlayer(String str);// 模糊查询球员
+	
+	public ArrayList<SeasonPlayer> getPlayOffPlayer();
 }

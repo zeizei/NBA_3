@@ -104,44 +104,30 @@ public class MainFrame extends JFrame {
 		 * 导航栏
 		 */
 		private static final long serialVersionUID = 1L;
-		private NavigationButton quitSystem, playerPanelButton, teamPanelButton, matchPanelButton, hotSportPanelButton, statisticsPanelButton,dataLivePanelButton;
+		private NavigationButton quitSystem, playerPanelButton, teamPanelButton, matchPanelButton, hotSportPanelButton, statisticsPanelButton, dataLivePanelButton;
 		private int button_w = 150;
 		private int button_h = 50;
 		private int button_y = 10;
 		private int gap = 130;
-		private ImageIcon player_normal = new ImageIcon(
-				PathOfFile.NAVIGATION_IMAGE + "players_normal.png");
-		private ImageIcon player_press = new ImageIcon(
-				"images/navigation/players_press.png");
-		private ImageIcon player_enter = new ImageIcon(
-				"images/navigation/players_enter.png");
-		private ImageIcon teams_normal = new ImageIcon(
-				"images/navigation/teams_normal.png");
-		private ImageIcon teams_press = new ImageIcon(
-				"images/navigation/teams_press.png");
-		private ImageIcon teams_enter = new ImageIcon(
-				"images/navigation/teams_enter.png");
-		private ImageIcon match_normal = new ImageIcon(
-				"images/navigation/match_normal.png");
-		private ImageIcon match_press = new ImageIcon(
-				"images/navigation/match_press.png");
-		private ImageIcon match_enter = new ImageIcon(
-				"images/navigation/match_enter.png");
-		private ImageIcon hot_normal = new ImageIcon(
-				"images/navigation/hot_normal.png");
-		private ImageIcon hot_press = new ImageIcon(
-				"images/navigation/hot_press.png");
-		private ImageIcon hot_enter = new ImageIcon(
-				"images/navigation/hot_enter.png");
-		private ImageIcon exit_normal = new ImageIcon(
-				"images/navigation/exit_normal.png");
-		private ImageIcon exit_enter = new ImageIcon(
-				"images/navigation/exit_enter.png");
-		private ImageIcon datalive_normal=new ImageIcon("images/navigation/datalive_normal.png");
-		private ImageIcon datalive_enter=new ImageIcon("images/navigation/datalive_enter.png");
-		private ImageIcon statistics_normal=new ImageIcon("images/navigation/statistic_normal.png");
-		private ImageIcon statistics_press=new ImageIcon("images/navigation/statistic_press.png");
-		private ImageIcon statistics_enter=new ImageIcon("images/navigation/statistic_enter.png");
+		private ImageIcon player_normal = new ImageIcon(PathOfFile.NAVIGATION_IMAGE + "players_normal.png");
+		private ImageIcon player_press = new ImageIcon("images/navigation/players_press.png");
+		private ImageIcon player_enter = new ImageIcon("images/navigation/players_enter.png");
+		private ImageIcon teams_normal = new ImageIcon("images/navigation/teams_normal.png");
+		private ImageIcon teams_press = new ImageIcon("images/navigation/teams_press.png");
+		private ImageIcon teams_enter = new ImageIcon("images/navigation/teams_enter.png");
+		private ImageIcon match_normal = new ImageIcon("images/navigation/match_normal.png");
+		private ImageIcon match_press = new ImageIcon("images/navigation/match_press.png");
+		private ImageIcon match_enter = new ImageIcon("images/navigation/match_enter.png");
+		private ImageIcon hot_normal = new ImageIcon("images/navigation/hot_normal.png");
+		private ImageIcon hot_press = new ImageIcon("images/navigation/hot_press.png");
+		private ImageIcon hot_enter = new ImageIcon("images/navigation/hot_enter.png");
+		private ImageIcon exit_normal = new ImageIcon("images/navigation/exit_normal.png");
+		private ImageIcon exit_enter = new ImageIcon("images/navigation/exit_enter.png");
+		private ImageIcon datalive_normal = new ImageIcon("images/navigation/datalive_normal.png");
+		private ImageIcon datalive_enter = new ImageIcon("images/navigation/datalive_enter.png");
+		private ImageIcon statistics_normal = new ImageIcon("images/navigation/statistic_normal.png");
+		private ImageIcon statistics_press = new ImageIcon("images/navigation/statistic_press.png");
+		private ImageIcon statistics_enter = new ImageIcon("images/navigation/statistic_enter.png");
 
 		public NavigationPanel() {
 			this.setLayout(null);
@@ -159,17 +145,15 @@ public class MainFrame extends JFrame {
 			teamPanelButton = new NavigationButton(teams_normal);
 			matchPanelButton = new NavigationButton(match_normal);
 			hotSportPanelButton = new NavigationButton(hot_normal);
-			dataLivePanelButton=new NavigationButton(datalive_normal);
+			dataLivePanelButton = new NavigationButton(datalive_normal);
 			statisticsPanelButton = new NavigationButton(statistics_normal);
 		}
 
 		private void setComponentsLocation() {
 			playerPanelButton.setBounds(390, button_y, button_w, button_h);
 			teamPanelButton.setBounds(390 + gap, button_y, button_w, button_h);
-			matchPanelButton.setBounds(390 + gap * 2, button_y, button_w,
-					button_h);
-			hotSportPanelButton.setBounds(390 + gap * 3, button_y, button_w,
-					button_h);
+			matchPanelButton.setBounds(390 + gap * 2, button_y, button_w, button_h);
+			hotSportPanelButton.setBounds(390 + gap * 3, button_y, button_w, button_h);
 			quitSystem.setBounds(390 + gap * 6, button_y, button_w, button_h);
 			dataLivePanelButton.setBounds(390 + gap * 5, button_y, button_w, button_h);
 			statisticsPanelButton.setBounds(390 + gap * 4, button_y, button_w, button_h);
@@ -214,7 +198,7 @@ public class MainFrame extends JFrame {
 					Main.mainFrame.changeBackGround(new ImageIcon("images/teams/background_team.png"));
 				}
 				else if (isPlayOff == 1) {
-					Main.mainFrame.changeBackGround(new ImageIcon(PathOfFile.HOTSPOT + "background_hotspot.png"));
+					Main.mainFrame.changeBackGround(new ImageIcon(PathOfFile.TEAM_IMAGE + "background_playOff_team.png"));
 				}
 				contentPanel.showTeamPanel();
 			}
@@ -282,8 +266,8 @@ public class MainFrame extends JFrame {
 				else
 					statisticsPanelButton.setIcon(statistics_enter);
 			}
-			else if(e.getSource().equals(dataLivePanelButton)){
-				if(dataLivePanelButton.isPress){
+			else if (e.getSource().equals(dataLivePanelButton)) {
+				if (dataLivePanelButton.isPress) {
 				}
 				else
 					dataLivePanelButton.setIcon(datalive_enter);
@@ -324,8 +308,8 @@ public class MainFrame extends JFrame {
 				else
 					statisticsPanelButton.setIcon(statistics_normal);
 			}
-			else if(e.getSource().equals(dataLivePanelButton)){
-				if(dataLivePanelButton.isPress){
+			else if (e.getSource().equals(dataLivePanelButton)) {
+				if (dataLivePanelButton.isPress) {
 				}
 				else
 					dataLivePanelButton.setIcon(datalive_normal);

@@ -92,12 +92,23 @@ public class StatisticsData implements StatisticsDataService {
 
 	public ArrayList<SeasonPlayer> vagueSearchPlayer(String str) {
 		if (str != null) {
-			String sql = "select * from seasonplayer where season = '2014-15' and isPlayOff = 0 and playerName like '%" + str + "%' order by  point/numOfGame desc limit 10";
+			String sql = "select * from seasonplayer where season = '2014-15' and isPlayOff = 0 and playerName like '%" + str
+					+ "%' and playerName in (select playerName from seasonplayer where season = '2014-15' and isPlayOff = 1) order by  point/numOfGame desc limit 10";
 			ResultSet rs = this.nba_db.find(sql);
 			ArrayList<SeasonPlayer> seasonPlayerList = beans.Bean.resultSetToList(rs, new SeasonPlayer());
 			if (seasonPlayerList != null && seasonPlayerList.size() != 0) {
 				return seasonPlayerList;
 			}
+		}
+		return null;
+	}
+
+	public ArrayList<SeasonPlayer> getPlayOffPlayer() {
+		String sql = "select * from seasonplayer where season = '2014-15' and isPlayOff = 0 and playerName in (select playerName from seasonplayer where season = '2014-15' and isPlayOff = 1) order by  point/numOfGame desc limit 10";
+		ResultSet rs = this.nba_db.find(sql);
+		ArrayList<SeasonPlayer> seasonPlayerList = beans.Bean.resultSetToList(rs, new SeasonPlayer());
+		if (seasonPlayerList != null && seasonPlayerList.size() != 0) {
+			return seasonPlayerList;
 		}
 		return null;
 	}
